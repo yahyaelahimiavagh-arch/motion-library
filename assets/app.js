@@ -358,6 +358,30 @@ $('#rl-open').addEventListener('click', () => openTech(rItems()[ri].id));
 $('#rl-all').addEventListener('click', () => { const b = $('#filters .chip[data-cat="' + rcat + '"]'); if (b) b.click(); $('#library').scrollIntoView() });
 rBuild(); rSyncPlay(); rUI(); requestAnimationFrame(rTick);
 
+
+/* ---------- site menu drawer ---------- */
+const drawer = $('#drawer'), menuBtn = $('#menu-btn'), htmlEl = document.documentElement;
+function openDrawer() {
+  if (drawer.open) return;
+  if (dlg.open) dlg.close(); if (cmd.open) cmd.close();
+  drawer.classList.remove('closing'); drawer.showModal(); htmlEl.classList.add('menu-open'); menuBtn.setAttribute('aria-expanded', 'true');
+  $('#drawer-close').focus({ preventScroll: true });
+}
+function closeDrawer() {
+  if (!drawer.open || drawer.classList.contains('closing')) return;
+  const done = () => { drawer.classList.remove('closing'); drawer.close(); htmlEl.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', 'false') };
+  if (reduced) done(); else { drawer.classList.add('closing'); setTimeout(done, 250) }
+}
+menuBtn.addEventListener('click', openDrawer);
+$('#drawer-close').addEventListener('click', closeDrawer);
+drawer.addEventListener('click', e => { if (e.target === drawer || e.target.closest('a')) closeDrawer() });
+drawer.addEventListener('cancel', e => { e.preventDefault(); closeDrawer() });
+try {
+  const ifmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', hour12: false });
+  const itick = () => { $('#drawer-clock').textContent = 'Istanbul · ' + ifmt.format(new Date()) + ' local time' };
+  itick(); setInterval(itick, 10000);
+} catch (e) {}
+
 /* ---------- colors section ---------- */
 const colList = $('#col-list');
 colList.innerHTML = VIDEOS.map(v => '<div class="cv" style="--ac:' + v.ac + '" data-v="' + v.n + '"><h3><i></i>Video ' + fa(v.n) + ': ' + esc(shortTitle(v)) + '</h3>' +
