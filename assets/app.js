@@ -247,10 +247,20 @@ fl.addEventListener('click', e => {
 
 /* ---------- scroll spy ---------- */
 const spyMap = new Map();
+let spyCur = null;
 const spy = new IntersectionObserver(es => {
   es.forEach(e => spyMap.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0));
   let best = null, bv = 0; spyMap.forEach((r, id) => { if (r > bv) { bv = r; best = id } });
-  if (best) $$('.rail a').forEach(a => { const on = a.dataset.sec === best; a.setAttribute('aria-current', on); if (on && matchMedia('(max-width:1099px)').matches) a.scrollIntoView({ inline: 'center', block: 'nearest' }) });
+  if (!best || best === spyCur) return;
+  spyCur = best;
+  $$('.rail a').forEach(a => {
+    const on = a.dataset.sec === best; a.setAttribute('aria-current', on);
+    /* Center the active chip by scrolling only the chip bar sideways. scrollIntoView would also move the page and fight the user's scroll. */
+    if (on && matchMedia('(max-width:1099px)').matches) {
+      const bar = a.parentElement, x = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2;
+      bar.scrollTo({ left: Math.max(0, x), behavior: 'auto' });
+    }
+  });
 }, { rootMargin: '-110px 0px -45% 0px', threshold: [0, .02, .1, .3] });
 $$('.chap, #colors, #kit').forEach(s => spy.observe(s));
 
