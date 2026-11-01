@@ -17,31 +17,42 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=202611012329">
+<link rel="stylesheet" href="assets/style.css?v=202611012357">
 </head>
 <body>
 <a class="skip" href="#library">Skip to content</a>
 
-<header class="top">
+<header class="site-head">
   <div class="top-in">
-    <a class="brand" href="https://elahimiavagh.com/" aria-label="elahimiavagh home">
-      <span class="brand-mark">YE</span>
-      <span>elahimiavagh</span>
-    </a>
-    <span class="crumb" aria-hidden="true">/</span>
-    <a class="brand-sub" href="#top">Motion Library</a>
-    <nav class="top-nav" aria-label="Sections">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="https://elahimiavagh.com/" aria-label="elahimiavagh home">
+        <span class="brand-mark">YE</span>
+        <span>elahimiavagh</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://elahimiavagh.com/#services">Services</a>
+        <a href="https://elahimiavagh.com/#work">Work</a>
+        <a href="https://elahimiavagh.com/#process">Process</a>
+        <a href="https://elahimiavagh.com/#about">About</a>
+        <a class="lib-nav" href="#top" aria-current="page">Motion Library</a>
+        <a class="mail-nav" href="mailto:yahya@elahimiavagh.com">Email</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="tools" role="navigation" aria-label="Library sections">
+  <div class="tools-in">
+    <nav class="tools-nav">
       <a href="#reels">Reels</a>
       <a href="#library">Techniques</a>
       <a href="#colors">Colors</a>
       <a href="#kit">Motion kit</a>
     </nav>
-    <div class="top-act">
-      <button class="btn ghost" id="open-search" type="button" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="hide-s">Search</span><kbd class="hide-s">Ctrl K</kbd></button>
-      <a class="btn ghost home-link" href="https://elahimiavagh.com/">Home</a>
-    </div>
+    <button class="btn ghost" id="open-search" type="button" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
   </div>
-</header>
+</div>
+<button class="fab-search" id="fab-search" type="button" aria-label="Search"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 
 <main id="top">
   <section class="hero" aria-labelledby="h1">
@@ -203,7 +214,7 @@
 
 <div id="toast" role="status" aria-live="polite"></div>
 <noscript><p style="padding:24px;text-align:center">Turn on JavaScript to see the live demos.</p></noscript>
-<script src="assets/data.js?v=202611012329"></script>
-<script src="assets/app.js?v=202611012329"></script>
+<script src="assets/data.js?v=202611012357"></script>
+<script src="assets/app.js?v=202611012357"></script>
 </body>
 </html>

@@ -455,7 +455,7 @@ function choose(i) {
   if (r.kind === 't') openTech(r.t.id); else { copy(r.c.hex, r.c.hex); cmd.close() }
 }
 function openSearch() { if (dlg.open) dlg.close(); q.value = ''; runSearch(); cmd.showModal(); q.focus() }
-$('#open-search').addEventListener('click', openSearch);
+$('#open-search').addEventListener('click', openSearch); $('#fab-search').addEventListener('click', openSearch);
 q.addEventListener('input', runSearch);
 q.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(results.length - 1, sel + 1); renderResults(); $('[aria-selected=true]', list)?.scrollIntoView({ block: 'nearest' }) }
