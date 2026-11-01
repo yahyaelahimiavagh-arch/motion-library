@@ -126,7 +126,7 @@ function placePlayhead() {
 }
 let last = performance.now();
 function tick(now) {
-  const dt = Math.min(.1, (now - last) / 1000); last = now;
+  const dt = Math.max(0, Math.min(.1, (now - last) / 1000)); last = now;
   if (playing && !scrubbing && heroVisible && !document.hidden) { pos = (pos + dt / SLOT) % ORDER.length; }
   showTech(Math.floor(pos)); placePlayhead();
   requestAnimationFrame(tick);
@@ -163,16 +163,33 @@ rail.innerHTML = '<a href="#reels" data-sec="reels"><i></i><span>Category reels<
 const frames = [];
 /* Demos load a little before they scroll into view and are only unloaded when far away.
    This keeps scrolling smooth on phones (few live iframes) and avoids black tiles. */
-const live = new Set(), MAX_LIVE = 6;
+const live = new Set(), near = new Set(), MAX_LIVE = 8;
 function turnOn(f) {
   if (f.dataset.on) return;
-  if (live.size >= MAX_LIVE) { const old = live.values().next().value; turnOff(old) }
-  f.srcdoc = f._doc; f.dataset.on = '1'; live.add(f);
+  if (live.size >= MAX_LIVE) { for (const o of live) { if (!near.has(o)) { turnOff(o); break } } }
+  f.dataset.on = '1'; live.add(f);
+  f.onload = () => { f.onload = null; if (f.dataset.on) f.parentElement.classList.add('ready') };
+  f.srcdoc = f._doc;
 }
-function turnOff(f) { if (!f.dataset.on) return; f.srcdoc = ''; delete f.dataset.on; live.delete(f) }
-const ioNear = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) turnOn(e.target) }), { rootMargin: '700px 0px' });
+function turnOff(f) { if (!f.dataset.on) return; f.onload = null; f.srcdoc = ''; delete f.dataset.on; live.delete(f); f.parentElement.classList.remove('ready') }
+const ioNear = new IntersectionObserver(es => es.forEach(e => {
+  const f = e.target;
+  if (e.isIntersecting) { near.add(f); f.parentElement.classList.add('in'); turnOn(f) } else { near.delete(f); f.parentElement.classList.remove('in') }
+}), { rootMargin: '700px 0px' });
 const ioFar = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) turnOff(e.target) }), { rootMargin: '1800px 0px' });
 const io = { observe(f) { ioNear.observe(f); ioFar.observe(f) } };
+
+/* Poster shown under every demo until it has loaded: a category icon on a soft, colorful, slowly moving glow. */
+const ICONS = {
+  type: '<path d="M10 14V10h28v4M24 10v28M18 38h12"/><path d="M33 26h9M37.5 26v12" opacity=".6"/>',
+  ui: '<rect x="9" y="12" width="30" height="24" rx="6"/><path d="M9 20h30"/><circle cx="15" cy="16" r="1" fill="currentColor"/><path d="M16 29h10M16 33h6" opacity=".65"/>',
+  data: '<path d="M10 38V22M20 38V14M30 38V26M40 38V10"/><path d="M8 38h34" opacity=".6"/>',
+  fx: '<path d="M24 6c1.4 9 4 11.6 13 13-9 1.4-11.6 4-13 13-1.4-9-4-11.6-13-13 9-1.4 11.6-4 13-13z"/><path d="M37 30c.6 3.6 1.6 4.6 5 5.2-3.4.6-4.4 1.6-5 5.2-.6-3.6-1.6-4.6-5-5.2 3.4-.6 4.4-1.6 5-5.2z" opacity=".7"/>',
+  layout: '<path d="M8 17V9h8M32 9h8v8M40 31v8h-8M16 39H8v-8"/><rect x="18" y="18" width="12" height="12" rx="3" opacity=".7"/>'
+};
+function posterHTML(t) {
+  return '<div class="ph" style="--cc:' + CATC[t.cat] + '" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><div class="ph-icon"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICONS[t.cat] + '</svg></div></div>';
+}
 
 function ribbonHTML(v) {
   return '<div class="ribbon" role="group" aria-label="Colors of ' + esc(shortTitle(v)) + '">' + v.palette.map(g =>
@@ -198,8 +215,9 @@ function timelineHTML(v) {
     (items.some(i => i.full) ? '<p class="tl-note">Hatched bars mean the technique is used across the whole video or in scattered places.</p>' : '');
 }
 function tileHTML(t) {
-  return '<div class="tile-demo"><iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1"></iframe><button class="tile-open" type="button" aria-label="Open: ' + esc(t.fa) + '"></button></div>' +
-    '<h3>' + esc(t.fa) + '</h3><span class="cat">' + catDot(t.cat) + catLabel(t) + '</span>';
+  return '<div class="tile-demo">' + posterHTML(t) + '<iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1"></iframe><button class="tile-open" type="button" aria-label="Open: ' + esc(t.fa) + '"></button></div>' +
+    '<h3>' + esc(t.fa) + '</h3><span class="cat">' + catDot(t.cat) + catLabel(t) + '</span>' +
+    '<button class="btn tile-btn" type="button" data-details>Details <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
 }
 const chapters = $('#chapters');
 VIDEOS.forEach(v => {
@@ -219,7 +237,7 @@ VIDEOS.forEach(v => {
   chapters.appendChild(sec);
 });
 chapters.addEventListener('click', e => {
-  const open = e.target.closest('.tile-open'); if (open) return openTech(open.closest('.tile').dataset.id);
+  const open = e.target.closest('.tile-open, [data-details]'); if (open) return openTech(open.closest('.tile').dataset.id);
   const seg = e.target.closest('.seg'); if (seg) return openTech(seg.dataset.id);
   const sw = e.target.closest('[data-hex]'); if (sw) copy(sw.dataset.hex, sw.dataset.hex);
 });
@@ -314,7 +332,7 @@ function rSyncPlay() {
   $('#rl-play').setAttribute('aria-label', rplaying ? 'Pause' : 'Play');
 }
 function rTick(now) {
-  const dt = Math.min(.1, (now - rlast) / 1000); rlast = now;
+  const dt = Math.max(0, Math.min(.1, (now - rlast) / 1000)); rlast = now;
   if (rvisible && rready && rplaying && !document.hidden) {
     rt += dt;
     if (rt >= RSLOT) rLoad(ri + 1);
