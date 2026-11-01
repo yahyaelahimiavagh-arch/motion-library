@@ -92,7 +92,7 @@ h1 .dot{color:#747d8e}
 .reel-ruler{position:absolute;left:0;right:0;top:0;height:26px;overflow:hidden;border-bottom:1px solid var(--line);font:500 11px/1 var(--text);color:var(--mute2)}
 .reel-ruler i{position:absolute;bottom:0;width:1px;height:8px;background:var(--mute2);font-style:normal}
 .reel-ruler i b{position:absolute;bottom:12px;left:4px;font-weight:500;white-space:nowrap}
-.reel-clips{display:grid;gap:3px;height:92px;padding-top:6px;touch-action:pan-y;cursor:ew-resize;border-radius:8px}
+.reel-clips{display:grid;gap:3px;height:92px;padding-top:6px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:ew-resize;border-radius:8px}
 .clip{position:relative;container-type:inline-size;background:var(--ac);color:var(--ac-ink);border-radius:6px;padding:8px 10px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transform-origin:left center;animation:clipIn .7s var(--expo) both;animation-delay:calc(var(--i)*70ms + 700ms)}
 .clip .rn{font:800 26px/1 var(--display);letter-spacing:-.04em}
 .clip .rt{display:none;font-weight:600;font-size:12.5px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

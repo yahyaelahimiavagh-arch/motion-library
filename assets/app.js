@@ -80,7 +80,7 @@ $('#lead').innerHTML = '<b>' + fa(TECHS.length) + ' live techniques</b> from ' +
 const clipsEl = $('#reel-clips'), ph = $('#playhead'), mon = $('#mon');
 const TOTAL = VIDEOS.reduce((s, v) => s + v.dur, 0);
 const SLOT = 3.4;           /* seconds each technique is shown */
-let pos = 0, playing = !reduced, scrubbing = false, shown = -1, heroVisible = true;
+let pos = 0, playing = !reduced, scrubbing = false, shown = -1, heroVisible = true, monT;
 
 clipsEl.style.gridTemplateColumns = VIDEOS.map(v => 'minmax(30px,' + v.dur + 'fr)').join(' ');
 clipsEl.innerHTML = VIDEOS.map((v, i) => '<div class="clip" style="--ac:' + v.ac + ';--ac-ink:' + inkOn(v.ac) + ';--i:' + i + '"><span class="rn">' + fa(v.n) + '</span><span class="rt">' + esc(shortTitle(v)) + '</span></div>').join('');
@@ -105,10 +105,15 @@ function timeToPos(time) {
   const v = VIDEOS[vi], u = Math.min(.999, Math.max(0, (time - clipStart[vi]) / v.dur));
   return firstIdx[vi] + u * v.techs.length;
 }
+let monDoc = -1;
+function loadMon(i) { if (monDoc === i || !ORDER[i]) return; monDoc = i; mon.srcdoc = docFor(ORDER[i]) }
 function showTech(i) {
   if (i === shown) return; shown = i;
   const t = ORDER[i];
-  mon.srcdoc = docFor(t);
+  /* While dragging across the timeline, update labels at once but load the demo only when the finger settles. */
+  clearTimeout(monT);
+  if (scrubbing) monT = setTimeout(() => loadMon(i), 160);
+  else loadMon(i);
   $('#mon-name').textContent = t.fa;
   $('#mon-src').textContent = 'Video ' + fa(t.vid.n) + ' · ' + shortTitle(t.vid);
   clipEls.forEach((c, k) => c.classList.toggle('on', VIDEOS[k] === t.vid));
@@ -129,10 +134,11 @@ function tick(now) {
 function seekFromEvent(e) {
   const r = clipsEl.getBoundingClientRect(), f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
   pos = timeToPos(f * TOTAL);
+  showTech(Math.min(ORDER.length - 1, Math.floor(pos))); placePlayhead();
 }
 clipsEl.addEventListener('pointerdown', e => { scrubbing = true; clipsEl.setPointerCapture(e.pointerId); seekFromEvent(e) });
 clipsEl.addEventListener('pointermove', e => { if (scrubbing) seekFromEvent(e) });
-const endScrub = () => { scrubbing = false };
+const endScrub = () => { scrubbing = false; clearTimeout(monT); loadMon(shown) };
 clipsEl.addEventListener('pointerup', endScrub); clipsEl.addEventListener('pointercancel', endScrub);
 clipsEl.addEventListener('keydown', e => {
   const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
