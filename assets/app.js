@@ -155,11 +155,18 @@ rail.innerHTML = VIDEOS.map(v => '<a href="#v' + v.n + '" data-sec="v' + v.n + '
 
 /* ---------- chapters ---------- */
 const frames = [];
-const io = new IntersectionObserver(es => es.forEach(e => {
-  const f = e.target;
-  if (e.isIntersecting) { if (!f.dataset.on) { f.srcdoc = f._doc; f.dataset.on = '1' } }
-  else if (f.dataset.on) { f.srcdoc = ''; delete f.dataset.on }
-}), { rootMargin: '120px' });
+/* Demos load a little before they scroll into view and are only unloaded when far away.
+   This keeps scrolling smooth on phones (few live iframes) and avoids black tiles. */
+const live = new Set(), MAX_LIVE = 6;
+function turnOn(f) {
+  if (f.dataset.on) return;
+  if (live.size >= MAX_LIVE) { const old = live.values().next().value; turnOff(old) }
+  f.srcdoc = f._doc; f.dataset.on = '1'; live.add(f);
+}
+function turnOff(f) { if (!f.dataset.on) return; f.srcdoc = ''; delete f.dataset.on; live.delete(f) }
+const ioNear = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) turnOn(e.target) }), { rootMargin: '700px 0px' });
+const ioFar = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) turnOff(e.target) }), { rootMargin: '1800px 0px' });
+const io = { observe(f) { ioNear.observe(f); ioFar.observe(f) } };
 
 function ribbonHTML(v) {
   return '<div class="ribbon" role="group" aria-label="Colors of ' + esc(shortTitle(v)) + '">' + v.palette.map(g =>
@@ -185,7 +192,7 @@ function timelineHTML(v) {
     (items.some(i => i.full) ? '<p class="tl-note">Hatched bars mean the technique is used across the whole video or in scattered places.</p>' : '');
 }
 function tileHTML(t) {
-  return '<div class="tile-demo"><iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1" loading="lazy"></iframe><button class="tile-open" type="button" aria-label="Open: ' + esc(t.fa) + '"></button></div>' +
+  return '<div class="tile-demo"><iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1"></iframe><button class="tile-open" type="button" aria-label="Open: ' + esc(t.fa) + '"></button></div>' +
     '<h3>' + esc(t.fa) + '</h3><span class="cat">' + catDot(t.cat) + catLabel(t) + '</span>';
 }
 const chapters = $('#chapters');

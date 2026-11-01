@@ -276,3 +276,11 @@ dialog[open]{animation:dlg .26s var(--expo)}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* Phones and touch screens: drop the heavy full-screen effects so scrolling stays smooth */
+@media (max-width:820px),(hover:none){
+  body::before{display:none}
+  body::after{background:radial-gradient(circle at 10% 18%,rgba(7,27,77,.68),transparent 33rem)}
+  .top,.rail-in{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(5,7,11,.96)}
+  .tile:hover .tile-demo{transform:none;box-shadow:none}
+}
