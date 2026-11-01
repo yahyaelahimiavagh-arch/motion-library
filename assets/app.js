@@ -150,7 +150,7 @@ addEventListener('resize', placePlayhead);
 
 /* ---------- rail ---------- */
 const rail = $('#rail-in');
-rail.innerHTML = VIDEOS.map(v => '<a href="#v' + v.n + '" data-sec="v' + v.n + '" style="--ac:' + v.ac + '"><i></i><b>' + fa(v.n) + '</b><span>' + esc(shortTitle(v)) + '</span></a>').join('') +
+rail.innerHTML = '<a href="#reels" data-sec="reels"><i></i><span>Category reels</span></a><span class="gap"></span>' + VIDEOS.map(v => '<a href="#v' + v.n + '" data-sec="v' + v.n + '" style="--ac:' + v.ac + '"><i></i><b>' + fa(v.n) + '</b><span>' + esc(shortTitle(v)) + '</span></a>').join('') +
   '<span class="gap"></span><a href="#colors" data-sec="colors"><i></i><span>Colors</span></a><a href="#kit" data-sec="kit"><i></i><span>Motion kit</span></a>';
 
 /* ---------- chapters ---------- */
@@ -262,7 +262,77 @@ const spy = new IntersectionObserver(es => {
     }
   });
 }, { rootMargin: '-110px 0px -45% 0px', threshold: [0, .02, .1, .3] });
-$$('.chap, #colors, #kit').forEach(s => spy.observe(s));
+$$('.chap, #reels, #colors, #kit').forEach(s => spy.observe(s));
+
+/* ---------- category reels ---------- */
+const REELS = {
+  type: ['kinetic', 'softwipe', 'wordcuts', 'chroma', 'neonslam', 'ovalmark', 'bleedtext'],
+  ui: ['glass', 'stack', 'list3d', 'chips', 'slabbtn', 'liquidmorph', 'floatcards'],
+  data: ['counter', 'slider', 'chart', 'clockdial', 'ringcount', 'timerrows', 'statboard'],
+  fx: ['focus', 'particles', 'scenecut', 'lightbloom', 'dustdissolve', 'gridwave', 'layerparallax'],
+  layout: ['frame', 'reticle', 'hexnodes', 'nodeflow', 'posterred', 'cornerhud', 'archframe']
+};
+const RSLOT = 4.2;
+let rcat = 'type', ri = 0, rt = 0, rplaying = !reduced, rvisible = false, rready = false, rfront = null, rtok = 0, rlast = performance.now();
+const rA = $('#rl-a'), rB = $('#rl-b'), rItems = () => REELS[rcat].map(id => byId[id]);
+$('#rl-tabs').innerHTML = Object.entries(CATS).map(([k, l]) => '<button role="tab" type="button" data-k="' + k + '" aria-selected="' + (k === rcat) + '">' + l + '</button>').join('');
+function rBuild() {
+  const items = rItems(), sec = $('#reels');
+  sec.style.setProperty('--ac', CATC[rcat]);
+  $('#rl-bar').innerHTML = items.map(() => '<i></i>').join('');
+  $('#rl-list').innerHTML = items.map((t, i) => '<li><button type="button" data-i="' + i + '"><b>' + (i + 1) + '</b><span>' + esc(t.fa) + '</span><small>' + mmss(i * RSLOT) + '</small></button></li>').join('');
+  $('#rl-all').textContent = 'See all ' + TECHS.filter(t => t.cat === rcat).length + ' in ' + CATS[rcat];
+  $$('#rl-tabs [role=tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.k === rcat));
+}
+function rUI() {
+  const t = rItems()[ri], n = REELS[rcat].length;
+  $('#rl-meta').innerHTML = 'Technique ' + (ri + 1) + ' of ' + n + ' · Video ' + fa(t.vid.n) + ': ' + esc(shortTitle(t.vid));
+  $('#rl-title').textContent = t.fa; $('#rl-when').textContent = t.when;
+  $$('#rl-list button').forEach((b, i) => b.classList.toggle('on', i === ri));
+  $$('#rl-bar i').forEach((s, i) => { s.style.setProperty('--p', i < ri ? 1 : 0); s.classList.toggle('on', i === ri) });
+  $('#rl-time').textContent = mmss(ri * RSLOT + rt) + ' / ' + mmss(n * RSLOT);
+}
+function rLoad(i) {
+  ri = (i + REELS[rcat].length) % REELS[rcat].length; rt = 0; rready = false; rUI();
+  const back = rfront === rA ? rB : rA, old = rfront, tok = ++rtok;
+  back.onload = () => {
+    if (tok !== rtok) return;
+    back.onload = null; back.classList.add('on'); rfront = back; rready = true;
+    if (old) { old.classList.remove('on'); setTimeout(() => { if (rfront !== old) { old.onload = null; old.srcdoc = '' } }, 400) }
+  };
+  back.srcdoc = docFor(rItems()[ri]);
+}
+function rStop() { rtok++; rready = false; [rA, rB].forEach(f => { f.onload = null; f.srcdoc = ''; f.classList.remove('on') }); rfront = null }
+function rSyncPlay() {
+  $('#rl-ico').setAttribute('d', rplaying ? 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z' : 'M7 4.5v15l12-7.5z');
+  $('#rl-play').setAttribute('aria-label', rplaying ? 'Pause' : 'Play');
+}
+function rTick(now) {
+  const dt = Math.min(.1, (now - rlast) / 1000); rlast = now;
+  if (rvisible && rready && rplaying && !document.hidden) {
+    rt += dt;
+    if (rt >= RSLOT) rLoad(ri + 1);
+    else {
+      const bar = $$('#rl-bar i')[ri]; if (bar) bar.style.setProperty('--p', (rt / RSLOT).toFixed(3));
+      $('#rl-time').textContent = mmss(ri * RSLOT + rt) + ' / ' + mmss(REELS[rcat].length * RSLOT);
+    }
+  }
+  requestAnimationFrame(rTick);
+}
+new IntersectionObserver(es => {
+  const v = es[0].isIntersecting;
+  if (v === rvisible) return; rvisible = v;
+  if (v) rLoad(ri); else rStop();
+}, { rootMargin: '150px 0px' }).observe($('#reels'));
+$('#rl-tabs').addEventListener('click', e => { const b = e.target.closest('[role=tab]'); if (!b || b.dataset.k === rcat) return; rcat = b.dataset.k; ri = 0; rBuild(); if (rvisible) rLoad(0) });
+$('#rl-list').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) rLoad(+b.dataset.i) });
+$('#rl-bar').addEventListener('click', () => {});
+$('#rl-prev').addEventListener('click', () => rLoad(ri - 1));
+$('#rl-next').addEventListener('click', () => rLoad(ri + 1));
+$('#rl-play').addEventListener('click', () => { rplaying = !rplaying; rSyncPlay() });
+$('#rl-open').addEventListener('click', () => openTech(rItems()[ri].id));
+$('#rl-all').addEventListener('click', () => { const b = $('#filters .chip[data-cat="' + rcat + '"]'); if (b) b.click(); $('#library').scrollIntoView() });
+rBuild(); rSyncPlay(); rUI(); requestAnimationFrame(rTick);
 
 /* ---------- colors section ---------- */
 const colList = $('#col-list');

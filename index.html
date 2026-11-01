@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=202611012301">
+<link rel="stylesheet" href="assets/style.css?v=202611012307">
 </head>
 <body>
 <a class="skip" href="#library">Skip to content</a>
@@ -31,6 +31,7 @@
     <span class="crumb" aria-hidden="true">/</span>
     <a class="brand-sub" href="#top">Motion Library</a>
     <nav class="top-nav" aria-label="Sections">
+      <a href="#reels">Reels</a>
       <a href="#library">Techniques</a>
       <a href="#colors">Colors</a>
       <a href="#kit">Motion kit</a>
@@ -78,6 +79,39 @@
     </aside>
 
     <div class="content">
+      <section id="reels" class="sec" aria-labelledby="reels-h">
+        <div class="sec-head">
+          <div class="kicker">Category reels</div>
+          <h2 id="reels-h">One category in 30 seconds.</h2>
+          <p>Each reel plays seven of the best techniques of one category, back to back. When one fits your project, open its code and colors.</p>
+        </div>
+        <div class="tabs rl-tabs" role="tablist" id="rl-tabs" aria-label="Reel category"></div>
+        <div class="rl">
+          <div class="rl-stage">
+            <div class="rl-screen"><iframe id="rl-a" title="Reel demo" sandbox="allow-scripts" tabindex="-1"></iframe><iframe id="rl-b" title="Reel demo" sandbox="allow-scripts" tabindex="-1"></iframe></div>
+            <div class="rl-bar" id="rl-bar" aria-hidden="true"></div>
+            <div class="rl-ctrl">
+              <button class="btn ghost icon" id="rl-prev" type="button" aria-label="Previous technique"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 5h2.5v14H6zM19 5v14L9.5 12z" fill="currentColor"/></svg></button>
+              <button class="btn ghost icon" id="rl-play" type="button" aria-label="Pause"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path id="rl-ico" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg></button>
+              <button class="btn ghost icon" id="rl-next" type="button" aria-label="Next technique"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15.5 5H18v14h-2.5zM5 5l9.5 7L5 19z" fill="currentColor"/></svg></button>
+              <span class="rl-time muted" id="rl-time"></span>
+            </div>
+          </div>
+          <div class="rl-info">
+            <div class="rl-now" aria-live="off">
+              <div class="rl-meta muted" id="rl-meta"></div>
+              <h3 id="rl-title"></h3>
+              <p id="rl-when"></p>
+              <div class="rl-act">
+                <button class="btn pri" id="rl-open" type="button">Open code and colors</button>
+                <button class="btn" id="rl-all" type="button"></button>
+              </div>
+            </div>
+            <ol class="rl-list" id="rl-list"></ol>
+          </div>
+        </div>
+      </section>
+
       <section id="library" class="sec" aria-labelledby="lib-h">
         <div class="sec-head">
           <div class="kicker">Techniques</div>
@@ -169,7 +203,7 @@
 
 <div id="toast" role="status" aria-live="polite"></div>
 <noscript><p style="padding:24px;text-align:center">Turn on JavaScript to see the live demos.</p></noscript>
-<script src="assets/data.js?v=202611012301"></script>
-<script src="assets/app.js?v=202611012301"></script>
+<script src="assets/data.js?v=202611012307"></script>
+<script src="assets/app.js?v=202611012307"></script>
 </body>
 </html>
