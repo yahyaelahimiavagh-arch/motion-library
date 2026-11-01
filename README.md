@@ -24,7 +24,7 @@ build.py            فایل‌های src را به assets/data.js تبدیل م
 
 1. در hPanel: **Advanced ← Git**.
 2. آدرس HTTPS مخزن عمومی را بزن، شاخه `main`.
-3. مسیر نصب: `public_html` (دامنهٔ اصلی) یا پوشهٔ ساب‌دامین.
+3. مسیر نصب (Directory): `motion-library` تا سایت روی `elahimiavagh.com/motion-library/` بنشیند. خالی نگذار، چون خالی یعنی خود `public_html`.
 4. Create را بزن و بعد **Auto Deployment** را روشن کن. آدرس Webhook را در تنظیمات مخزن GitHub (Settings ← Webhooks) با Content type `application/json` و رویداد push اضافه کن.
 
 از این به بعد هر push خودش روی سایت می‌نشیند.
