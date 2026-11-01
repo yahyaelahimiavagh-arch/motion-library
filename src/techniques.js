@@ -3,7 +3,7 @@ const FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?fa
 
 const KIT_CSS = `*{box-sizing:border-box;margin:0}
 html{font-size:calc(100vw/27)}
-body{position:relative;width:27rem;height:48rem;overflow:hidden;background:#070B13;color:#F6FBFF;font-family:'Vazirmatn','Inter Tight',system-ui,sans-serif}
+body{position:relative;width:27rem;height:48rem;overflow:hidden;background:#070B13;color:#F6FBFF;font-family:'Inter Tight',system-ui,sans-serif}
 .stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 30%,#1b2a4a 0%,#090E19 70%)}
 .foot{position:absolute;inset:0;background:linear-gradient(180deg,#6b6b66,#44443f)}
 .foot i{position:absolute;left:60%;top:24%;width:7rem;height:8.5rem;margin-left:-3.5rem;border-radius:50% 50% 46% 46%;background:#c89a7e}
@@ -33,16 +33,16 @@ const FOOT = '<div class="foot"><i></i><b></b></div>';
 
 const TECHS = [
 /* 1 ---------------------------------------------------------------- */
-{ id:'kinetic', fa:'زیرنویس کلمه‌به‌کلمه', en:'Kinetic Typography', cat:'type',
-  when:'گفتار اصلی ویدیو. کلمه‌های کلیدی (عدد، پول، سن) با رنگ یا فونت متفاوت برجسته می‌شن.',
-  timing:'هر کلمه ۰٫۴ ثانیه، فاصله‌ی ۰٫۲۶ ثانیه · بالا‌آمدن + بلور به واضح',
-  where:'کل ویدیو', colors:['#F6FBFF','#EAC68A'], dur:4.6,
-  css:`.sub{position:absolute;left:1.5rem;right:1.5rem;bottom:9rem;text-align:center;direction:rtl;font-size:1.7rem;font-weight:800;line-height:1.6;text-shadow:0 .1rem .8rem rgba(0,0,0,.6)}
+{ id:'kinetic', fa:'Word-by-word subtitles', en:'Kinetic Typography', cat:'type',
+  when:'The video\'s spoken audio. Key words (numbers, money, age) stand out with a different color or font.',
+  timing:'Each word 0.4 s, 0.26 s apart · rise + blur-to-sharp',
+  where:'Whole video', colors:['#F6FBFF','#EAC68A'], dur:4.6,
+  css:`.sub{position:absolute;left:1.5rem;right:1.5rem;bottom:9rem;text-align:center;direction:ltr;font-size:1.7rem;font-weight:800;line-height:1.6;text-shadow:0 .1rem .8rem rgba(0,0,0,.6)}
 .sub span{display:inline-block;margin:0 .25rem}
 .sub .hl{color:#EAC68A}
 .sub .num{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:2.3rem;color:#EAC68A}`,
   html:`<div class="stage">${FOOT}<div class="sub" id="sub"></div></div>`,
-  js:`const words=[['بعدش',''],['$1,500','num'],['در',''],['ماه',''],['تو',''],['۱۴','hl'],['سالگی','']];
+  js:`const words=[['Then',''],['$1,500','num'],['a',''],['month',''],['at',''],['14','hl'],['years old','']];
 const sub=document.getElementById('sub');
 const els=words.map(([w,c])=>{const s=document.createElement('span');s.textContent=w;s.className=c;sub.appendChild(s);return s});
 play(4.6,t=>{
@@ -55,10 +55,10 @@ play(4.6,t=>{
 });` },
 
 /* 2 ---------------------------------------------------------------- */
-{ id:'glass', fa:'کارت شیشه‌ای', en:'Glassmorphism UI Card', cat:'ui',
-  when:'نمایش یک عدد یا اطلاعات کوتاه کنار صورت بدون پوشاندن فوتیج.',
-  timing:'ورود ۰٫۷ ثانیه · ease-out · scale از ۰٫۹۲ به ۱ + بلور به واضح',
-  where:'ثانیه ۱۲ تا ۲۳', colors:['#EAC68A','#C6A266'], dur:4,
+{ id:'glass', fa:'Glass card', en:'Glassmorphism UI Card', cat:'ui',
+  when:'Shows one number or a short fact next to the face without covering the footage.',
+  timing:'Enters in 0.7 s · ease-out · scale 0.92 to 1 + blur-to-sharp',
+  where:'Seconds 12 to 23', colors:['#EAC68A','#C6A266'], dur:4,
   css:`.card{position:absolute;left:2rem;top:9rem;width:10.5rem;padding:1.1rem 1.2rem}
 .card small{display:block;font:600 .75rem 'Inter Tight',sans-serif;letter-spacing:.12em;opacity:.7}
 .card .v{font:italic 2.8rem/1.15 'Instrument Serif',serif}
@@ -75,17 +75,17 @@ play(4,t=>{
 });` },
 
 /* 3 ---------------------------------------------------------------- */
-{ id:'focus', fa:'فوکوس بلور و کارت چت', en:'Focus Pull (Background Blur)', cat:'fx',
-  when:'وقتی گرافیک مهمی میاد. فوتیج تار و تیره می‌شه تا چشم روی گرافیک بمونه، بعد برمی‌گرده.',
-  timing:'بلور و تیره‌شدن ۰٫۷ ثانیه · خروج ۰٫۷ ثانیه · فوتیج کمی زوم می‌شه',
-  where:'ثانیه ۶ تا ۱۰ و ۲۵ تا ۳۱', colors:['#FFFFFF'], dur:5.2,
+{ id:'focus', fa:'Blur focus and chat card', en:'Focus Pull (Background Blur)', cat:'fx',
+  when:'When an important graphic arrives. The footage blurs and darkens so the eye stays on the graphic, then returns.',
+  timing:'Blur and darken 0.7 s · exit 0.7 s · footage zooms slightly',
+  where:'Seconds 6 to 10 and 25 to 31', colors:['#FFFFFF'], dur:5.2,
   css:`.foot{will-change:filter,transform}
-.chat{position:absolute;left:2.2rem;right:2.2rem;top:12rem;padding:1.2rem;direction:rtl}
+.chat{position:absolute;left:2.2rem;right:2.2rem;top:12rem;padding:1.2rem;direction:ltr}
 .who{display:flex;gap:.7rem;align-items:center;font-weight:800;font-size:1rem}
 .av{width:2.4rem;height:2.4rem;border-radius:50%;background:#F61E36;display:grid;place-items:center;font-weight:800}
 .msg{margin-top:.9rem;padding:.9rem 1rem;border-radius:.9rem;background:rgba(255,255,255,.14);font-weight:600;font-size:1.15rem;line-height:1.5}
-.re{position:absolute;left:2.2rem;top:25rem;padding:.5rem 1.1rem;border-radius:2rem;background:#fff;color:#111;font-weight:800;font-size:1rem;direction:rtl}`,
-  html:`<div class="stage">${FOOT.replace('class="foot"','class="foot" id="foot"')}<div class="chat glass" id="chat"><div class="who"><span class="av">ک</span>صاحب کانال</div><div class="msg">خب، ماهی چقدر می‌خوای؟</div></div><div class="re" id="re">زیاده؟</div></div>`,
+.re{position:absolute;left:2.2rem;top:25rem;padding:.5rem 1.1rem;border-radius:2rem;background:#fff;color:#111;font-weight:800;font-size:1rem;direction:ltr}`,
+  html:`<div class="stage">${FOOT.replace('class="foot"','class="foot" id="foot"')}<div class="chat glass" id="chat"><div class="who"><span class="av">C</span>Channel owner</div><div class="msg">So, how much a month do you want?</div></div><div class="re" id="re">Too much?</div></div>`,
   js:`const foot=document.getElementById('foot'), chat=document.getElementById('chat'), re=document.getElementById('re');
 play(5.2,t=>{
   const p=ease.inOut(seg(t,.3,1)), q=ease.inOut(seg(t,4,4.7)), k=p*(1-q);
@@ -99,10 +99,10 @@ play(5.2,t=>{
 });` },
 
 /* 4 ---------------------------------------------------------------- */
-{ id:'counter', fa:'شمارنده‌ی عدد', en:'Number Counter', cat:'data',
-  when:'عدد بزرگ و ادعایی (بازدید، درآمد). شمارش با شتاب کندشونده تا عدد نهایی.',
-  timing:'۲٫۴ ثانیه · ease-out-expo · در ویدیو از ۶۵۰٬۰۲۹٬۰۱۱ به ۷۰۰٬۰۰۰٬۰۰۰ می‌رسه',
-  where:'ثانیه ۰ و ۳۶ تا ۳۸', colors:['#F6FBFF','#F61E36'], dur:4.5,
+{ id:'counter', fa:'Number counter', en:'Number Counter', cat:'data',
+  when:'A big, bold claim (views, revenue). The count slows down as it reaches the final number.',
+  timing:'2.4 s · ease-out-expo · in the video it goes from 650,029,011 to 700,000,000',
+  where:'Seconds 0 and 36 to 38', colors:['#F6FBFF','#F61E36'], dur:4.5,
   css:`.pill{position:absolute;left:50%;top:17rem;transform:translateX(-50%);padding:.35rem .85rem;border-radius:2rem;font:600 .8rem 'Inter Tight',sans-serif;display:flex;gap:.45rem;align-items:center;white-space:nowrap}
 .dot{width:.65rem;height:.45rem;border-radius:.15rem;background:#F61E36}
 .num{position:absolute;left:0;right:0;top:19.5rem;text-align:center;font:800 3rem/1 'Inter Tight',sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}`,
@@ -116,10 +116,10 @@ play(4.5,t=>{
 });` },
 
 /* 5 ---------------------------------------------------------------- */
-{ id:'slider', fa:'اسلایدر قیمت', en:'Value Slider', cat:'data',
-  when:'مقایسه‌ی مبلغ یا مقدار. عدد و دستگیره همزمان حرکت می‌کنن و یک حباب واکنش می‌گیره.',
-  timing:'۱٫۷ ثانیه · ease-in-out · حباب با ease-out-back',
-  where:'ثانیه ۸ تا ۱۳', colors:['#EAC68A','#C6A266','#F6FBFF'], dur:4.6,
+{ id:'slider', fa:'Price slider', en:'Value Slider', cat:'data',
+  when:'Comparing amounts or values. The number and the handle move together and a bubble reacts.',
+  timing:'1.7 s · ease-in-out · bubble uses ease-out-back',
+  where:'Seconds 8 to 13', colors:['#EAC68A','#C6A266','#F6FBFF'], dur:4.6,
   css:`.rate{position:absolute;left:2rem;right:2rem;top:15rem;padding:1.3rem}
 .rate small{font:600 .7rem 'Inter Tight',sans-serif;letter-spacing:.14em;opacity:.65}
 .rate .v{font:italic 3.4rem/1.1 'Instrument Serif',serif}
@@ -128,8 +128,8 @@ play(4.5,t=>{
 .fl{position:absolute;left:0;top:0;bottom:0;border-radius:1rem;background:linear-gradient(90deg,#C6A266,#EAC68A)}
 .th{position:absolute;top:50%;width:1.5rem;height:1.5rem;margin:-.75rem 0 0 -.75rem;border-radius:50%;background:#fff;box-shadow:0 .2rem .8rem rgba(0,0,0,.45)}
 .ticks{display:flex;justify-content:space-between;font:500 .6rem 'Inter Tight',sans-serif;opacity:.55}
-.bub{position:absolute;right:2.4rem;top:12.6rem;padding:.4rem .9rem;border-radius:2rem;background:#fff;color:#111;font:800 .9rem 'Vazirmatn',sans-serif;direction:rtl}`,
-  html:`<div class="stage"><div class="bub" id="bub">زیاده؟</div><div class="rate glass" id="rate"><small>MONTHLY RATE</small><div class="v"><span id="v">$900</span><s>/mo</s></div><div class="trk"><div class="fl" id="fl"></div><div class="th" id="th"></div></div><div class="ticks"><span>$0</span><span>$500</span><span>$1,000</span><span>$1,500</span></div></div></div>`,
+.bub{position:absolute;right:2.4rem;top:12.6rem;padding:.4rem .9rem;border-radius:2rem;background:#fff;color:#111;font:800 .9rem 'Inter Tight',sans-serif;direction:ltr}`,
+  html:`<div class="stage"><div class="bub" id="bub">Too much?</div><div class="rate glass" id="rate"><small>MONTHLY RATE</small><div class="v"><span id="v">$900</span><s>/mo</s></div><div class="trk"><div class="fl" id="fl"></div><div class="th" id="th"></div></div><div class="ticks"><span>$0</span><span>$500</span><span>$1,000</span><span>$1,500</span></div></div></div>`,
   js:`const v=document.getElementById('v'), fl=document.getElementById('fl'), th=document.getElementById('th'), bub=document.getElementById('bub'), rate=document.getElementById('rate');
 play(4.6,t=>{
   const p=ease.inOut(seg(t,.5,2.2)), x=Math.round(lerp(900,1000,p)), o=1-seg(t,4,4.4);
@@ -141,10 +141,10 @@ play(4.6,t=>{
 });` },
 
 /* 6 ---------------------------------------------------------------- */
-{ id:'chart', fa:'نمودار خطی انیمیشنی', en:'Animated Line Chart', cat:'data',
-  when:'رشد در زمان (سابسکرایبر، فروش). خط کشیده می‌شه، سطح زیرش پر می‌شه و در پایان یک بج رشد میاد.',
-  timing:'رسم خط ۲٫۲ ثانیه · ease-in-out · بج بعد از رسیدن خط',
-  where:'ثانیه ۲۶ تا ۳۱', colors:['#4EA2EA','#1EAE4E','#F61E36'], dur:5,
+{ id:'chart', fa:'Animated line chart', en:'Animated Line Chart', cat:'data',
+  when:'Growth over time (subscribers, sales). The line draws, the area beneath fills, and a growth badge appears at the end.',
+  timing:'Line draws in 2.2 s · ease-in-out · badge after the line lands',
+  where:'Seconds 26 to 31', colors:['#4EA2EA','#1EAE4E','#F61E36'], dur:5,
   css:`.st{position:absolute;left:1.6rem;right:1.6rem;top:12rem;padding:1.1rem 1.2rem}
 .hd{display:flex;justify-content:space-between;align-items:center;font:600 .8rem 'Inter Tight',sans-serif}
 .hd span{display:flex;gap:.45rem;align-items:center}
@@ -167,14 +167,14 @@ play(5,t=>{
 });` },
 
 /* 7 ---------------------------------------------------------------- */
-{ id:'particles', fa:'ذرات طلایی (Bokeh)', en:'Particle Burst', cat:'fx',
-  when:'لحظه‌ی «وای» یا عدد بزرگ؛ حس جشن و مقیاس. ذرات دور عدد پخش می‌شن و چشمک می‌زنن.',
-  timing:'پخش ۱٫۶ ثانیه · چشمک ۰٫۶ تا ۱ ثانیه · ۱۷۰ ذره با seed ثابت',
-  where:'ثانیه ۰ و ۳۶ تا ۳۸', colors:['#EAC68A','#D2AE72','#FFFFFF'], dur:5,
+{ id:'particles', fa:'Gold particles (bokeh)', en:'Particle Burst', cat:'fx',
+  when:'A “wow” moment or a big number; a sense of celebration and scale. Particles scatter around the number and twinkle.',
+  timing:'Spread 1.6 s · twinkle 0.6 to 1 s · 170 particles with a fixed seed',
+  where:'Seconds 0 and 36 to 38', colors:['#EAC68A','#D2AE72','#FFFFFF'], dur:5,
   css:`canvas{position:absolute;inset:0;width:100%;height:100%}
 .num{position:absolute;left:0;right:0;top:19.6rem;text-align:center;font:800 3rem/1 'Inter Tight',sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.cap{position:absolute;left:0;right:0;top:25rem;text-align:center;direction:rtl;font-weight:800;font-size:1.4rem}`,
-  html:`<div class="stage"><canvas id="cv" width="540" height="960"></canvas><div class="num" id="n">700,000,000</div><div class="cap" id="cap">حدوداً نزدیک</div></div>`,
+.cap{position:absolute;left:0;right:0;top:25rem;text-align:center;direction:ltr;font-weight:800;font-size:1.4rem}`,
+  html:`<div class="stage"><canvas id="cv" width="540" height="960"></canvas><div class="num" id="n">700,000,000</div><div class="cap" id="cap">Close to</div></div>`,
   js:`const cv=document.getElementById('cv'), g=cv.getContext('2d'), n=document.getElementById('n'), cap=document.getElementById('cap');
 function rnd(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const R=rnd(7), P=[];
@@ -194,10 +194,10 @@ play(5,t=>{
 });` },
 
 /* 8 ---------------------------------------------------------------- */
-{ id:'stack', fa:'کارت‌های روی‌هم', en:'Stacked Cards', cat:'ui',
-  when:'چند مورد هم‌نوع پشت سر هم (ویدیوها، ماه‌ها، اعضا). هر کارت با فاصله وارد می‌شه و روی قبلی می‌شینه.',
-  timing:'هر کارت ۰٫۶ ثانیه · فاصله‌ی ۰٫۳۵ ثانیه · ease-out-back + چرخش کم',
-  where:'ثانیه ۲۰ تا ۲۳ و ۳۳ تا ۳۴', colors:['#F61E36','#F6FBFF'], dur:5,
+{ id:'stack', fa:'Stacked cards', en:'Stacked Cards', cat:'ui',
+  when:'Several items of one kind in a row (videos, months, members). Each card enters with a delay and lands on the previous one.',
+  timing:'Each card 0.6 s · 0.35 s apart · ease-out-back + a slight rotation',
+  where:'Seconds 20 to 23 and 33 to 34', colors:['#F61E36','#F6FBFF'], dur:5,
   css:`.sc{position:absolute;left:2.2rem;top:12rem;width:11rem;padding:.9rem 1rem;border-radius:1rem;background:linear-gradient(160deg,#2a2d33,#14161a);border:1px solid rgba(255,255,255,.12);box-shadow:0 1rem 2rem rgba(0,0,0,.5);font-family:'Inter Tight',sans-serif}
 .sc b{display:flex;gap:.5rem;align-items:center;font-size:.85rem}
 .ic{width:1rem;height:1rem;border-radius:.3rem;background:#F61E36}
@@ -212,18 +212,18 @@ play(5,t=>cs.forEach((c,i)=>{
 }));` },
 
 /* 9 ---------------------------------------------------------------- */
-{ id:'cursor', fa:'کرسر و برچسب نقش', en:'Cursor + Tag Pointer', cat:'ui',
-  when:'معرفی آدم‌ها یا نقش‌ها؛ حس یک رابط واقعی. کرسر روی منحنی می‌ره، برچسب همراهشه و کلیک حلقه می‌سازه.',
-  timing:'حرکت ۱٫۵ ثانیه روی منحنی · ease-in-out · کلیک ۰٫۶ ثانیه',
-  where:'ثانیه ۳۹ تا ۴۴', colors:['#72D2AE','#4EA2EA'], dur:4.6,
+{ id:'cursor', fa:'Cursor and role label', en:'Cursor + Tag Pointer', cat:'ui',
+  when:'Introducing people or roles with a real-interface feel. The cursor follows a curve, the label travels with it, and the click makes a ring.',
+  timing:'Move 1.5 s along a curve · ease-in-out · click 0.6 s',
+  where:'Seconds 39 to 44', colors:['#72D2AE','#4EA2EA'], dur:4.6,
   css:`.list{position:absolute;left:2rem;top:10rem;width:15.5rem;padding:1rem}
-.row{display:flex;gap:.7rem;align-items:center;padding:.55rem .6rem;border-radius:.7rem;font:600 .95rem 'Vazirmatn',sans-serif;direction:rtl;justify-content:flex-end}
+.row{display:flex;gap:.7rem;align-items:center;padding:.55rem .6rem;border-radius:.7rem;font:600 .95rem 'Inter Tight',sans-serif;direction:ltr;justify-content:flex-end}
 .row small{margin-right:auto;opacity:.55;font:500 .7rem 'Inter Tight',sans-serif}
 .pa{width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;color:#10131a;font:800 .75rem 'Inter Tight',sans-serif}
 .cur{position:absolute;left:0;top:0;width:1.7rem;z-index:5}
 .tag{position:absolute;left:0;top:0;padding:.22rem .6rem;border-radius:.5rem;background:#72D2AE;color:#052418;font:700 .8rem 'Inter Tight',sans-serif;z-index:5}
 .rip{position:absolute;left:0;top:0;width:2.6rem;height:2.6rem;margin:-1.3rem 0 0 -1.3rem;border:2px solid #4EA2EA;border-radius:50%;opacity:0}`,
-  html:`<div class="stage">${FOOT}<div class="list glass"><div class="row"><span>رایان</span><span class="pa" style="background:#D2AE72">R</span></div><div class="row" id="target"><span>سارا</span><span class="pa" style="background:#72D2AE">S</span></div><div class="row"><span>امید</span><span class="pa" style="background:#4EA2EA">O</span></div><div class="row"><span>نیکا</span><span class="pa" style="background:#E8EEF9">N</span></div></div><div class="rip" id="rip"></div><svg class="cur" id="cur" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.6L9 19z" fill="#fff" stroke="#10131a" stroke-width="1.4" stroke-linejoin="round"/></svg><div class="tag" id="tag">Editor</div></div>`,
+  html:`<div class="stage">${FOOT}<div class="list glass"><div class="row"><span>Ryan</span><span class="pa" style="background:#D2AE72">R</span></div><div class="row" id="target"><span>Sara</span><span class="pa" style="background:#72D2AE">S</span></div><div class="row"><span>Omid</span><span class="pa" style="background:#4EA2EA">O</span></div><div class="row"><span>Nika</span><span class="pa" style="background:#E8EEF9">N</span></div></div><div class="rip" id="rip"></div><svg class="cur" id="cur" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.6L9 19z" fill="#fff" stroke="#10131a" stroke-width="1.4" stroke-linejoin="round"/></svg><div class="tag" id="tag">Editor</div></div>`,
   js:`const cur=document.getElementById('cur'), tag=document.getElementById('tag'), rip=document.getElementById('rip'), target=document.getElementById('target');
 const rem=parseFloat(getComputedStyle(document.documentElement).fontSize);
 const bez=(a,b,c,t)=>[(1-t)*(1-t)*a[0]+2*(1-t)*t*b[0]+t*t*c[0],(1-t)*(1-t)*a[1]+2*(1-t)*t*b[1]+t*t*c[1]];
@@ -240,16 +240,16 @@ play(4.6,t=>{
 });` },
 
 /* 10 --------------------------------------------------------------- */
-{ id:'toggle', fa:'سوییچ دوحالته', en:'Segmented Toggle', cat:'ui',
-  when:'مقایسه‌ی دو حالت (قبل/بعد، موبایل/تیم). پیل طلایی می‌لغزه و جمله‌ی بالا عوض می‌شه.',
-  timing:'لغزش ۰٫۶ ثانیه · ease-in-out · تغییر متن هم‌زمان با لغزش',
-  where:'ثانیه ۳۹ تا ۴۳', colors:['#EAC68A','#C6A266','#F6FBFF'], dur:4.6,
-  css:`.q{position:absolute;left:1.5rem;right:1.5rem;top:12rem;height:6rem;direction:rtl;text-align:center;font-weight:800;font-size:1.7rem;line-height:1.6}
+{ id:'toggle', fa:'Two-state toggle', en:'Segmented Toggle', cat:'ui',
+  when:'Comparing two states (before/after, mobile/team). A gold pill slides and the sentence above changes.',
+  timing:'Slide 0.6 s · ease-in-out · text swaps while it slides',
+  where:'Seconds 39 to 43', colors:['#EAC68A','#C6A266','#F6FBFF'], dur:4.6,
+  css:`.q{position:absolute;left:1.5rem;right:1.5rem;top:12rem;height:6rem;direction:ltr;text-align:center;font-weight:800;font-size:1.7rem;line-height:1.6}
 .q span{position:absolute;left:0;right:0;top:0}
 .seg{position:absolute;left:4.5rem;right:4.5rem;top:20rem;height:3.2rem;display:grid;grid-template-columns:1fr 1fr;border-radius:2rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font:600 .9rem 'Inter Tight',sans-serif}
 .pl{position:absolute;left:.28rem;top:.28rem;bottom:.28rem;width:calc(50% - .28rem);border-radius:2rem;background:linear-gradient(#EAC68A,#C6A266)}
 .seg i{position:relative;z-index:1;display:grid;place-items:center;font-style:normal}`,
-  html:`<div class="stage"><div class="q"><span id="q1">هنوز با <b style="color:#EAC68A">موبایل</b> ادیت می‌زنی؟</span><span id="q2">تیم داریم، <b style="color:#EAC68A">دفتر</b> داریم</span></div><div class="seg" id="seg"><div class="pl" id="pl"></div><i id="l1">Mobile</i><i id="l2">Team</i></div></div>`,
+  html:`<div class="stage"><div class="q"><span id="q1">Still editing on <b style="color:#EAC68A">mobile</b>?</span><span id="q2">We have a team, we have an <b style="color:#EAC68A">office</b></span></div><div class="seg" id="seg"><div class="pl" id="pl"></div><i id="l1">Mobile</i><i id="l2">Team</i></div></div>`,
   js:`const q1=document.getElementById('q1'), q2=document.getElementById('q2'), pl=document.getElementById('pl'), l1=document.getElementById('l1'), l2=document.getElementById('l2'), seg_=document.getElementById('seg');
 play(4.6,t=>{
   const p=ease.inOut(seg(t,1.6,2.2)), o=1-seg(t,4,4.4), i=ease.out(seg(t,0,.5));
@@ -261,10 +261,10 @@ play(4.6,t=>{
 });` },
 
 /* 11 --------------------------------------------------------------- */
-{ id:'reveal', fa:'افشای متن و رول رقم', en:'Mask Reveal + Digit Roll', cat:'type',
-  when:'عنوان بزرگ یا عدد نتیجه (EDIT و ۰۴). متن با ماسک از چپ پاک‌کننده می‌شه و رقم مثل کنتور می‌چرخه.',
-  timing:'ماسک ۰٫۹ ثانیه · ease-out · رول رقم ۱٫۲ ثانیه · ease-in-out',
-  where:'ثانیه ۳۹ تا ۴۴', colors:['#F6FBFF'], dur:4.6,
+{ id:'reveal', fa:'Text reveal and digit roll', en:'Mask Reveal + Digit Roll', cat:'type',
+  when:'A big headline or result number (EDIT and 04). The text is wiped in with a mask from the left and the digit rolls like an odometer.',
+  timing:'Mask 0.9 s · ease-out · digit roll 1.2 s · ease-in-out',
+  where:'Seconds 39 to 44', colors:['#F6FBFF'], dur:4.6,
   css:`.panel{position:absolute;left:1.4rem;right:1.4rem;top:11.5rem;height:11rem}
 .meta{position:absolute;left:2.6rem;top:12.5rem;font:600 .65rem 'Inter Tight',sans-serif;letter-spacing:.18em;opacity:.65}
 .meta.r{left:auto;right:2.6rem}
@@ -283,10 +283,10 @@ play(4.6,t=>{
 });` },
 
 /* 12 --------------------------------------------------------------- */
-{ id:'frame', fa:'قاب گوشی با درخشش', en:'Device Frame + Glow', cat:'layout',
-  when:'نمونه‌کار قبل/بعد. نسخه‌ی خام کمرنگ و کج، نسخه‌ی نهایی بزرگ‌تر با نور آبی که نفس می‌کشه.',
-  timing:'ورود ۰٫۸ ثانیه · ease-out-back · ضربان نور حدود ۲ ثانیه',
-  where:'کل ویدیو', colors:['#294C87','#9AB5ED','#152139','#2F4A7F','#A0C4FF','#6AA0F3'], dur:5,
+{ id:'frame', fa:'Phone frame with glow', en:'Device Frame + Glow', cat:'layout',
+  when:'A before/after showcase. The raw version is faded and tilted; the final one is larger with a blue glow that breathes.',
+  timing:'Enters in 0.8 s · ease-out-back · glow pulse about 2 s',
+  where:'Whole video', colors:['#294C87','#9AB5ED','#152139','#2F4A7F','#A0C4FF','#6AA0F3'], dur:5,
   css:`.stage{background:radial-gradient(90% 60% at 60% 45%,#1d3460 0%,#0E162E 45%,#070B13 85%)}
 .lbl{position:absolute;left:0;right:0;top:5rem;text-align:center;font:600 .7rem 'Inter Tight',sans-serif;letter-spacing:.3em;color:#929EBB}
 h1{position:absolute;left:0;right:0;top:6.4rem;text-align:center;font:800 3.2rem/1 'Inter Tight',sans-serif;letter-spacing:-.03em;background:linear-gradient(#A0C4FF,#6AA0F3);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -308,10 +308,10 @@ play(5,t=>{
 });` },
 
 /* 13 --------------------------------------------------------------- */
-{ id:'pushin', fa:'زوم آهسته و پرش کادر', en:'Push-in + Reframe Punch', cat:'fx',
-  when:'ریتم دادن به مصاحبه‌ی ثابت. زوم کند، بعد پرش کوتاه به کادر نزدیک‌تر با فلاش خیلی ملایم.',
-  timing:'زوم آهسته ۲٫۴ ثانیه · پرش ۰٫۲ ثانیه · ease-out',
-  where:'کل ویدیو (حدود ثانیه ۲ تا ۶)', colors:[], dur:5,
+{ id:'pushin', fa:'Slow zoom and frame jump', en:'Push-in + Reframe Punch', cat:'fx',
+  when:'Gives a static interview some rhythm. A slow zoom, then a short jump to a tighter frame with a very soft flash.',
+  timing:'Slow zoom 2.4 s · jump 0.2 s · ease-out',
+  where:'Whole video (around seconds 2 to 6)', colors:[], dur:5,
   css:`.foot{transform-origin:50% 36%;will-change:transform}
 .vg{position:absolute;inset:0;background:radial-gradient(70% 55% at 50% 45%,transparent 40%,rgba(0,0,0,.55))}
 .fl{position:absolute;inset:0;background:#fff;opacity:0}`,
@@ -326,10 +326,10 @@ play(5,t=>{
 });` },
 
 /* 14 --------------------------------------------------------------- */
-{ id:'wire', fa:'مدل سیمی دستگاه', en:'Wireframe Mockup Draw-on', cat:'ui',
-  when:'نشان‌دادن دستگاه یا محصول به شکل ساده بدون عکس. خط‌ها کشیده می‌شن و میله‌های رنگی رشد می‌کنن.',
-  timing:'رسم خط ۱٫۲ ثانیه · میله‌ها ۰٫۶ ثانیه با فاصله · برچسب با ease-out-back',
-  where:'ثانیه ۶', colors:['#F6FBFF','#72D2AE','#D2AE72','#4EA2EA'], dur:4.6,
+{ id:'wire', fa:'Wireframe device', en:'Wireframe Mockup Draw-on', cat:'ui',
+  when:'Shows a device or product in a simple form without a photo. Lines draw and colored bars grow.',
+  timing:'Line draw 1.2 s · bars 0.6 s staggered · label uses ease-out-back',
+  where:'Second 6', colors:['#F6FBFF','#72D2AE','#D2AE72','#4EA2EA'], dur:4.6,
   css:`.stage{background:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.2px) 0 0/1.3rem 1.3rem,radial-gradient(120% 80% at 50% 30%,#1b2a4a 0%,#090E19 70%)}
 svg{position:absolute;left:50%;top:10rem;width:13rem;margin-left:-6.5rem;overflow:visible}
 .tg{position:absolute;left:50%;top:7.8rem;transform:translateX(-50%);padding:.3rem .8rem;border-radius:.4rem;background:#1b3a6e;border:1px solid #4EA2EA;font:600 .75rem 'Inter Tight',sans-serif;white-space:nowrap}`,
@@ -347,26 +347,26 @@ play(4.6,t=>{
 });` }
 ];
 
-const CATS = { type:'تایپوگرافی', ui:'کارت و UI', data:'عدد و داده', fx:'افکت و دوربین', layout:'قاب و چیدمان' };
+const CATS = { type:'Typography', ui:'Cards and UI', data:'Numbers and data', fx:'Effects and camera', layout:'Frame and layout' };
 
 const VIDEOS = [{
-  id:'v1', n:1, title:'ریل ادیت: قبل و بعد', meta:'۴۵ ثانیه · ۷۲۰×۱۲۸۰ · ادیت پادکست فارسی',
-  mood:'تیره و سینمایی. پس‌زمینه‌ی سرمه‌ای تقریباً سیاه، نور آبی الکتریکی دور قاب، طلایی فقط برای پول و عدد. رابط‌های ساختگی جای فیلم آرشیوی رو می‌گیرن.',
+  id:'v1', n:1, title:'Reel edit: before and after', meta:'45 seconds · 720×1280 · a Persian podcast edit',
+  mood:'Dark and cinematic. A near-black navy background, electric blue light around the frame, gold only for money and numbers. Fake interfaces stand in for stock footage.',
   rules:[
-    'هر ادعا یک مدرک بصری داره: حرف از پول، کارت پول. حرف از رشد، نمودار.',
-    'وقتی گرافیک میاد، فوتیج تار و تیره می‌شه و بعد برمی‌گرده. صورت و گرافیک همزمان رقابت نمی‌کنن.',
-    'رنگ‌ها نقش ثابت دارن: طلایی برای پول و عدد، آبی برای UI و برند، سبز برای مثبت، قرمز فقط برای یوتیوب.',
-    'گرافیک کنار صورت کوچک می‌مونه. فقط وقتی فوتیج رها می‌شه، تمام‌صفحه می‌شه.',
-    'ورود حدود ۰٫۴ تا ۰٫۸ ثانیه با ease-out یا back، خروج سریع‌تر.',
-    'تایپ: گروتسک بولد فشرده برای تیتر و عددهای بزرگ، ایتالیک سریف برای مبلغ و تأکید، زیرنویس فارسی سفید با کلمه‌ی کلیدی رنگی.'
+    'Every claim gets visual proof: talk about money, show a money card. Talk about growth, show a chart.',
+    'When a graphic arrives, the footage blurs and darkens, then comes back. The face and the graphic never compete at the same time.',
+    'Colors have fixed roles: gold for money and numbers, blue for UI and brand, green for positive, red only for YouTube.',
+    'The graphic beside the face stays small. It goes full screen only when the footage is let go.',
+    'Entrances take about 0.4 to 0.8 s with ease-out or back, exits are faster.',
+    'Type: a bold condensed grotesque for headlines and big numbers, an italic serif for amounts and emphasis, white Persian subtitles with a colored key word.'
   ],
   palette:[
-    { g:'پس‌زمینه', c:[['#090E19','بالای صفحه'],['#070B13','پایین صفحه'],['#0E162E','کناره‌ی نور'],['#152139','پیل برچسب‌ها']] },
-    { g:'نور و قاب', c:[['#2F4A7F','نور کنار قاب'],['#1F3664','نور دورتر'],['#294C87','حاشیه‌ی قاب'],['#9AB5ED','لبه‌ی روشن قاب']] },
-    { g:'آبی برند و UI', c:[['#A0C4FF','بالای تیتر'],['#6AA0F3','پایین تیتر'],['#88BAFD','دکمه'],['#4EA2EA','خط نمودار']] },
-    { g:'طلایی (پول و عدد)', c:[['#EAC68A','روشن'],['#D2AE72','اصلی'],['#C6A266','تیره']] },
-    { g:'وضعیت', c:[['#72D2AE','عدد مثبت'],['#1EAE4E','بج رشد'],['#F61E36','یوتیوب']] },
-    { g:'متن', c:[['#F6FBFF','تیتر'],['#EBF4FF','ایتالیک'],['#929EBB','برچسب'],['#8F97B0','زیرنویس'],['#6E778C','فوتر']] }
+    { g:'Background', c:[['#090E19','Top of screen'],['#070B13','Bottom of screen'],['#0E162E','Light edge'],['#152139','Label pill']] },
+    { g:'Light and frame', c:[['#2F4A7F','Light beside frame'],['#1F3664','Farther light'],['#294C87','Frame border'],['#9AB5ED','Frame highlight edge']] },
+    { g:'Brand blue and UI', c:[['#A0C4FF','Top of headline'],['#6AA0F3','Bottom of headline'],['#88BAFD','Button'],['#4EA2EA','Chart line']] },
+    { g:'Gold (money and numbers)', c:[['#EAC68A','Light'],['#D2AE72','Main'],['#C6A266','Dark']] },
+    { g:'Status', c:[['#72D2AE','Positive number'],['#1EAE4E','Growth badge'],['#F61E36','YouTube']] },
+    { g:'Text', c:[['#F6FBFF','Headline'],['#EBF4FF','Italic'],['#929EBB','Label'],['#8F97B0','Subtitle'],['#6E778C','Footer']] }
   ]
 }];
 

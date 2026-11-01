@@ -17,10 +17,10 @@ function camBg(s,T,k){bg.style.transformOrigin=HD[0]+'rem '+HD[1]+'rem';bg.style
 function gest(t){aL.setAttribute('transform','rotate('+(Math.sin(t*3.1)*9)+' 9.5 20.8)');aR.setAttribute('transform','rotate('+(Math.sin(t*2.6+1)*-9)+' 17.5 20.8)')}`;
 
 TECHS.push(
-{ v:10, id:'punchcut', fa:'پانچ‌این: برش بین نمای دور و نمای نزدیک', en:'Digital Punch-in Jump Cuts', cat:'fx',
-  when:'ریتم دادن به ویدیوی مصاحبه با یک دوربین ثابت. هر ۳ تا ۵ ثانیه برش مستقیم بین نمای کامل (۱×) و نمای نزدیک (۲٫۲ تا ۲٫۵×) انجام می‌شه. بدون انیمیشن گذار؛ فقط برش و یک فلاش خیلی کم‌رنگ.',
-  timing:'نمای دور ۱٫۶ تا ۳٫۲ ثانیه · نمای نزدیک ۱٫۸ تا ۴ ثانیه · ضریب بزرگ‌نمایی نزدیک ۲٫۲ تا ۲٫۵ · برش مستقیم بدون تونل‌زدن · فلاش ۸٪ برای ۰٫۱ ثانیه',
-  where:'کل ویدیو (ثانیه‌های ۱٫۸ و ۳٫۷ و ۷ و ۱۲ و ۱۵٫۵ و ۲۱)', colors:['#002039','#002E46','#04415B','#DBBFAA'], dur:7.2,
+{ v:10, id:'punchcut', fa:'Punch-in: cut between wide and close shots', en:'Digital Punch-in Jump Cuts', cat:'fx',
+  when:'Giving an interview video rhythm with a static camera. Every 3 to 5 seconds there is a hard cut between the full shot (1×) and a close shot (2.2 to 2.5×). No transition animation; just the cut and a very faint flash.',
+  timing:'Wide shot 1.6 to 3.2 s · close shot 1.8 to 4 s · close zoom factor 2.2 to 2.5 · hard cut with no tunneling · 8% flash for 0.1 s',
+  where:'Whole video (seconds 1.8, 3.7, 7, 12, 15.5 and 21)', colors:['#002039','#002E46','#04415B','#DBBFAA'], dur:7.2,
   css:SCENE_CSS,
   html:`<div class="stage">${SCENE_HTML}<div class="lb" id="lb"></div><div class="fl" id="fl"></div></div>`,
   js:`${CAMJS}
@@ -33,10 +33,10 @@ play(7.2,t=>{
   fl.style.opacity=.08*Math.max(0,1-(t-k[0])/.1);
 });` },
 
-{ v:10, id:'headdrift', fa:'حرکت آرام دوربین با قفل روی سر', en:'Head-locked Slow Push (Ken Burns)', cat:'fx',
-  when:'داخل هر نما. مرکز زوم همیشه روی سر گوینده است نه وسط کادر، پس سر روی خط‌های یک‌سوم می‌مونه و بدن و دست‌ها نسبت به اون می‌لغزن. نمای نزدیک آروم به عقب می‌ره و نمای دور آروم جلو میاد.',
-  timing:'نزدیک: از ۲٫۴× به ۱٫۹× در ۳ ثانیه (ease-out) · دور: از ۱٫۰× به ۱٫۱۲× در ۳ ثانیه · سر ۱ تا ۲٫۵rem به پایین می‌لغزه · مرکز تغییر مقیاس = سر',
-  where:'تمام نماهای ویدیو', colors:['#002039','#DBBFAA','#F0EBEF'], dur:6.4,
+{ v:10, id:'headdrift', fa:'Slow camera drift locked on the head', en:'Head-locked Slow Push (Ken Burns)', cat:'fx',
+  when:'Inside each shot. The zoom origin is always the speaker\'s head, not the center of the frame, so the head stays on the thirds lines and the body and hands slide relative to it. A close shot eases back slowly, a wide shot eases forward.',
+  timing:'Close: from 2.4× to 1.9× in 3 s (ease-out) · wide: from 1.0× to 1.12× in 3 s · the head slides down 1 to 2.5rem · scale origin = head',
+  where:'Every shot in the video', colors:['#002039','#DBBFAA','#F0EBEF'], dur:6.4,
   css:`${SCENE_CSS}
 .gd{position:absolute;inset:0;pointer-events:none;z-index:7}
 .gd i{position:absolute;background:rgba(240,235,239,.28)}
@@ -50,10 +50,10 @@ play(6.4,t=>{
   lb.textContent=(t<3.2?'PUSH-OUT  ':'PUSH-IN  ')+'x'+s.toFixed(2);
 });` },
 
-{ v:10, id:'layerparallax', fa:'پارالاکس لایه‌ای: سوژه جدا از پس‌زمینه', en:'Subject / Background Parallax Scale', cat:'fx',
-  when:'عمق دادن به فیلم تخت. سوژه به‌صورت یک لایه جدا از پس‌زمینه جدا می‌شه و در زوم، سوژه ۴ تا ۵٪ در ثانیه بزرگ می‌شه ولی پس‌زمینه فقط حدود ۱٪؛ حس دوربین واقعی (dolly) میاد.',
-  timing:'سوژه ۴٫۵٪/ثانیه · پس‌زمینه ۱٪/ثانیه (ضریب ۰٫۳۵ از زوم سوژه) · مقایسه ۳ ثانیه تخت و ۳ ثانیه پارالاکس · پس‌زمینه‌ی تار برای پنهان‌شدن لبه‌ها',
-  where:'نمای نزدیک ثانیه ۲ تا ۳٫۵ و نمای دور ثانیه ۱۲ تا ۱۵', colors:['#002039','#04415B','#00263E'], dur:6.4,
+{ v:10, id:'layerparallax', fa:'Layered parallax: subject separated from the background', en:'Subject / Background Parallax Scale', cat:'fx',
+  when:'Giving depth to flat footage. The subject is split into a layer separate from the background, and during a zoom the subject grows 4 to 5% per second while the background grows only about 1%; the feel of a real dolly.',
+  timing:'Subject 4.5%/s · background 1%/s (a 0.35 factor of the subject zoom) · comparison 3 s flat and 3 s parallax · blurred background to hide edges',
+  where:'Close shot seconds 2 to 3.5 and wide shot seconds 12 to 15', colors:['#002039','#04415B','#00263E'], dur:6.4,
   css:`${SCENE_CSS}
 .bgl{background-image:radial-gradient(#1c5a7a 1.5px,transparent 2px),radial-gradient(70% 30% at 50% 88%,#04415B 0%,transparent 70%),radial-gradient(60% 40% at 30% 30%,#002E46 0%,transparent 70%),radial-gradient(#fff0 0,#fff0 0);background-size:2.2rem 2.2rem,auto,auto,auto;background-color:#002039}
 .lb{font-size:.85rem;line-height:1.5}`,
@@ -66,15 +66,15 @@ play(6.4,t=>{
   lb.innerHTML=(par?'PARALLAX':'FLAT')+'<br>subject  x'+s.toFixed(2)+'<br>background  x'+(1+(s-1)*k).toFixed(2);
 });` },
 
-{ v:10, id:'headroomtext', fa:'تیتر در فضای بالای سر و قرارگیری کنار سر', en:'Head-anchored Text Placement', cat:'layout',
-  when:'گذاشتن متن روی ویدیوی مصاحبه. در نمای دور تیتر درشت دقیقا بالای سر (headroom) می‌شینه و با سر جابه‌جا می‌شه. در نمای نزدیک قرص‌های متنی کنار سر، هم‌ارتفاع صورت، از لبه‌ی راست می‌لغزن.',
-  timing:'تیتر ۰٫۷ ثانیه · بلور ۶ تا ۰ · فاصله‌ی ثابت ۹rem بالای سر · قرص‌ها ۰٫۵ ثانیه با فاصله‌ی ۱٫۲ ثانیه و کشیدگی به چپ · هر قرص ۱٫۸ ثانیه می‌مونه',
-  where:'ثانیه ۴ تا ۷ و ۷ تا ۱۱', colors:['#DBBFAA','#F0EBEF','#002039'], dur:7.2,
+{ v:10, id:'headroomtext', fa:'Headline in the headroom and pills beside the head', en:'Head-anchored Text Placement', cat:'layout',
+  when:'Placing text over an interview video. In a wide shot the big title sits exactly above the head (headroom) and moves with it. In a close shot text pills slide in from the right edge, level with the face, beside the head.',
+  timing:'Title 0.7 s · blur 6 to 0 · fixed 9rem gap above the head · pills 0.5 s, 1.2 s apart, stretching to the left · each pill stays 1.8 s',
+  where:'Seconds 4 to 7 and 7 to 11', colors:['#DBBFAA','#F0EBEF','#002039'], dur:7.2,
   css:`${SCENE_CSS}
-.tt{position:absolute;left:0;right:0;text-align:center;direction:rtl;font:800 3.4rem/1.1 'Vazirmatn','Inter Tight',sans-serif;color:#DBBFAA;text-shadow:0 .2rem 1.2rem rgba(0,0,0,.4);z-index:5}
-.tt small{display:block;font:500 1.2rem 'Vazirmatn',sans-serif;color:#E8D8C4;opacity:.85;margin-top:.2rem}
-.pl{position:absolute;height:3rem;min-width:7rem;padding:0 1.4rem;border-radius:1.5rem;border:.1rem solid rgba(240,235,239,.75);background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(.6rem);backdrop-filter:blur(.6rem);color:#fff;display:flex;align-items:center;justify-content:center;direction:rtl;font:700 1.35rem 'Vazirmatn',sans-serif;z-index:5}`,
-  html:`<div class="stage">${SCENE_HTML}<div class="tt" id="tt">مشکل اصلی<small>همیشه محتوا نیست</small></div><div class="pl" id="p1">تصور کن</div><div class="pl" id="p2">منتشر کن</div></div>`,
+.tt{position:absolute;left:0;right:0;text-align:center;direction:ltr;font:800 3.4rem/1.1 'Inter Tight',sans-serif;color:#DBBFAA;text-shadow:0 .2rem 1.2rem rgba(0,0,0,.4);z-index:5}
+.tt small{display:block;font:500 1.2rem 'Inter Tight',sans-serif;color:#E8D8C4;opacity:.85;margin-top:.2rem}
+.pl{position:absolute;height:3rem;min-width:7rem;padding:0 1.4rem;border-radius:1.5rem;border:.1rem solid rgba(240,235,239,.75);background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(.6rem);backdrop-filter:blur(.6rem);color:#fff;display:flex;align-items:center;justify-content:center;direction:ltr;font:700 1.35rem 'Inter Tight',sans-serif;z-index:5}`,
+  html:`<div class="stage">${SCENE_HTML}<div class="tt" id="tt">The real problem<small>isn't always the content</small></div><div class="pl" id="p1">Imagine</div><div class="pl" id="p2">Publish</div></div>`,
   js:`${CAMJS}
 const tt=document.getElementById('tt'),p1=document.getElementById('p1'),p2=document.getElementById('p2');
 play(7.2,t=>{
@@ -87,18 +87,18 @@ play(7.2,t=>{
   p2.style.top=(T[1]-1.2)+'rem';
 });` },
 
-{ v:10, id:'rackfocus', fa:'تغییر فوکوس: سوژه تار، متن واضح', en:'Rack Focus to Text', cat:'fx',
-  when:'وقتی متن مهمه. سوژه و پس‌زمینه با بلور ملایم از فوکوس خارج می‌شن و متن تیز و واضح می‌مونه؛ بعد فوکوس دوباره روی سوژه برمی‌گرده. باعث می‌شه چشم به متن بره بدون اینکه ویدیو قطع بشه.',
-  timing:'بلور سوژه ۰ تا ۰٫۶rem در ۰٫۶ ثانیه · نگه‌داری ۲ ثانیه · برگشت ۰٫۵ ثانیه · بلور پس‌زمینه ثابت ۰٫۷rem · حروف متن با تأخیر ۰٫۰۶ ثانیه',
-  where:'ثانیه ۴ تا ۷', colors:['#DBBFAA','#002039','#F0EBEF'], dur:5.2,
+{ v:10, id:'rackfocus', fa:'Rack focus: blurred subject, sharp text', en:'Rack Focus to Text', cat:'fx',
+  when:'When the text matters. The subject and background go out of focus with a soft blur while the text stays sharp; then the focus returns to the subject. It sends the eye to the text without cutting the video.',
+  timing:'Subject blur 0 to 0.6rem in 0.6 s · hold 2 s · return 0.5 s · background blur fixed at 0.7rem · text letters delayed 0.06 s',
+  where:'Seconds 4 to 7', colors:['#DBBFAA','#002039','#F0EBEF'], dur:5.2,
   css:`${SCENE_CSS}
-.tt{position:absolute;left:0;right:0;top:6rem;text-align:center;direction:rtl;font:800 3.6rem/1.15 'Vazirmatn','Inter Tight',sans-serif;color:#DBBFAA;z-index:5}
+.tt{position:absolute;left:0;right:0;top:6rem;text-align:center;direction:ltr;font:800 3.6rem/1.15 'Inter Tight',sans-serif;color:#DBBFAA;z-index:5}
 .tt span{display:inline-block}
-.sb{position:absolute;left:3rem;right:3rem;top:15rem;text-align:center;direction:rtl;font:500 1.2rem/1.6 'Vazirmatn',sans-serif;color:#E8D8C4;z-index:5}`,
-  html:`<div class="stage">${SCENE_HTML}<div class="tt" id="tt"></div><div class="sb" id="sb">محتوای خوب بدون استراتژی فقط هزینه است.</div></div>`,
+.sb{position:absolute;left:3rem;right:3rem;top:15rem;text-align:center;direction:ltr;font:500 1.2rem/1.6 'Inter Tight',sans-serif;color:#E8D8C4;z-index:5}`,
+  html:`<div class="stage">${SCENE_HTML}<div class="tt" id="tt"></div><div class="sb" id="sb">Good content without strategy is just a cost.</div></div>`,
   js:`${CAMJS}
-const tt=document.getElementById('tt'),sb=document.getElementById('sb'),W='مشکل مهم';
-tt.innerHTML='<span>مشکل</span> <span>مهم</span>';const sp=[...tt.children];
+const tt=document.getElementById('tt'),sb=document.getElementById('sb'),W='Key problem';
+tt.innerHTML='<span>Key</span> <span>problem</span>';const sp=[...tt.children];
 play(5.2,t=>{
   const s=lerp(1,1.08,ease.out(seg(t,0,5.2))),T=[14.3,17.4];cam(s,T);camBg(s,T,.35);gest(t);
   const f=ease.inOut(seg(t,.6,1.2))*(1-ease.inOut(seg(t,3.6,4.2)));
@@ -107,15 +107,15 @@ play(5.2,t=>{
   sb.style.opacity=ease.out(seg(t,1.8,2.5))*(1-seg(t,3.5,4.1));
 });` },
 
-{ v:10, id:'archframe', fa:'قاب طاق‌دار نازک پشت سوژه', en:'Arch Outline Frame Behind Subject', cat:'layout',
-  when:'نمای دور وقتی می‌خوای متن و سوژه یک واحد بشن. یک خط نازک سفید به شکل طاق (کپسول بلند) دور سوژه کشیده می‌شه، متن داخل طاق بالای سر می‌شینه و سوژه جلوش می‌ایسته.',
-  timing:'کشیده‌شدن خط ۱٫۲ ثانیه از پایین به بالا (دو طرف هم‌زمان) · ease-in-out · ضخامت ۱ پیکسل · شفافیت ۵۵٪ · متن ۰٫۵ ثانیه بعد از رسیدن خط',
-  where:'ثانیه ۴ تا ۷', colors:['#F0EBEF','#DBBFAA','#002039'], dur:5.6,
+{ v:10, id:'archframe', fa:'Thin arch frame behind the subject', en:'Arch Outline Frame Behind Subject', cat:'layout',
+  when:'A wide shot when you want the text and the subject to become one unit. A thin white line shaped like an arch (a tall capsule) is drawn around the subject, the text sits inside the arch above the head and the subject stands in front of it.',
+  timing:'Line draws in 1.2 s from bottom to top (both sides together) · ease-in-out · 1 px thick · 55% opacity · text 0.5 s after the line arrives',
+  where:'Seconds 4 to 7', colors:['#F0EBEF','#DBBFAA','#002039'], dur:5.6,
   css:`${SCENE_CSS}
 svg.ar{position:absolute;left:0;top:0;width:27rem;height:48rem;z-index:2;overflow:visible}
-.tt{position:absolute;left:0;right:0;top:8rem;text-align:center;direction:rtl;font:800 3rem/1.2 'Vazirmatn','Inter Tight',sans-serif;color:#DBBFAA;z-index:1}
-.tt small{display:block;font:500 1.05rem/1.6 'Vazirmatn',sans-serif;color:#E8D8C4;opacity:.85;margin-top:.5rem}`,
-  html:`<div class="stage">${SCENE_HTML}<svg class="ar" viewBox="0 0 27 48"><path id="a1" d="M3.5 36 V10.5 A5.5 5.5 0 0 1 14.5 10.5" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08"/><path id="a2" d="M24.5 36 V10.5 A5.5 5.5 0 0 0 14.5 10.5" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08"/><path d="M3.5 36A10.5 4 0 0 0 24.5 36" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08" id="a3"/></svg><div class="tt" id="tt">مشکل اصلی<small>محتوا پشتش استراتژی می‌خواهد.</small></div></div>`,
+.tt{position:absolute;left:0;right:0;top:8rem;text-align:center;direction:ltr;font:800 3rem/1.2 'Inter Tight',sans-serif;color:#DBBFAA;z-index:1}
+.tt small{display:block;font:500 1.05rem/1.6 'Inter Tight',sans-serif;color:#E8D8C4;opacity:.85;margin-top:.5rem}`,
+  html:`<div class="stage">${SCENE_HTML}<svg class="ar" viewBox="0 0 27 48"><path id="a1" d="M3.5 36 V10.5 A5.5 5.5 0 0 1 14.5 10.5" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08"/><path id="a2" d="M24.5 36 V10.5 A5.5 5.5 0 0 0 14.5 10.5" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08"/><path d="M3.5 36A10.5 4 0 0 0 24.5 36" fill="none" stroke="#F0EBEF" stroke-opacity=".55" stroke-width=".08" id="a3"/></svg><div class="tt" id="tt">The real problem<small>Content needs a strategy behind it.</small></div></div>`,
   js:`${CAMJS}
 const a1=document.getElementById('a1'),a2=document.getElementById('a2'),a3=document.getElementById('a3'),tt=document.getElementById('tt');
 const L1=a1.getTotalLength(),L3=a3.getTotalLength();[a1,a2].forEach(p=>p.style.strokeDasharray=L1);a3.style.strokeDasharray=L3;
@@ -126,10 +126,10 @@ play(5.6,t=>{
   const a=ease.out(seg(t,1.4,2.1));tt.style.opacity=a*o;tt.style.filter='blur('+(1-a)*5+'px)';tt.style.transform='translateY('+lerp(1,0,a)+'rem)';
 });` },
 
-{ v:10, id:'lowercard', fa:'کارت شیشه‌ای پایین و ستاره‌های شناور', en:'Glass Lower-Third + Sparkle Stars', cat:'ui',
-  when:'معرفی گوینده یا برند در ۲ ثانیه‌ی اول. یک کارت شیشه‌ای مات با آیکن، نام و توضیح کوتاه از گوشه‌ی پایین کج و آرام جا می‌افتد، همراه با دو ستاره‌ی چهارپر که می‌چرخن و می‌رن.',
-  timing:'کارت ۰٫۸ ثانیه · back-ease با چرخش ۶ تا ۰ درجه · ستاره‌ها ۱٫۵ ثانیه چرخش ۹۰ درجه · کارت ۳ ثانیه می‌مونه و پایین می‌ره',
-  where:'ثانیه ۰٫۲ تا ۳', colors:['#9DB4CE','#365A8A','#F0EBEF','#DBBFAA'], dur:4.6,
+{ v:10, id:'lowercard', fa:'Glass lower card and floating stars', en:'Glass Lower-Third + Sparkle Stars', cat:'ui',
+  when:'Introducing the speaker or brand in the first 2 seconds. A frosted glass card with an icon, a name and a short description settles calmly from the lower corner, tilted, with two four-point stars that spin and leave.',
+  timing:'Card 0.8 s · back-ease with a 6 to 0 degree rotation · stars spin 90 degrees over 1.5 s · the card stays 3 s and goes down',
+  where:'Seconds 0.2 to 3', colors:['#9DB4CE','#365A8A','#F0EBEF','#DBBFAA'], dur:4.6,
   css:`${SCENE_CSS}
 .cd{position:absolute;left:1.2rem;right:1.2rem;bottom:2.6rem;height:7.5rem;border-radius:1.2rem;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.07));-webkit-backdrop-filter:blur(1rem) saturate(1.3);backdrop-filter:blur(1rem) saturate(1.3);border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1rem 2rem rgba(0,0,0,.35);padding:1rem 1.2rem;color:#F0EBEF;z-index:6;direction:ltr}
 .cd .h{display:flex;align-items:center;gap:.8rem;font:700 1.15rem 'Inter Tight',sans-serif}
@@ -146,18 +146,18 @@ play(4.6,t=>{
   [[s1,19,5],[s2,3.5,16]].forEach(([e,x,y],i)=>{const u=seg(t,.5+i*.3,2.2+i*.3);e.style.left=(x+Math.sin(u*3)*1.5)+'rem';e.style.top=(37-u*y-(i?4:0))+'rem';e.style.opacity=Math.sin(Math.PI*u)*o;e.style.transform='rotate('+(u*90)+'deg) scale('+(.6+.6*u)+')'});
 });` },
 
-{ v:10, id:'splitreveal', fa:'خط عمودی روی کادر و لیست آیکن محو', en:'Vertical Line Split + Ghost Icon List', cat:'layout',
-  when:'توضیح مفهوم کنار سوژه. یک خط عمودی نازک از چپ کادر رد می‌شه، پشتش آیکن خطی بزرگ و برچسب‌های محو‌شونده نمایان می‌شن؛ ویدیوی گوینده بدون تغییر ادامه پیدا می‌کنه.',
-  timing:'خط ۱ ثانیه از چپ به راست و بعد آروم ۰٫۵rem دیگه می‌لغزه · آیکن با بلور ۸ تا ۰ · برچسب‌ها با فاصله‌ی ۰٫۳ ثانیه و شفافیت ۵۰٪',
-  where:'ثانیه ۱۲ تا ۱۵', colors:['#F0EBEF','#DBBFAA','#365A8A'], dur:5.2,
+{ v:10, id:'splitreveal', fa:'Vertical line over the frame and fading icon list', en:'Vertical Line Split + Ghost Icon List', cat:'layout',
+  when:'Explaining a concept beside the subject. A thin vertical line crosses the frame from the left, and a big line icon and fading labels appear behind it; the speaker\'s video continues unchanged.',
+  timing:'Line 1 s left to right, then slides another 0.5rem slowly · icon blur 8 to 0 · labels 0.3 s apart and 50% opacity',
+  where:'Seconds 12 to 15', colors:['#F0EBEF','#DBBFAA','#365A8A'], dur:5.2,
   css:`${SCENE_CSS}
 .ln{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(240,235,239,.75) 25%,rgba(240,235,239,.75) 75%,transparent);z-index:4}
 .gh{position:absolute;left:0;top:0;bottom:0;width:10rem;overflow:hidden;z-index:3}
 .gh svg{position:absolute;left:1.2rem;top:6rem;width:6rem;height:6rem;fill:none;stroke:#F0EBEF;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.gh b{position:absolute;left:1.4rem;direction:rtl;font:600 1.4rem 'Vazirmatn',sans-serif;color:#9DB4CE}
+.gh b{position:absolute;left:1.4rem;direction:ltr;font:600 1.4rem 'Inter Tight',sans-serif;color:#9DB4CE}
 .tt{position:absolute;right:1.5rem;top:5rem;text-align:left;font:800 1.9rem/1.1 'Inter Tight',sans-serif;color:#F0EBEF;z-index:4}
 .tt small{display:block;font:300 1.35rem 'Inter Tight',sans-serif;color:#DBBFAA}`,
-  html:`<div class="stage">${SCENE_HTML}<div class="gh" id="gh"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="3"/><path d="M3 21c0-5 3-7 6-7s6 2 6 7"/><path d="M15 14l6-2v6l-6-2z"/></svg><b style="top:14rem">نام</b><b style="top:17rem">ایده</b><b style="top:20rem">انتشار</b></div><div class="ln" id="ln"></div><div class="tt" id="tt">Marketing<small>content plan</small></div></div>`,
+  html:`<div class="stage">${SCENE_HTML}<div class="gh" id="gh"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="3"/><path d="M3 21c0-5 3-7 6-7s6 2 6 7"/><path d="M15 14l6-2v6l-6-2z"/></svg><b style="top:14rem">Name</b><b style="top:17rem">Idea</b><b style="top:20rem">Publish</b></div><div class="ln" id="ln"></div><div class="tt" id="tt">Marketing<small>content plan</small></div></div>`,
   js:`${CAMJS}
 const gh=document.getElementById('gh'),ln=document.getElementById('ln'),tt=document.getElementById('tt'),bs=[...gh.querySelectorAll('b')],ic=gh.querySelector('svg');
 play(5.2,t=>{
@@ -169,10 +169,10 @@ play(5.2,t=>{
   const m=ease.out(seg(t,.6,1.4));tt.style.opacity=m*o;tt.style.transform='translateX('+(1-m)*3+'rem)';
 });` },
 
-{ v:10, id:'kashida', fa:'کشیدگی حروف (کشیده) و فاصله‌ی حروف جمع‌شونده', en:'Kashida Stretch + Tracking Collapse', cat:'type',
-  when:'تیتر فارسی یا عربی. حروف اتصالی با کشیده (ـ) کش میان و به شکل طبیعی جمع می‌شن، بدون اینکه حروف شکسته بشن. اسم لاتین زیرش با فاصله‌ی حروف زیاد شروع می‌شه و به حالت عادی برمی‌گرده.',
-  timing:'تعداد کشیده ۸ تا ۰ در ۰٫۹ ثانیه (ease-out) · بلور ۰٫۶rem · فاصله‌ی حروف لاتین ۰٫۶em تا ۰٫۰۲em · ورود هر خط با تأخیر ۰٫۳ ثانیه · خروج با بلور',
-  where:'ثانیه ۳٫۶ تا ۵٫۵ و ۲۱ تا ۲۴', colors:['#DBBFAA','#E8D8C4','#F0EBEF','#002039'], dur:5.4,
+{ v:10, id:'kashida', fa:'Kashida stretch and tightening letter-spacing', en:'Kashida Stretch + Tracking Collapse', cat:'type',
+  when:'A Persian or Arabic headline. Connected letters stretch with a kashida (ـ) and tighten naturally, without breaking the letters. The Latin name below starts with wide letter-spacing and returns to normal.',
+  timing:'Kashida count 8 to 0 in 0.9 s (ease-out) · blur 0.6rem · Latin letter-spacing 0.6em to 0.02em · each line delayed 0.3 s · blur on exit',
+  where:'Seconds 3.6 to 5.5 and 21 to 24', colors:['#DBBFAA','#E8D8C4','#F0EBEF','#002039'], dur:5.4,
   css:`${SCENE_CSS}
 .k1{position:absolute;left:0;right:0;top:11rem;text-align:center;direction:rtl;font:800 3.6rem/1.2 'Vazirmatn','Inter Tight',sans-serif;color:#DBBFAA;white-space:nowrap}
 .k2{position:absolute;left:0;right:0;top:15.4rem;text-align:center;direction:rtl;font:500 1.5rem/1.4 'Vazirmatn',sans-serif;color:#E8D8C4;white-space:nowrap}
@@ -190,20 +190,20 @@ play(5.4,t=>{
 });` }
 );
 
-VIDEOS.push({ id:'v10', n:10, title:'مصاحبه‌ی تک‌نفره: دوربین قفل‌شده روی سر', meta:'۲۴ ثانیه · ۷۲۰×۱۲۸۰ · ریل گفتاری با پانچ‌این‌های پی‌درپی و متن عربی/لاتین',
-  mood:'حرفه‌ای و آرام. استودیوی آبی-سرمه‌ای با تیرگی گوشه‌ها و نور فیروزه‌ای کف، سوژه روی چهارپایه، متن کرم‌رنگ نرم. تمام پویایی از دوربین می‌آید (پانچ‌این و حرکت آرام)، نه از گرافیک؛ گرافیک ساده و شیشه‌ای است.',
+VIDEOS.push({ id:'v10', n:10, title:'Solo interview: camera locked on the head', meta:'24 seconds · 720×1280 · a spoken reel with successive punch-ins and Arabic/Latin text',
+  mood:'Professional and calm. A navy-blue studio with darkened corners and a turquoise floor glow, the subject on a stool, soft cream text. All the dynamism comes from the camera (punch-ins and slow drift), not from graphics; the graphics are simple and glassy.',
   rules:[
-    'دوربین واقعی ثابت است؛ همه‌ی حرکت‌ها زوم دیجیتال روی یک نمای ۴K هستند: نمای دور ۱× و نمای نزدیک ۲٫۲ تا ۲٫۵×.',
-    'مرکز هر زوم سر گوینده است. سر همیشه روی خط یک‌سوم افقی/عمودی می‌ماند و بدن نسبت به آن می‌لغزد. نمای دور سر در ~۳۴٪ ارتفاع، نمای نزدیک در ~۲۵٪.',
-    'هر ۳ تا ۵ ثانیه برش مستقیم بین دور و نزدیک (بدون گذار). داخل هر نما حرکت خیلی آرام: نزدیک آرام عقب می‌رود (−۴ تا −۵٪/ثانیه)، دور آرام جلو می‌آید (+۲٪/ثانیه).',
-    'سوژه جدا از پس‌زمینه زوم می‌شود: سوژه ۴ تا ۵٪/ثانیه و پس‌زمینه حدود ۱٪ (پارالاکس لایه‌ای).',
-    'متن همیشه نسبت به سر چیده می‌شود: عنوان بالای سر در نمای دور، قرص‌ها کنار سر در نمای نزدیک، کارت معرفی پایین کادر.',
-    'گاهی فوکوس به متن می‌رود: سوژه تار و متن واضح، با خط طاق‌دار نازک دور سوژه.'
+    'The real camera is static; all movement is a digital zoom on one 4K frame: wide shot 1× and close shot 2.2 to 2.5×.',
+    'The center of every zoom is the speaker\'s head. The head always stays on a horizontal/vertical thirds line and the body slides relative to it. In the wide shot the head sits at ~34% of the height, in the close shot at ~25%.',
+    'Every 3 to 5 seconds a hard cut between wide and close (no transition). Inside each shot there is very slow movement: close drifts back slowly (−4 to −5%/s), wide drifts forward (+2%/s).',
+    'The subject zooms separately from the background: the subject 4 to 5%/s and the background about 1% (layered parallax).',
+    'Text is always laid out relative to the head: a headline above the head in wide shots, pills beside the head in close shots, an intro card at the bottom of the frame.',
+    'Sometimes focus goes to the text: the subject is blurred and the text sharp, with a thin arch line around the subject.'
   ],
   palette:[
-    { g:'استودیو', c:[['#00162A','تیرگی گوشه'],['#002039','پس‌زمینه‌ی تیره'],['#002E46','پس‌زمینه‌ی میانی'],['#00263E','لکه‌ی نور'],['#04415B','نور فیروزه‌ای کف']] },
-    { g:'سوژه', c:[['#0B1D4A','پیراهن سرمه‌ای'],['#4F6A7C','جین'],['#06372F','صندلی سبز'],['#A9664A','پوست']] },
-    { g:'متن و گرافیک', c:[['#DBBFAA','کرم (تیتر)'],['#E8D8C4','کرم روشن (زیرنویس)'],['#F0EBEF','سفید (خط و قرص)'],['#9DB4CE','آبی ستاره'],['#365A8A','آبی ستاره‌ی تیره']] }
+    { g:'Studio', c:[['#00162A','Corner vignette'],['#002039','Dark background'],['#002E46','Mid background'],['#00263E','Light spot'],['#04415B','Turquoise floor light']] },
+    { g:'Subject', c:[['#0B1D4A','Navy shirt'],['#4F6A7C','Jeans'],['#06372F','Green stool'],['#A9664A','Skin']] },
+    { g:'Text and graphics', c:[['#DBBFAA','Cream (headline)'],['#E8D8C4','Light cream (subtitle)'],['#F0EBEF','White (line and pills)'],['#9DB4CE','Star blue'],['#365A8A','Dark star blue']] }
   ] });
 
 TOKENS_CSS = TOKENS_CSS.replace(/\n\}$/, `

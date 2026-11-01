@@ -3,10 +3,10 @@ const DOTS = `background-image:radial-gradient(#2c2c2c 1px,transparent 1.5px);ba
 
 TECHS.push(
 /* ================= VIDEO 7: neon lime on black ================= */
-{ v:7, id:'neonslam', fa:'کوبیدن کلمه‌ها با نئون لیمویی', en:'Neon Word Slam (Stacked)', cat:'type',
-  when:'گفتار پرانرژی. دو کلمه‌ی درشت روی هم؛ بالا سفید، پایین لیمویی نئون (یا صورتی برای تغییر لحن). هر جمله با ضربه‌ی scale و بلور میاد و با برش می‌ره.',
-  timing:'هر جمله ۱ ثانیه · scale ۱٫۶ به ۱ در ۰٫۲۵ ثانیه · expo · گلو ۱٫۲rem · ستاره‌ی کوچک روی حرف',
-  where:'ثانیه ۰ تا ۸', colors:['#080808','#FFFFFF','#E5ED35','#FE4EE2'], dur:4.4,
+{ v:7, id:'neonslam', fa:'Neon word slam with lime', en:'Neon Word Slam (Stacked)', cat:'type',
+  when:'Energetic speech. Two big words stacked: white on top, neon lime below (or pink for a change of tone). Each sentence lands with a scale hit and blur and leaves with a cut.',
+  timing:'Each sentence 1 s · scale 1.6 to 1 in 0.25 s · expo · glow 1.2rem · a small star over a letter',
+  where:'Seconds 0 to 8', colors:['#080808','#FFFFFF','#E5ED35','#FE4EE2'], dur:4.4,
   css:`.stage{background:#080808;${DOTS}}
 .ph{position:absolute;left:0;right:0;text-align:center;font:800 4.6rem/.95 'Inter Tight',sans-serif;letter-spacing:-.04em;text-transform:uppercase;display:none}
 .ph div{display:block}
@@ -24,10 +24,10 @@ play(4.4,t=>{
   sm.style.opacity=i===0?seg(u,.4,.8)*o:0;
 });` },
 
-{ v:7, id:'hlprompt', fa:'پنجره‌ی پرامپت با هایلایت لیمویی', en:'Prompt Box + Highlighter Tokens', cat:'ui',
-  when:'نشون‌دادن یک دستور یا کد. یک کادر حاشیه‌ای روی شبکه‌ی نقطه‌ای، متن تایپ می‌شه و کلمه‌های مهم با نوار لیمویی ماژیک‌خورده می‌شن (متن روی نوار مشکی می‌شه).',
-  timing:'تایپ ۲٫۴ ثانیه · هایلایت هر توکن ۰٫۳ ثانیه wipe چپ به راست · کرسر ۱ هرتز · کادر ۰٫۶ ثانیه باز می‌شه',
-  where:'ثانیه ۱۳ تا ۲۵', colors:['#080808','#E5ED35','#FFFFFF','#2C2C2C'], dur:5.6,
+{ v:7, id:'hlprompt', fa:'Prompt window with lime highlight', en:'Prompt Box + Highlighter Tokens', cat:'ui',
+  when:'Showing a command or code. An outlined box on a dot grid, text typed, and key words marked with a lime highlighter bar (the text turns black on the bar).',
+  timing:'Typing 2.4 s · highlight each token 0.3 s wipe left to right · cursor 1 Hz · box opens in 0.6 s',
+  where:'Seconds 13 to 25', colors:['#080808','#E5ED35','#FFFFFF','#2C2C2C'], dur:5.6,
   css:`.stage{background:#080808;${DOTS};font-family:'Inter Tight',sans-serif}
 .hd{position:absolute;left:2.5rem;top:12rem;font:800 1.6rem 'Inter Tight',sans-serif;color:#fff;letter-spacing:-.02em}
 .bx{position:absolute;left:2.5rem;right:2.5rem;top:15rem;height:15rem;border:.12rem solid #E5ED35;border-radius:.8rem;box-shadow:0 0 1.2rem rgba(229,237,53,.25);padding:1.3rem;font:500 1.2rem/2 'Inter Tight',sans-serif;color:#fff}
@@ -46,10 +46,10 @@ play(5.6,t=>{
   const a=ease.out(seg(t,.1,.7));bx.style.opacity=a*o;bx.style.transform='scaleY('+lerp(.7,1,a)+')';hd.style.opacity=seg(t,0,.5)*o;
 });` },
 
-{ v:7, id:'colorflood', fa:'پر‌شدن صفحه با رنگ و تیتر کشیده', en:'Color Flood + Stretched Headline', cat:'fx',
-  when:'ضربه‌ی احساسی وسط ویدیو. کل صفحه ناگهان لیمویی می‌شه و یک کلمه‌ی مشکی خیلی درشت روی افقی کشیده می‌شه و سر جاش می‌نشینه، حس «کشیدگی» حرکت رو منتقل می‌کنه.',
-  timing:'پر‌شدن ۰٫۳ ثانیه (clip دایره‌ای) · کشیدگی scaleX ۱٫۸ به ۱ در ۰٫۶ ثانیه · back-ease · نگه‌داری ۱٫۵ ثانیه',
-  where:'ثانیه ۲۶ تا ۲۸', colors:['#E5ED35','#080808'], dur:3.6,
+{ v:7, id:'colorflood', fa:'Color flood and stretched headline', en:'Color Flood + Stretched Headline', cat:'fx',
+  when:'An emotional beat in the middle of the video. The whole screen suddenly turns lime and one huge black word is stretched horizontally and settles, conveying the feel of “stretch” in the motion.',
+  timing:'Fill 0.3 s (circular clip) · stretch scaleX 1.8 to 1 in 0.6 s · back-ease · hold 1.5 s',
+  where:'Seconds 26 to 28', colors:['#E5ED35','#080808'], dur:3.6,
   css:`.stage{background:#080808;${DOTS}}
 .fl{position:absolute;inset:0;background:#E5ED35;clip-path:circle(0% at 50% 50%)}
 .w{position:absolute;left:0;right:0;top:21rem;text-align:center;font:800 5rem 'Inter Tight',sans-serif;letter-spacing:-.04em;color:#080808;text-transform:uppercase}
@@ -63,10 +63,10 @@ play(3.6,t=>{
   s.style.opacity=seg(t,.9,1.3)*o;
 });` },
 
-{ v:7, id:'timerrows', fa:'ردیف‌های پشته‌ای با شمارنده‌ی ساعت', en:'Stacking Rows + Hour Counter', cat:'data',
-  when:'نشون‌دادن حجم کار یا زمان («۱۶ ساعت کار»). برچسب‌های حاشیه‌ی صورتی یکی‌یکی از پایین می‌ان و همراهشون یه عدد صورتی بزرگ بالا می‌ره: ۲، ۹، ۱۳، ۱۶ ساعت.',
-  timing:'هر ردیف ۰٫۵ ثانیه با فاصله‌ی ۰٫۷ · پشته با spring · عدد با تأخیر ۰٫۱ پله‌ای عوض می‌شه · پایان با ریزش ردیف‌ها',
-  where:'ثانیه ۳۳ تا ۴۰', colors:['#080808','#FE4EE2','#E5ED35','#FFFFFF'], dur:5.2,
+{ v:7, id:'timerrows', fa:'Stacked rows with an hour counter', en:'Stacking Rows + Hour Counter', cat:'data',
+  when:'Showing workload or time (“16 hours of work”). Pink-outlined labels come up one by one from the bottom while a big pink number counts up: 2, 9, 13, 16 hours.',
+  timing:'Each row 0.5 s, 0.7 s apart · the stack uses a spring · the number steps with a 0.1 delay · rows tumble away at the end',
+  where:'Seconds 33 to 40', colors:['#080808','#FE4EE2','#E5ED35','#FFFFFF'], dur:5.2,
   css:`.stage{background:#080808;${DOTS}}
 .hd{position:absolute;left:0;right:0;top:9rem;text-align:center;font:800 1.4rem 'Inter Tight',sans-serif;letter-spacing:.02em;color:#fff}
 .hd b{color:#E5ED35;text-shadow:0 0 .8rem rgba(229,237,53,.6)}
@@ -85,10 +85,10 @@ play(5.2,t=>{
   n.textContent=(cnt?H[cnt-1]:0)+'H';n.style.opacity=seg(t,.3,.7)*o;n.style.transform='scale('+(1+.08*Math.max(0,1-((t-(.4+(cnt-1)*.7))*4)))+')';
 });` },
 
-{ v:7, id:'nodeflow', fa:'زنجیره‌ی نودها با توپ نورانی و قوس', en:'Node Chain + Glowing Ball Arc', cat:'layout',
-  when:'توضیح یک پایپ‌لاین (ورودی ← پرامپت ← خروجی). جعبه‌های حاشیه‌لیمویی با خط وصل می‌شن، یک توپ نورانی از میون‌شون رد می‌شه و هر کدوم رو روشن می‌کنه؛ در پایان توپ روی یک قوس خط‌چین به مقصد می‌پره.',
-  timing:'هر نود ۰٫۵ ثانیه · توپ ۰٫۸ ثانیه بین نودها · قوس ۱٫۴ ثانیه · نود فعال scale ۱٫۰۶ و گلو',
-  where:'ثانیه ۱۰ تا ۱۴ و ۴۲ تا ۴۹', colors:['#080808','#E5ED35','#FFFFFF','#2C2C2C'], dur:6,
+{ v:7, id:'nodeflow', fa:'Node chain with a glowing ball and arc', en:'Node Chain + Glowing Ball Arc', cat:'layout',
+  when:'Explaining a pipeline (input → prompt → output). Lime-outlined boxes connect with lines, a glowing ball passes through and lights each one; at the end the ball jumps along a dashed arc to the destination.',
+  timing:'Each node 0.5 s · ball 0.8 s between nodes · arc 1.4 s · the active node scales 1.06 with a glow',
+  where:'Seconds 10 to 14 and 42 to 49', colors:['#080808','#E5ED35','#FFFFFF','#2C2C2C'], dur:6,
   css:`.stage{background:#080808;${DOTS}}
 .nd{position:absolute;top:19rem;width:6.6rem;height:2.6rem;border:.1rem solid #E5ED35;border-radius:.4rem;display:flex;align-items:center;justify-content:center;font:700 .75rem 'Inter Tight',sans-serif;letter-spacing:.08em;color:#fff;background:#0b0b0b}
 .ba{position:absolute;width:1rem;height:1rem;margin:-.5rem;border-radius:50%;background:#E5ED35;box-shadow:0 0 1rem .3rem rgba(229,237,53,.8)}
@@ -111,10 +111,10 @@ play(6,t=>{
 });` },
 
 /* ================= VIDEO 8: editorial collage ================= */
-{ v:8, id:'posterred', fa:'پوستر کلاژی با دایره‌ی قرمز', en:'Editorial Poster: Red Circle Collage', cat:'layout',
-  when:'شروع پرحس‌وحال. پس‌زمینه‌ی خاکستری روشن، دایره‌ی قرمز بزرگ، سوژه‌ی سیاه‌وسفید، حلقه‌های نازک و متن‌های ریز؛ لایه‌ها با پارالاکس و ورود متفاوت جا می‌افتن.',
-  timing:'دایره scale ۰ به ۱ در ۰٫۷ ثانیه (expo) · سوژه ۰٫۹ ثانیه از پایین · نقطه‌ی قرمز می‌چرخه ۸ ثانیه/دور · متن‌های ریز با تأخیر',
-  where:'ثانیه ۰ تا ۳', colors:['#D8D8D8','#B8B8B8','#D21212','#7E0606','#080808'], dur:4.8,
+{ v:8, id:'posterred', fa:'Collage poster with a red circle', en:'Editorial Poster: Red Circle Collage', cat:'layout',
+  when:'A vivid opening. A light gray background, a big red circle, a black-and-white subject, thin rings and tiny text; the layers settle in with parallax and different entrances.',
+  timing:'Circle scale 0 to 1 in 0.7 s (expo) · subject rises from below in 0.9 s · red dot turns once per 8 s · tiny texts delayed',
+  where:'Seconds 0 to 3', colors:['#D8D8D8','#B8B8B8','#D21212','#7E0606','#080808'], dur:4.8,
   css:`.stage{background:radial-gradient(90% 60% at 50% 40%,#E8E8E8,#B8B8B8 80%);font-family:'Inter Tight',sans-serif;color:#222}
 .rc{position:absolute;left:11rem;top:22rem;width:19rem;height:19rem;margin:-9.5rem;border-radius:50%;background:#D21212;box-shadow:inset -1.5rem -2rem 3rem rgba(126,6,6,.5)}
 .ring{position:absolute;left:14rem;top:26rem;width:25rem;height:25rem;margin:-12.5rem;border-radius:50%;border:1px dashed #D21212}
@@ -138,10 +138,10 @@ play(4.8,t=>{
   const w=seg(t,1.4,2.2);big.style.opacity=w*o;big.style.filter='blur('+(1-w)*.6+'rem)';big.style.transform='translateY('+(1-w)*1.2+'rem)';
 });` },
 
-{ v:8, id:'bleedtext', fa:'متن غول‌پیکر بریده‌شده پشت سوژه', en:'Giant Cropped Type Behind Subject', cat:'type',
-  when:'تاکید روی یک کلمه‌ی کلیدی (مثلاً «SKILLS»). کلمه به‌اندازه‌ی چند برابر کادر می‌شه و از لبه‌ی پایین بیرون می‌زنه، آهسته می‌لغزه؛ جلوش یک جمله‌ی سفید با blend می‌شینه.',
-  timing:'اسلاید افقی ۲ ثانیه · ease-out · کلمه از پایین ۱ ثانیه بالا می‌آید · جمله‌ی جلو با بلور ۰٫۵ ثانیه',
-  where:'ثانیه ۱٫۳ تا ۳', colors:['#D8D8D8','#D21212','#080808','#FFFFFF'], dur:4,
+{ v:8, id:'bleedtext', fa:'Giant text cut behind the subject', en:'Giant Cropped Type Behind Subject', cat:'type',
+  when:'Emphasis on one key word (for example “SKILLS”). The word grows several times the frame size and spills over the bottom edge, drifting slowly; a white sentence sits in front with a blend.',
+  timing:'Horizontal slide 2 s · ease-out · the word rises from below in 1 s · front sentence with 0.5 s blur',
+  where:'Seconds 1.3 to 3', colors:['#D8D8D8','#D21212','#080808','#FFFFFF'], dur:4,
   css:`.stage{background:radial-gradient(90% 60% at 50% 40%,#E8E8E8,#B8B8B8 80%);font-family:'Inter Tight',sans-serif}
 .rr{position:absolute;left:6rem;top:10rem;width:14rem;height:20rem;background:#D21212}
 .fr{position:absolute;left:5rem;top:9rem;width:16rem;height:22rem;border:1px solid #D21212}
@@ -158,10 +158,10 @@ play(4,t=>{
   const w=ease.out(seg(t,.8,1.5));sn.style.opacity=w*o;sn.style.filter='blur('+(1-w)*.6+'rem)';sn.style.transform='translateX('+lerp(-2,0,w)+'rem)';
 });` },
 
-{ v:8, id:'twosize', fa:'کپشن دوسایزه روی سیاه با سیاره', en:'Two-Size Caption + Planet Cut', cat:'type',
-  when:'گفتار روایی. کلمه‌ی ربط کوچک و سبک، کلمه‌ی اصلی درشت و فشرده (tracking منفی). بعد از هر عبارت برش مستقیم به صحنه‌ی بعد؛ زمینه‌ی سیاه با کره‌ای کم‌نور.',
-  timing:'هر عبارت ۱٫۲ ثانیه · کلمه‌ی کوچک اول ۰٫۲ ثانیه · کلمه‌ی بزرگ با بلور ۰٫۴ ثانیه · برش مستقیم',
-  where:'ثانیه ۳ تا ۴٫۳', colors:['#080808','#FFFFFF','#888888'], dur:3.6,
+{ v:8, id:'twosize', fa:'Two-size caption on black with a planet', en:'Two-Size Caption + Planet Cut', cat:'type',
+  when:'Narrative speech. A small, light connecting word and a big condensed main word (negative tracking). After each phrase a hard cut to the next scene; black ground with a dim sphere.',
+  timing:'Each phrase 1.2 s · small word first 0.2 s · big word with 0.4 s blur · hard cut',
+  where:'Seconds 3 to 4.3', colors:['#080808','#FFFFFF','#888888'], dur:3.6,
   css:`.stage{background:#000;font-family:'Inter Tight',sans-serif;color:#fff}
 .pl{position:absolute;left:-12rem;bottom:-12rem;width:26rem;height:26rem;border-radius:50%;background:radial-gradient(circle at 70% 25%,#9aa3ad 0,#4a5058 22%,#14161a 48%,#000 70%);box-shadow:-.3rem -.3rem 1.2rem rgba(180,200,230,.35)}
 .pl2{position:absolute;right:-5rem;top:-6rem;width:12rem;height:12rem;border-radius:50%;border:.15rem solid rgba(255,255,255,.55);border-left-color:transparent;border-bottom-color:transparent;transform:rotate(30deg)}
@@ -178,10 +178,10 @@ play(3.6,t=>{
   p.lastChild.style.color=(i===0&&bg<1)?'#888':'#fff';
 });` },
 
-{ v:8, id:'cornerhud', fa:'قاب HUD گوشه‌ای با تگ کوچک', en:'Corner HUD Frame + Micro Tag', cat:'layout',
-  when:'صحنه‌ی تاریک با یک شیء بزرگ. خط‌های L شکل در گوشه‌ها کشیده می‌شن، یک تگ کوچک با نوار لیمویی بالای کادر می‌شینه و عنوان دو‌سایزه پایین میاد.',
-  timing:'خطوط گوشه ۰٫۷ ثانیه کشیده می‌شن · تگ ۰٫۴ ثانیه · عنوان ۰٫۵ ثانیه با بلور · شیء با شناوری ±۰٫۴rem',
-  where:'ثانیه ۸٫۵ تا ۱۰٫۵', colors:['#000000','#FFFFFF','#DAEA32','#888888'], dur:4.2,
+{ v:8, id:'cornerhud', fa:'Corner HUD frame with a small tag', en:'Corner HUD Frame + Micro Tag', cat:'layout',
+  when:'A dark scene with one big object. L-shaped lines draw in the corners, a small tag with a lime bar sits above the frame and the two-size title comes in below.',
+  timing:'Corner lines draw in 0.7 s · tag 0.4 s · title 0.5 s with blur · the object floats ±0.4rem',
+  where:'Seconds 8.5 to 10.5', colors:['#000000','#FFFFFF','#DAEA32','#888888'], dur:4.2,
   css:`.stage{background:#000;font-family:'Inter Tight',sans-serif;color:#fff}
 .cn{position:absolute;width:5rem;height:7rem;border:0 solid #fff}
 .tg{position:absolute;left:2.5rem;top:3rem;font:600 .55rem/1.3 'Inter Tight',sans-serif;letter-spacing:.12em;color:#fff;border:1px solid #fff;padding:.3rem .5rem}
@@ -203,10 +203,10 @@ play(4.2,t=>{
 });` },
 
 /* ================= VIDEO 9: motion-designer reel on a laptop ================= */
-{ v:9, id:'dotline', fa:'نقطه ← خط ← فلاش رنگی ← عنوان', en:'Dot → Line → Color Flash → Title', cat:'fx',
-  when:'اوپنر ریل. یک نقطه‌ی کوچک نارنجی وسط شبکه‌ی تیره می‌ایسته، به خط افقی کشیده می‌شه، خط می‌ترکه و کل صفحه نارنجی می‌شه و عنوان از وسط باز می‌شه.',
-  timing:'نقطه ۰٫۳ ثانیه · خط ۰٫۶ ثانیه (scaleX expo) · انفجار رنگ ۰٫۴ ثانیه · عنوان با ماسک عمودی ۰٫۶ ثانیه',
-  where:'ثانیه ۰ تا ۳', colors:['#0A0F1E','#F65A0E','#D8480C','#080808'], dur:4.2,
+{ v:9, id:'dotline', fa:'Dot → line → color flash → title', en:'Dot → Line → Color Flash → Title', cat:'fx',
+  when:'A reel opener. A small orange dot sits in a dark grid, stretches into a horizontal line, the line bursts and the whole screen turns orange as the title opens from the middle.',
+  timing:'Dot 0.3 s · line 0.6 s (scaleX expo) · color burst 0.4 s · title with a vertical mask 0.6 s',
+  where:'Seconds 0 to 3', colors:['#0A0F1E','#F65A0E','#D8480C','#080808'], dur:4.2,
   css:`.stage{background:#0A0F1E;background-image:linear-gradient(#18203a 1px,transparent 1px),linear-gradient(90deg,#18203a 1px,transparent 1px);background-size:3rem 3rem;font-family:'Inter Tight',sans-serif}
 .dt{position:absolute;left:13.5rem;top:24rem;width:.8rem;height:.8rem;margin:-.4rem;border-radius:50%;background:#F65A0E;box-shadow:0 0 1rem #F65A0E}
 .ln{position:absolute;left:0;top:24rem;width:27rem;height:.18rem;margin-top:-.09rem;background:linear-gradient(90deg,transparent,#F65A0E 30%,#fff 50%,#F65A0E 70%,transparent);transform-origin:center}
@@ -224,10 +224,10 @@ play(4.2,t=>{
   sb.style.opacity=ease.out(seg(t,2.4,3))*o;
 });` },
 
-{ v:9, id:'gridwave', fa:'سطح موجی سه‌بعدی از مربع‌های رنگی', en:'3D Tile Wave Surface', cat:'fx',
-  when:'نشون‌دادن حس فیزیک و حجم. شبکه‌ای از مربع‌ها با ارتفاع سینوسی مثل پارچه موج برمی‌داره؛ رنگ از آبی-بنفش به نارنجی می‌ره و یک شیء کوچک روی موج سوار می‌شه.',
-  timing:'موج: سینوس شعاعی با سرعت ۲٫۵ rad/s · ۱۴×۱۴ مربع · پرسپکتیو دستی در canvas · رنگ از ارتفاع',
-  where:'ثانیه ۳ تا ۵', colors:['#0A0F1E','#4A5FD0','#F65A0E','#FFB07A'], dur:4.4,
+{ v:9, id:'gridwave', fa:'3D wavy surface of colored squares', en:'3D Tile Wave Surface', cat:'fx',
+  when:'Conveying a sense of physics and volume. A grid of squares with sinusoidal height ripples like cloth; the color goes from blue-purple to orange and a small object rides the wave.',
+  timing:'Wave: radial sine at 2.5 rad/s · 14×14 squares · hand-made perspective in canvas · color from height',
+  where:'Seconds 3 to 5', colors:['#0A0F1E','#4A5FD0','#F65A0E','#FFB07A'], dur:4.4,
   css:`.stage{background:radial-gradient(80% 50% at 50% 50%,#1a2144,#0A0F1E)}${CNV}`,
   html:`<div class="stage"><canvas id="c" width="540" height="960"></canvas></div>`,
   js:`const g=document.getElementById('c').getContext('2d'),N=14;
@@ -249,10 +249,10 @@ play(4.4,t=>{
   g.fillStyle='rgba(20,30,60,'+o+')';g.beginPath();g.arc(c[0]-5,c[1]-16,2.5,0,7);g.arc(c[0]+5,c[1]-16,2.5,0,7);g.fill();
 });` },
 
-{ v:9, id:'echotext', fa:'تکرار اکو و قاب ویوفایندر', en:'Echo-Repeat Text + Viewfinder', cat:'type',
-  when:'تاکید روی یک کلمه («منفرد»). همان کلمه ده‌ها بار به صورت خط‌های محو بالا و پایینش تکرار می‌شه و کلمه‌ی اصلی روشن می‌مونه. بعد صحنه آبی می‌شه و گوشه‌های ویوفایندر دور حروف قفل می‌شن.',
-  timing:'تکرار ۸ ردیف با تأخیر ۰٫۰۶ ثانیه · کم‌رنگ‌شدن ۱۲٪ هر ردیف · قفل‌شدن قاب ۰٫۴ ثانیه · رنگ زمینه ۰٫۳ ثانیه عوض می‌شه',
-  where:'ثانیه ۴٫۵ تا ۶٫۵', colors:['#0A0F1E','#FFFFFF','#0636E2','#F4F8FA'], dur:4.4,
+{ v:9, id:'echotext', fa:'Echo repeat and viewfinder frame', en:'Echo-Repeat Text + Viewfinder', cat:'type',
+  when:'Emphasis on one word (“singular”). The same word repeats dozens of times as faded lines above and below it while the main word stays bright. Then the scene turns blue and viewfinder corners lock around the letters.',
+  timing:'8 repeated rows 0.06 s apart · each row fades 12% · frame locks in 0.4 s · ground color changes in 0.3 s',
+  where:'Seconds 4.5 to 6.5', colors:['#0A0F1E','#FFFFFF','#0636E2','#F4F8FA'], dur:4.4,
   css:`.stage{background:#E8EEF2;font-family:'Inter Tight',sans-serif}
 .bl{position:absolute;inset:0;background:#0636E2;opacity:0}
 .dk{position:absolute;inset:0;background:#0A0F1E;opacity:0}
@@ -272,10 +272,10 @@ play(4.4,t=>{
   const k=ease.out(seg(t,3.2,3.6));V.forEach(({d,r,b})=>{d.style.opacity=ph===2?o:0;d.style.left=(r?19:5.5)+(r?1:-1)*(1-k)*4+'rem';d.style.top=(b?27:17.5)+(b?1:-1)*(1-k)*3+'rem'});
 });` },
 
-{ v:9, id:'statboard', fa:'داشبورد آمار با میله‌ی نارنجی', en:'Stat Board: Big % + Ring + Bars', cat:'data',
-  when:'نتیجه‌ی عددی. درصد خیلی بزرگ بالا می‌شمره، یک حلقه‌ی کوچک پر می‌شه و نمودار میله‌ای از چپ رشد می‌کنه؛ آخرین میله با رنگ تاکیدی نارنجی بالا می‌ره.',
-  timing:'شمارش ۱٫۵ ثانیه · میله‌ها با فاصله‌ی ۰٫۰۸ ثانیه · میله‌ی آخر ۰٫۴ ثانیه بعد · حلقه ۱٫۲ ثانیه',
-  where:'ثانیه ۶٫۵ تا ۸', colors:['#F4F8FA','#111111','#F65A0E','#D8480C'], dur:4.4,
+{ v:9, id:'statboard', fa:'Stats dashboard with an orange bar', en:'Stat Board: Big % + Ring + Bars', cat:'data',
+  when:'A numeric result. A very big percentage counts up, a small ring fills and a bar chart grows from the left; the last bar rises in the orange accent color.',
+  timing:'Count 1.5 s · bars 0.08 s apart · last bar 0.4 s later · ring 1.2 s',
+  where:'Seconds 6.5 to 8', colors:['#F4F8FA','#111111','#F65A0E','#D8480C'], dur:4.4,
   css:`.stage{background:#F4F6F7;font-family:'Inter Tight',sans-serif;color:#111}
 .big{position:absolute;left:2.5rem;top:15rem;font:800 4.4rem 'Inter Tight',sans-serif;letter-spacing:-.04em}
 .rg{position:absolute;left:2.5rem;top:22rem;width:6rem;height:6rem}
@@ -292,10 +292,10 @@ play(4.4,t=>{
   B.forEach((b,i)=>{const k=ease.out(seg(t,.5+i*.08+(i===H.length-1?.4:0),.9+i*.08+(i===H.length-1?.4:0)));b.style.height=(H[i]*100*k)+'%';b.style.opacity=o});
 });` },
 
-{ v:9, id:'ringparticles', fa:'ذرات رگه‌ای که به حلقه تبدیل می‌شن', en:'Streak Particles → Ring → Burst', cat:'fx',
-  when:'نمایش پیچیدگی یا انرژی. صدها خط سفید تصادفی روی صفحه‌ی تیره می‌چرخن، در یک حلقه جمع می‌شن، و بعد پرتوهای شعاعی از مرکز بیرون می‌زنن و صفحه آبی می‌شه.',
-  timing:'پراکندگی ۱ ثانیه · جمع‌شدن به حلقه ۱٫۵ ثانیه · ease-in-out · انفجار شعاعی ۰٫۸ ثانیه · ۳۰۰ خط (canvas)',
-  where:'ثانیه ۸ تا ۱۰٫۵', colors:['#0A0F1E','#FFFFFF','#0636E2','#1246EA'], dur:5,
+{ v:9, id:'ringparticles', fa:'Streaky particles that become a ring', en:'Streak Particles → Ring → Burst', cat:'fx',
+  when:'Showing complexity or energy. Hundreds of random white lines swirl on a dark screen, gather into a ring, then radial rays burst out of the center and the screen turns blue.',
+  timing:'Scatter 1 s · gather into a ring 1.5 s · ease-in-out · radial burst 0.8 s · 300 lines (canvas)',
+  where:'Seconds 8 to 10.5', colors:['#0A0F1E','#FFFFFF','#0636E2','#1246EA'], dur:5,
   css:`.stage{background:#0A0F1E}${CNV}`,
   html:`<div class="stage"><canvas id="c" width="540" height="960"></canvas></div>`,
   js:`const g=document.getElementById('c').getContext('2d'),N=300,rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
@@ -315,10 +315,10 @@ play(5,t=>{
   const k=seg(t,3.4,3.9)*(1-seg(t,4.4,5)),gr=g.createRadialGradient(270,480,0,270,480,60);gr.addColorStop(0,'rgba(18,70,234,'+k+')');gr.addColorStop(1,'rgba(18,70,234,0)');g.fillStyle=gr;g.fillRect(0,0,540,960);
 });` },
 
-{ v:9, id:'blobmorph', fa:'نقطه‌های سیاه که به لکه‌ی خاردار تبدیل می‌شن', en:'Dot Cluster → Spiky Blob → Single Dot', cat:'fx',
-  when:'گذار سازمانی یا خروجی. چند نقطه‌ی سیاه داخل دایره روی زمینه‌ی نارنجی می‌لرزن، دایره موجی و خاردار می‌شه، همه به یک نقطه می‌پیوندن و با یک حلقه‌ی بزرگ منفجر می‌شن.',
-  timing:'لرزش ۱ ثانیه · خاردار‌شدن ۱ ثانیه (شعاع نویز) · ادغام ۰٫۸ ثانیه · حلقه‌ی نهایی ۰٫۸ ثانیه · SVG path هر فریم',
-  where:'ثانیه ۱۱ تا ۱۳٫۵', colors:['#F65A0E','#D8480C','#080808','#FFB07A'], dur:4.6,
+{ v:9, id:'blobmorph', fa:'Black dots that become a spiky blob', en:'Dot Cluster → Spiky Blob → Single Dot', cat:'fx',
+  when:'An organic transition or an output. Several black dots shake inside a circle on an orange ground, the circle turns wavy and spiky, they all merge into one point and burst with a big ring.',
+  timing:'Shake 1 s · spiky 1 s (noise radius) · merge 0.8 s · final ring 0.8 s · SVG path each frame',
+  where:'Seconds 11 to 13.5', colors:['#F65A0E','#D8480C','#080808','#FFB07A'], dur:4.6,
   css:`.stage{background:#F65A0E}svg{position:absolute;left:0;top:0;width:27rem;height:48rem}`,
   html:`<div class="stage"><svg viewBox="0 0 27 48"><path id="bl" fill="none" stroke="#080808" stroke-width=".08"/><g id="ds" fill="#080808"></g><circle id="rg" cx="13.5" cy="24" r="1" fill="none" stroke="#080808" stroke-width=".25"/></svg></div>`,
   js:`const bl=document.getElementById('bl'),ds=document.getElementById('ds'),rg=document.getElementById('rg');
@@ -335,47 +335,47 @@ play(4.6,t=>{
 
 /* ---- VIDEOS entries 7-9 ---- */
 VIDEOS.push(
-{ id:'v7', n:7, title:'موشن نئونی: لیمویی روی سیاه', meta:'۶۷ ثانیه · ۷۲۰×۱۲۸۰ · ریل آموزشی با گرافیک متحرک نمایش داده‌شده روی لپ‌تاپ',
-  mood:'پرانرژی و فناورانه. سیاه خالص با شبکه‌ی نقطه‌ای کم‌نور، لیمویی نئون (#E5ED35) برای تاکید و صورتی نئون برای تغییر لحن. تایپوگرافی سنگین و فشرده، کادرهای باریک، حرکت‌ها ضربه‌ای.',
+{ id:'v7', n:7, title:'Neon motion: lime on black', meta:'67 seconds · 720×1280 · an educational reel with animated graphics shown on a laptop',
+  mood:'Energetic and techy. Pure black with a dim dot grid, neon lime (#E5ED35) for emphasis and neon pink for a change of tone. Heavy condensed typography, thin frames, hit-style motion.',
   rules:[
-    'دو رنگ نئون: لیمویی برای اصل پیام و صورتی فقط برای مفهوم‌های «مشکل» یا شمارنده‌ی زمان.',
-    'تایپ سنگین uppercase با tracking منفی و گلو؛ کلمه‌های جمله با scale و بلور می‌کوبن.',
-    'هر مفهوم یک المان UI ساده دارد: کادر پرامپت، ردیف برچسب، نود و خط، توپ نورانی.',
-    'گذار با پر‌شدن کامل صفحه از رنگ لیمویی و برش.',
-    'پایان: عبارت دعوت‌به‌اقدام درشت لیمویی روی شخص و پس‌زمینه‌ی تار.'
+    'Two neon colors: lime for the main message, pink only for “problem” concepts or the time counter.',
+    'Heavy uppercase type with negative tracking and a glow; the words of a sentence slam in with scale and blur.',
+    'Each concept gets one simple UI element: a prompt box, a label row, a node and a line, a glowing ball.',
+    'Transitions fill the whole screen with lime and cut.',
+    'Ending: a big lime call to action over the person and a blurred background.'
   ],
   palette:[
-    { g:'زمینه', c:[['#080808','سیاه'],['#2C2C2C','نقطه‌های شبکه'],['#0B0B0B','جعبه']] },
-    { g:'نئون', c:[['#E5ED35','لیمویی اصلی'],['#E2E62E','لیمویی روشن'],['#FE4EE2','صورتی نئون'],['#CA368D','صورتی تیره']] },
-    { g:'متن', c:[['#FFFFFF','سفید'],['#777777','خاکستری']] }
+    { g:'Ground', c:[['#080808','Black'],['#2C2C2C','Grid dots'],['#0B0B0B','Box']] },
+    { g:'Neon', c:[['#E5ED35','Main lime'],['#E2E62E','Light lime'],['#FE4EE2','Neon pink'],['#CA368D','Dark pink']] },
+    { g:'Text', c:[['#FFFFFF','White'],['#777777','Gray']] }
   ] },
-{ id:'v8', n:8, title:'کلاژ ادیتوریال: دایره‌ی قرمز', meta:'۱۵ ثانیه · ۷۲۰×۱۲۸۰ · روایت با تصاویر ترکیبی و کپشن دوسایزه',
-  mood:'گرافیک چاپی و سینمایی. خاکستری روشن یا سیاه خالص، یک دایره‌ی قرمز تنها رنگ، سوژه‌ها سیاه‌وسفید. کپشن‌ها دوسایزه و فشرده، متن‌های ریز تزئینی در گوشه‌ها.',
+{ id:'v8', n:8, title:'Editorial collage: red circle', meta:'15 seconds · 720×1280 · storytelling with combined images and two-size captions',
+  mood:'Print-like and cinematic. Light gray or pure black, a red circle as the only color, subjects in black and white. Captions are two-size and condensed, with tiny decorative text in the corners.',
   rules:[
-    'فقط یک رنگ: قرمز #D21212. بقیه خاکستری، سفید و سیاه.',
-    'هر صحنه یک کلاژ است: سوژه + دایره/مستطیل رنگی + حلقه‌ی نازک + متن ریز.',
-    'کپشن دوسایزه: کلمه‌ی ربط کوچک، کلمه‌ی اصلی درشت با tracking منفی.',
-    'گذار با برش مستقیم بین صحنه‌ی روشن و سیاه.',
-    'نکته: عکس‌های سوژه در ویدیوی مرجع بازتولید نشدن؛ دموها سوژه‌ی انتزاعی دارن.'
+    'Only one color: red #D21212. The rest is gray, white and black.',
+    'Each scene is a collage: subject + colored circle/rectangle + thin ring + tiny text.',
+    'Two-size caption: a small connecting word, a big main word with negative tracking.',
+    'Transition by hard cut between light and black scenes.',
+    'Note: the subject photos in the reference video are not reproduced; the demos use an abstract subject.'
   ],
   palette:[
-    { g:'زمینه', c:[['#E8E8E8','خاکستری روشن'],['#B8B8B8','خاکستری'],['#080808','سیاه'],['#000000','سیاه خالص']] },
-    { g:'قرمز', c:[['#D21212','دایره'],['#7E0606','سایه‌ی دایره'],['#C80B0D','قرمز میانی']] },
-    { g:'تاکید ریز', c:[['#DAEA32','نوار لیمویی تگ'],['#FFFFFF','متن'],['#888888','متن کم‌رنگ']] }
+    { g:'Ground', c:[['#E8E8E8','Light gray'],['#B8B8B8','Gray'],['#080808','Black'],['#000000','Pure black']] },
+    { g:'Red', c:[['#D21212','Circle'],['#7E0606','Circle shadow'],['#C80B0D','Mid red']] },
+    { g:'Tiny accent', c:[['#DAEA32','Tag lime bar'],['#FFFFFF','Text'],['#888888','Faded text']] }
   ] },
-{ id:'v9', n:9, title:'ریل موشن‌دیزاینر: نارنجی و آبی', meta:'۱۴ ثانیه · ۷۲۰×۱۲۸۰ · نمایش قابلیت‌های موشن روی لپ‌تاپ با انعکاس',
-  mood:'تمیز و مفهومی. زمینه‌ی سرمه‌ای تیره، سه رنگ جدا برای صحنه‌ها: نارنجی #F65A0E، آبی #0636E2 و سفید. هر صحنه یک قابلیت (۳D، ذره، آمار، مورف) را نشان می‌دهد و با فلاش رنگی عوض می‌شود.',
+{ id:'v9', n:9, title:'Motion designer reel: orange and blue', meta:'14 seconds · 720×1280 · motion features on a laptop with a reflection',
+  mood:'Clean and conceptual. A dark navy ground, three separate colors for scenes: orange #F65A0E, blue #0636E2 and white. Each scene shows one capability (3D, particles, stats, morph) and changes with a color flash.',
   rules:[
-    'شروع همیشه با نقطه → خط → انفجار رنگ.',
-    'هر صحنه رنگ زمینه‌ی خودش را دارد؛ گذار با پر‌شدن صفحه از رنگ بعدی.',
-    'مفهوم‌های تجریدی (موج، ذره، لکه) با بوم و ریاضی ساخته می‌شن نه با قالب آماده.',
-    'آمار و اینفوگرافیک: درصد بزرگ + حلقه + میله‌ی آخر نارنجی.',
-    'پایان ساده: لوگوی سفید روی تیره با زیرعنوان سریف.'
+    'Always starts with dot → line → color burst.',
+    'Each scene has its own ground color; the transition fills the screen with the next color.',
+    'Abstract concepts (wave, particle, blob) are made with canvas and math, not ready-made templates.',
+    'Stats and infographic: a big percentage + ring + an orange last bar.',
+    'A simple ending: a white logo on dark with a serif subtitle.'
   ],
   palette:[
-    { g:'زمینه', c:[['#0A0F1E','سرمه‌ای تیره'],['#E8EEF2','خاکستری-سفید'],['#F4F6F7','سفید داشبورد']] },
-    { g:'نارنجی', c:[['#F65A0E','نارنجی اصلی'],['#D8480C','نارنجی تیره'],['#FFB07A','هاله']] },
-    { g:'آبی', c:[['#0636E2','آبی تند'],['#1246EA','آبی روشن'],['#0A2E9A','آبی تیره'],['#4A5FD0','موج آبی']] }
+    { g:'Ground', c:[['#0A0F1E','Dark navy'],['#E8EEF2','Gray-white'],['#F4F6F7','Dashboard white']] },
+    { g:'Orange', c:[['#F65A0E','Main orange'],['#D8480C','Dark orange'],['#FFB07A','Halo']] },
+    { g:'Blue', c:[['#0636E2','Vivid blue'],['#1246EA','Light blue'],['#0A2E9A','Dark blue'],['#4A5FD0','Blue wave']] }
   ] }
 );
 

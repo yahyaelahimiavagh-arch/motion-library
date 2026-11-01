@@ -4,9 +4,9 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const fa = (n, d = 0) => Number(n).toLocaleString('fa-IR', { maximumFractionDigits: d });
-const toEn = s => String(s).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/٫/g, '.');
-const norm = s => toEn(s).toLowerCase().replace(/ي/g, 'ی').replace(/ك/g, 'ک').replace(/‌/g, ' ');
+const fa = (n, d = 0) => Number(n).toLocaleString('en-US', { maximumFractionDigits: d });
+const toEn = s => String(s);
+const norm = s => String(s).toLowerCase();
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store = { get(k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch (e) {} } };
 
@@ -17,13 +17,13 @@ const inkOn = hex => { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n
 const shortTitle = v => v.title.split(':')[0].trim();
 
 VIDEOS.forEach(v => {
-  v.dur = +((toEn(v.meta).match(/(\d+(?:\.\d+)?)\s*ثانیه/) || [0, 20])[1]);
+  v.dur = +((toEn(v.meta).match(/(\d+(?:\.\d+)?)\s*seconds?/i) || [0, 20])[1]);
   v.ac = ACC[v.n] || '#888888';
   v.techs = TECHS.filter(t => (t.v || 1) === v.n);
 });
 function parseSegs(where, dur) {
   const out = [];
-  for (const m of toEn(where).matchAll(/(\d+(?:\.\d+)?)\s*تا\s*(\d+(?:\.\d+)?)/g)) {
+  for (const m of toEn(where).matchAll(/(\d+(?:\.\d+)?)\s*to\s*(\d+(?:\.\d+)?)/g)) {
     const a = +m[1], b = +m[2];
     if (b > a && a < dur) out.push([a, Math.min(b, dur)]);
   }
@@ -32,7 +32,7 @@ function parseSegs(where, dur) {
 TECHS.forEach(t => { t.vid = VIDEOS.find(v => v.n === (t.v || 1)); t.segs = parseSegs(t.where, t.vid.dur); });
 const ORDER = VIDEOS.flatMap(v => v.techs);
 const byId = Object.fromEntries(TECHS.map(t => [t.id, t]));
-const mmss = s => fa(Math.floor(s / 60)) + ':' + fa(Math.round(s % 60)).padStart(2, '۰');
+const mmss = s => fa(Math.floor(s / 60)) + ':' + fa(Math.round(s % 60)).padStart(2, '0');
 
 /* ---------- helpers ---------- */
 let toastT;
@@ -45,10 +45,10 @@ async function copy(text, label) {
   try { await navigator.clipboard.writeText(text); ok = true } catch (e) {
     try { const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove() } catch (_) {}
   }
-  toast(ok ? 'کپی شد ' + (label ? '<code>' + esc(label) + '</code>' : '') : 'کپی نشد. متن را انتخاب کن و Ctrl+C بزن.');
+  toast(ok ? 'Copied ' + (label ? '<code>' + esc(label) + '</code>' : '') : 'Could not copy. Select the text and press Ctrl+C.');
 }
 function docFor(t) {
-  return '<!doctype html><html lang="fa"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' + FONTS +
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' + FONTS +
     '<style>' + KIT_CSS + '\n' + t.css + '</style></head><body>' + t.html + '<scr' + 'ipt>' + KIT_JS + '\n' + t.js + '</scr' + 'ipt></body></html>';
 }
 function snippetFor(t) {
@@ -72,16 +72,9 @@ function hl(src) {
 }
 function setCode(pre, text) { pre.innerHTML = text.length > 90000 ? esc(text) : hl(text); pre.scrollTop = 0; }
 
-/* ---------- theme ---------- */
-$('#theme').addEventListener('click', () => {
-  const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  const next = cur === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next; store.set('theme', next);
-});
-
 /* ---------- lead ---------- */
 const allHex = new Set(); VIDEOS.forEach(v => v.palette.forEach(g => g.c.forEach(c => allHex.add(c[0].toUpperCase()))));
-$('#lead').innerHTML = '<b>' + fa(TECHS.length) + ' تکنیک زنده</b> از ' + fa(VIDEOS.length) + ' ویدیوی مرجع، با ' + fa(allHex.size) + ' رنگ دقیق، زمان‌بندی تقریبی و کد آماده. هر ویدیو که تحلیل می‌شود، به همین نوار اضافه می‌شود.';
+$('#lead').innerHTML = '<b>' + fa(TECHS.length) + ' live techniques</b> from ' + fa(VIDEOS.length) + ' reference videos, with ' + fa(allHex.size) + ' exact colors, estimated timing and ready-to-use code. Every video that gets analyzed is added to this reel.';
 
 /* ---------- reel + monitor ---------- */
 const clipsEl = $('#reel-clips'), ph = $('#playhead'), mon = $('#mon');
@@ -117,10 +110,10 @@ function showTech(i) {
   const t = ORDER[i];
   mon.srcdoc = docFor(t);
   $('#mon-name').textContent = t.fa;
-  $('#mon-src').textContent = 'ویدیو ' + fa(t.vid.n) + ' · ' + shortTitle(t.vid);
+  $('#mon-src').textContent = 'Video ' + fa(t.vid.n) + ' · ' + shortTitle(t.vid);
   clipEls.forEach((c, k) => c.classList.toggle('on', VIDEOS[k] === t.vid));
   clipsEl.setAttribute('aria-valuenow', i + 1);
-  clipsEl.setAttribute('aria-valuetext', t.fa + '، ویدیو ' + fa(t.vid.n));
+  clipsEl.setAttribute('aria-valuetext', t.fa + ', video ' + fa(t.vid.n));
 }
 function placePlayhead() {
   const w = clipsEl.clientWidth, time = posToTime(pos);
@@ -147,7 +140,7 @@ clipsEl.addEventListener('keydown', e => {
 });
 function syncPlayBtn() {
   $('#mon-ico').setAttribute('d', playing ? 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z' : 'M7 4.5v15l12-7.5z');
-  $('#mon-play').setAttribute('aria-label', playing ? 'مکث' : 'پخش');
+  $('#mon-play').setAttribute('aria-label', playing ? 'Pause' : 'Play');
 }
 $('#mon-play').addEventListener('click', () => { playing = !playing; syncPlayBtn() });
 $('#mon-open').addEventListener('click', () => openTech(ORDER[Math.max(0, shown)].id));
@@ -158,7 +151,7 @@ addEventListener('resize', placePlayhead);
 /* ---------- rail ---------- */
 const rail = $('#rail-in');
 rail.innerHTML = VIDEOS.map(v => '<a href="#v' + v.n + '" data-sec="v' + v.n + '" style="--ac:' + v.ac + '"><i></i><b>' + fa(v.n) + '</b><span>' + esc(shortTitle(v)) + '</span></a>').join('') +
-  '<span class="gap"></span><a href="#colors" data-sec="colors"><i></i><span>رنگ‌ها</span></a><a href="#kit" data-sec="kit"><i></i><span>کیت حرکت</span></a>';
+  '<span class="gap"></span><a href="#colors" data-sec="colors"><i></i><span>Colors</span></a><a href="#kit" data-sec="kit"><i></i><span>Motion kit</span></a>';
 
 /* ---------- chapters ---------- */
 const frames = [];
@@ -169,9 +162,9 @@ const io = new IntersectionObserver(es => es.forEach(e => {
 }), { rootMargin: '120px' });
 
 function ribbonHTML(v) {
-  return '<div class="ribbon" role="group" aria-label="رنگ‌های ' + esc(shortTitle(v)) + '">' + v.palette.map(g =>
-    '<div class="g" style="--n:' + g.c.length + '">' + g.c.map(c => '<button type="button" style="--c:' + c[0] + '" data-hex="' + c[0] + '" data-role="' + esc(c[1]) + '" aria-label="کپی ' + c[0] + ' (' + esc(c[1]) + ')"></button>').join('') + '</div>').join('') +
-    '</div><div class="ribbon-cap" aria-hidden="true">روی رنگ‌ها بروید یا بزنید تا HEX کپی شود</div>';
+  return '<div class="ribbon" role="group" aria-label="Colors of ' + esc(shortTitle(v)) + '">' + v.palette.map(g =>
+    '<div class="g" style="--n:' + g.c.length + '">' + g.c.map(c => '<button type="button" style="--c:' + c[0] + '" data-hex="' + c[0] + '" data-role="' + esc(c[1]) + '" aria-label="Copy ' + c[0] + ' (' + esc(c[1]) + ')"></button>').join('') + '</div>').join('') +
+    '</div><div class="ribbon-cap" aria-hidden="true">Hover or tap a color, then click to copy its HEX</div>';
 }
 function timelineHTML(v) {
   const lanes = [], items = [];
@@ -188,18 +181,18 @@ function timelineHTML(v) {
   const step = v.dur > 40 ? 10 : v.dur > 18 ? 5 : 2;
   let ticks = ''; for (let s = 0; s <= v.dur; s += step) ticks += '<i style="left:' + (s / v.dur * 100) + '%"><b>' + mmss(s) + '</b></i>';
   const seg = items.map(it => '<button type="button" class="seg' + (it.full ? ' full' : '') + '" data-id="' + it.t.id + '" style="--c:' + CATC[it.t.cat] + ';left:' + (it.a / v.dur * 100) + '%;width:' + ((it.b - it.a) / v.dur * 100) + '%;top:' + (it.lane * 28) + 'px" title="' + esc(it.t.fa) + '">' + esc(it.t.fa) + '</button>').join('');
-  return '<div class="tl" role="group" aria-label="نوار زمانی ' + esc(shortTitle(v)) + '"><div class="tl-ruler">' + ticks + '</div><div class="tl-lanes" style="height:' + (lanes.length * 28) + 'px">' + seg + '</div></div>' +
-    (items.some(i => i.full) ? '<p class="tl-note">خط‌خطی‌ها یعنی تکنیک در کل ویدیو یا چند جای پراکنده استفاده شده.</p>' : '');
+  return '<div class="tl" role="group" aria-label="Timeline of ' + esc(shortTitle(v)) + '"><div class="tl-ruler">' + ticks + '</div><div class="tl-lanes" style="height:' + (lanes.length * 28) + 'px">' + seg + '</div></div>' +
+    (items.some(i => i.full) ? '<p class="tl-note">Hatched bars mean the technique is used across the whole video or in scattered places.</p>' : '');
 }
 function tileHTML(t) {
-  return '<div class="tile-demo"><iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1" loading="lazy"></iframe><button class="tile-open" type="button" aria-label="باز کردن: ' + esc(t.fa) + '"></button></div>' +
-    '<h3>' + esc(t.fa) + '</h3><p class="en">' + esc(t.en) + '</p><span class="cat">' + catDot(t.cat) + catLabel(t) + '</span>';
+  return '<div class="tile-demo"><iframe title="' + esc(t.fa) + '" sandbox="allow-scripts" tabindex="-1" loading="lazy"></iframe><button class="tile-open" type="button" aria-label="Open: ' + esc(t.fa) + '"></button></div>' +
+    '<h3>' + esc(t.fa) + '</h3><span class="cat">' + catDot(t.cat) + catLabel(t) + '</span>';
 }
 const chapters = $('#chapters');
 VIDEOS.forEach(v => {
   const sec = document.createElement('article');
   sec.className = 'chap'; sec.id = 'v' + v.n; sec.dataset.spy = ''; sec.style.setProperty('--ac', v.ac);
-  sec.innerHTML = '<header class="chap-h"><span class="chap-n" aria-hidden="true">' + fa(v.n).padStart(2, '۰') + '</span><div><h2>' + esc(v.title) + '</h2><p class="chap-meta">' + esc(v.meta) + '</p></div></header>' +
+  sec.innerHTML = '<header class="chap-h"><span class="chap-n" aria-hidden="true">' + fa(v.n).padStart(2, '0') + '</span><div><h2>' + esc(v.title) + '</h2><p class="chap-meta">' + esc(v.meta) + '</p></div></header>' +
     '<div class="chap-body"><p class="mood">' + esc(v.mood) + '</p><ul class="rules">' + v.rules.map(r => '<li>' + esc(r) + '</li>').join('') + '</ul></div>' +
     ribbonHTML(v) + timelineHTML(v) + '<div class="tiles"></div>';
   const grid = $('.tiles', sec);
@@ -227,7 +220,7 @@ chapters.addEventListener('focusin', e => { if (e.target.matches('.ribbon button
 /* ---------- filters ---------- */
 let cat = 'all';
 const fl = $('#filters');
-fl.innerHTML = '<button class="chip" type="button" data-cat="all" aria-pressed="true">همه <small>' + fa(TECHS.length) + '</small></button>' +
+fl.innerHTML = '<button class="chip" type="button" data-cat="all" aria-pressed="true">All <small>' + fa(TECHS.length) + '</small></button>' +
   Object.entries(CATS).map(([k, l]) => '<button class="chip" type="button" data-cat="' + k + '" aria-pressed="false" style="--dc:' + CATC[k] + '"><i></i>' + l + ' <small>' + fa(TECHS.filter(t => t.cat === k).length) + '</small></button>').join('');
 function applyFilter() {
   let any = false;
@@ -256,8 +249,8 @@ $$('.chap, #colors, #kit').forEach(s => spy.observe(s));
 
 /* ---------- colors section ---------- */
 const colList = $('#col-list');
-colList.innerHTML = VIDEOS.map(v => '<div class="cv" style="--ac:' + v.ac + '" data-v="' + v.n + '"><h3><i></i>ویدیو ' + fa(v.n) + ': ' + esc(shortTitle(v)) + '</h3>' +
-  v.palette.map(g => '<div class="cg"><h4>' + esc(g.g) + '</h4><div class="sws">' + g.c.map(c => '<button type="button" class="sw" data-hex="' + c[0] + '" data-q="' + esc(norm(c[0] + ' ' + c[1] + ' ' + g.g)) + '" aria-label="کپی ' + c[0] + ' ' + esc(c[1]) + '"><i style="background:' + c[0] + '"></i><code>' + c[0] + '</code><span>' + esc(c[1]) + '</span></button>').join('') + '</div></div>').join('') + '</div>').join('');
+colList.innerHTML = VIDEOS.map(v => '<div class="cv" style="--ac:' + v.ac + '" data-v="' + v.n + '"><h3><i></i>Video ' + fa(v.n) + ': ' + esc(shortTitle(v)) + '</h3>' +
+  v.palette.map(g => '<div class="cg"><h4>' + esc(g.g) + '</h4><div class="sws">' + g.c.map(c => '<button type="button" class="sw" data-hex="' + c[0] + '" data-q="' + esc(norm(c[0] + ' ' + c[1] + ' ' + g.g)) + '" aria-label="Copy ' + c[0] + ' ' + esc(c[1]) + '"><i style="background:' + c[0] + '"></i><code>' + c[0] + '</code><span>' + esc(c[1]) + '</span></button>').join('') + '</div></div>').join('') + '</div>').join('');
 colList.addEventListener('click', e => { const b = e.target.closest('[data-hex]'); if (b) copy(b.dataset.hex, b.dataset.hex) });
 $('#col-q').addEventListener('input', e => {
   const q = norm(e.target.value.trim());
@@ -270,9 +263,9 @@ $('[data-copy="tokens"]').addEventListener('click', () => copy(TOKENS_CSS, 'toke
 
 /* ---------- kit ---------- */
 const KIT = {
-  js: [KIT_JS, 'تابع‌های کمکی و play(dur, draw)؛ این را اول هر نمونه بگذار.'],
-  css: [KIT_CSS, 'صحنه‌ی ۹:۱۶ با واحد rem؛ هر چیزی با اندازه‌ی صفحه جابه‌جا می‌شود.'],
-  render: [RENDER_JS, 'خروجی ویدیو با Playwright و ffmpeg؛ فریم‌به‌فریم، بدون پرش.']
+  js: [KIT_JS, 'Helper functions and play(dur, draw). Put this at the top of every example.'],
+  css: [KIT_CSS, 'A 9:16 stage in rem units, so everything scales with the page width.'],
+  render: [RENDER_JS, 'Render to video with Playwright and ffmpeg, frame by frame with no dropped frames.']
 };
 let kitK = 'js';
 function showKit() { setCode($('#kit-pre'), KIT[kitK][0]); $('#kit-note').textContent = KIT[kitK][1] }
@@ -287,21 +280,21 @@ showKit();
 const dlg = $('#dlg'); let cur = null, tabK = 'snip';
 function renderCode() {
   const t = cur; if (!t) return;
-  if (tabK === 'snip') { setCode($('#d-pre'), snippetFor(t)); $('#d-note').textContent = 'فقط CSS و HTML و JS تکنیک؛ کیت حرکت جدا کپی می‌شود.' }
-  else { setCode($('#d-pre'), docFor(t)); $('#d-note').textContent = 'فایل HTML کامل و مستقل؛ در مرورگر باز کن و اجرا می‌شود.' }
+  if (tabK === 'snip') { setCode($('#d-pre'), snippetFor(t)); $('#d-note').textContent = 'Only the technique\'s CSS, HTML and JS. Copy the Motion Kit separately.' }
+  else { setCode($('#d-pre'), docFor(t)); $('#d-note').textContent = 'A complete, standalone HTML file. Open it in a browser and it runs.' }
 }
 function openTech(id, fromHash) {
   const t = byId[id]; if (!t) return; cur = t;
   $('#d-frame').srcdoc = docFor(t);
   $('#d-cat').innerHTML = catDot(t.cat) + catLabel(t);
-  $('#d-vid').textContent = 'ویدیو ' + fa(t.vid.n) + ': ' + shortTitle(t.vid);
-  $('#d-title').textContent = t.fa; $('#d-en').textContent = t.en;
+  $('#d-vid').textContent = 'Video ' + fa(t.vid.n) + ': ' + shortTitle(t.vid);
+  $('#d-title').textContent = t.fa;
   $('#d-when').textContent = t.when; $('#d-timing').textContent = t.timing; $('#d-where').textContent = t.where;
-  $('#d-colors').innerHTML = t.colors.map(c => '<button type="button" data-hex="' + c + '" aria-label="کپی ' + c + '"><i style="background:' + c + '"></i>' + c + '</button>').join('');
+  $('#d-colors').innerHTML = t.colors.map(c => '<button type="button" data-hex="' + c + '" aria-label="Copy ' + c + '"><i style="background:' + c + '"></i>' + c + '</button>').join('');
   tabK = 'snip'; $$('#d-tabs [role=tab]').forEach(x => x.setAttribute('aria-selected', x.dataset.k === 'snip')); renderCode();
   $('.d-info', dlg).scrollTop = 0;
   if (cmd.open) cmd.close();
-  if (!dlg.open) dlg.showModal();
+  if (!dlg.open) { dlg.showModal(); $('#d-close').focus({ preventScroll: true }); }
   if (!fromHash) history.replaceState(null, '', '#/t/' + id);
 }
 const step = d => { const i = ORDER.indexOf(cur); openTech(ORDER[(i + d + ORDER.length) % ORDER.length].id) };
@@ -321,19 +314,19 @@ dlg.addEventListener('close', () => {
 });
 dlg.addEventListener('keydown', e => {
   if (e.target.matches('input,textarea')) return;
-  if (e.key === 'ArrowLeft') step(1); if (e.key === 'ArrowRight') step(-1);
+  if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1);
 });
 
 /* ---------- search ---------- */
 const cmd = $('#cmd'), q = $('#cmd-q'), list = $('#cmd-list'); let results = [], sel = 0;
-const INDEX = TECHS.map(t => ({ t, s: norm([t.fa, t.en, t.when, catLabel(t), t.vid.title, t.colors.join(' ')].join(' ')) }));
+const INDEX = TECHS.map(t => ({ t, s: norm([t.fa, t.when, catLabel(t), t.vid.title, t.colors.join(' ')].join(' ')) }));
 const COLORS = []; VIDEOS.forEach(v => v.palette.forEach(g => g.c.forEach(c => COLORS.push({ v, hex: c[0], role: c[1], s: norm(c[0] + ' ' + c[1] + ' ' + g.g) }))));
 function runSearch() {
   const query = norm(q.value.trim()), words = query.split(/\s+/).filter(Boolean);
   results = [];
   if (!words.length) { results = ORDER.slice(0, 8).map(t => ({ kind: 't', t })) }
   else {
-    INDEX.forEach(({ t, s }) => { if (words.every(w => s.includes(w))) results.push({ kind: 't', t, rank: norm(t.fa + ' ' + t.en).includes(words[0]) ? 0 : 1 }) });
+    INDEX.forEach(({ t, s }) => { if (words.every(w => s.includes(w))) results.push({ kind: 't', t, rank: norm(t.fa).includes(words[0]) ? 0 : 1 }) });
     results.sort((a, b) => a.rank - b.rank);
     results = results.slice(0, 12);
     COLORS.forEach(c => { if (results.length < 18 && words.every(w => c.s.includes(w)) && (words[0].startsWith('#') || words[0].length > 2)) results.push({ kind: 'c', c }) });
@@ -342,9 +335,9 @@ function runSearch() {
 }
 function renderResults() {
   list.innerHTML = results.length ? results.map((r, i) => r.kind === 't'
-    ? '<li role="option" data-i="' + i + '" aria-selected="' + (i === sel) + '">' + catDot(r.t.cat) + '<span>' + esc(r.t.fa) + '</span><span class="sub">ویدیو ' + fa(r.t.vid.n) + '</span></li>'
-    : '<li role="option" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="sq" style="background:' + r.c.hex + '"></span><span><code>' + r.c.hex + '</code> ' + esc(r.c.role) + '</span><span class="sub">کپی رنگ، ویدیو ' + fa(r.c.v.n) + '</span></li>').join('')
-    : '<li aria-disabled="true" style="cursor:default;color:var(--mute)">چیزی پیدا نشد. اسم تکنیک، دسته یا یک HEX را امتحان کن.</li>';
+    ? '<li role="option" data-i="' + i + '" aria-selected="' + (i === sel) + '">' + catDot(r.t.cat) + '<span>' + esc(r.t.fa) + '</span><span class="sub">Video ' + fa(r.t.vid.n) + '</span></li>'
+    : '<li role="option" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="sq" style="background:' + r.c.hex + '"></span><span><code>' + r.c.hex + '</code> ' + esc(r.c.role) + '</span><span class="sub">Copy color · video ' + fa(r.c.v.n) + '</span></li>').join('')
+    : '<li aria-disabled="true" style="cursor:default;color:var(--mute)">Nothing found. Try a technique name, a category or a HEX value.</li>';
 }
 function choose(i) {
   const r = results[i]; if (!r) return;
@@ -373,4 +366,19 @@ function route() {
 }
 addEventListener('hashchange', route);
 route();
+
+/* ---------- glow, ripple ---------- */
+if (matchMedia('(pointer: fine)').matches) {
+  addEventListener('mousemove', e => {
+    document.documentElement.style.setProperty('--mouse-x', (e.clientX / innerWidth * 100) + '%');
+    document.documentElement.style.setProperty('--mouse-y', (e.clientY / innerHeight * 100) + '%');
+  }, { passive: true });
+}
+document.addEventListener('pointerdown', e => {
+  const b = e.target.closest('.btn'); if (!b || reduced) return;
+  const r = b.getBoundingClientRect(), z = Math.max(r.width, r.height) * 2.4, d = document.createElement('span');
+  d.className = 'ripple';
+  d.style.cssText = 'width:' + z + 'px;height:' + z + 'px;left:' + (e.clientX - r.left - z / 2) + 'px;top:' + (e.clientY - r.top - z / 2) + 'px';
+  b.appendChild(d); setTimeout(() => d.remove(), 750);
+});
 })();

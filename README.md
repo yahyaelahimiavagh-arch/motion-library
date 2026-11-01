@@ -1,30 +1,30 @@
-# موشن‌لیب — کتابخانهٔ تکنیک‌های موشن
+# Motion Library
 
-سایت استاتیک (بدون نیاز به build روی هاست) که تکنیک‌های موشن گرافیک، رنگ‌های دقیق، زمان‌بندی و کد آماده را نشان می‌دهد.
+A static site (no build step on the host) that shows reusable motion-graphics techniques with live demos, exact colors, estimated timing and copy-ready code.
 
-## ساختار
+## Structure
 
 ```
-index.html          صفحهٔ اصلی
-assets/style.css    استایل
-assets/app.js       منطق سایت
-assets/data.js      داده‌ها (خودکار ساخته می‌شود؛ دستی ویرایش نکن)
-src/techniques*.js  منبع داده‌ها؛ هر فایل مربوط به چند ویدیو
-build.py            فایل‌های src را به assets/data.js تبدیل می‌کند
-.htaccess           فشرده‌سازی، کش و HTTPS برای هاستینگر
+index.html          the page
+assets/style.css    styles
+assets/app.js       site logic
+assets/data.js      data (generated; do not edit by hand)
+src/techniques*.js  data source; each file covers a few videos
+build.py            turns src/ into assets/data.js
+.htaccess           compression, caching and HTTPS for Hostinger
 ```
 
-## اضافه کردن ویدیوی جدید
+## Adding a new video
 
-1. تکنیک‌ها را در یک فایل جدید مثل `src/techniques7.js` بنویس.
-2. اجرا کن: `python3 build.py`
-3. تغییرات را commit و push کن.
+1. Write its techniques in a new file such as `src/techniques7.js`.
+2. Run `python3 build.py`.
+3. Commit and push.
 
-## اتصال به هاستینگر (hPanel)
+## Deploying to Hostinger (hPanel)
 
-1. در hPanel: **Advanced ← Git**.
-2. آدرس HTTPS مخزن عمومی را بزن، شاخه `main`.
-3. مسیر نصب (Directory): `motion-library` تا سایت روی `elahimiavagh.com/motion-library/` بنشیند. خالی نگذار، چون خالی یعنی خود `public_html`.
-4. Create را بزن و بعد **Auto Deployment** را روشن کن. آدرس Webhook را در تنظیمات مخزن GitHub (Settings ← Webhooks) با Content type `application/json` و رویداد push اضافه کن.
+1. In hPanel open **Advanced → Git**.
+2. Enter the public HTTPS repository URL and the `main` branch.
+3. Set the install path (Directory) to `motion-library` so the site lives at `elahimiavagh.com/motion-library/`. Do not leave it empty: empty means `public_html` itself.
+4. Click Create, then turn on **Auto deployment**.
 
-از این به بعد هر push خودش روی سایت می‌نشیند.
+Every push to `main` is then deployed automatically.

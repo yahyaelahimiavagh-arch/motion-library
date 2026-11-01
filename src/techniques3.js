@@ -1,10 +1,10 @@
 /* ===== Video 3: cinematic 3D app sign-up flow (CSS-3D approximations) ===== */
 TECHS.push(
 /* 1 ---------------------------------------------------------------- */
-{ v:3, id:'extrude', fa:'لوگوی سه‌بعدی لایه‌ای با حرکت دوربین', en:'Layered 3D Extrusion + Camera Fly', cat:'fx',
-  when:'شروع ویدیو. لوگو از چند لایه‌ی پشت هم ساخته می‌شه (حجم‌دار)، دوربین از خیلی نزدیک شروع می‌کنه و عقب می‌کشه.',
-  timing:'حرکت دوربین ۳ ثانیه · ease-in-out · چرخش اولیه ۶۲ تا ۱۸ درجه · ۱۸ لایه با فاصله‌ی ۰٫۲۲rem',
-  where:'ثانیه ۰ تا ۴', colors:['#2A2A8A','#1E7EA2','#2ABAAE','#7ED2AE','#000000'], dur:5.5,
+{ v:3, id:'extrude', fa:'Layered 3D logo with camera move', en:'Layered 3D Extrusion + Camera Fly', cat:'fx',
+  when:'The start of a video. The logo is built from several stacked layers (it has volume); the camera starts very close and pulls back.',
+  timing:'Camera move 3 s · ease-in-out · initial rotation 62 to 18 degrees · 18 layers 0.22rem apart',
+  where:'Seconds 0 to 4', colors:['#2A2A8A','#1E7EA2','#2ABAAE','#7ED2AE','#000000'], dur:5.5,
   css:`.stage{background:#000;perspective:55rem;perspective-origin:50% 44%}
 .cam{position:absolute;left:50%;top:22rem;width:0;height:0;transform-style:preserve-3d}
 .ly{position:absolute;left:-9rem;top:-9rem;width:18rem;height:18rem}
@@ -27,10 +27,10 @@ play(5.5,t=>{
 });` },
 
 /* 2 ---------------------------------------------------------------- */
-{ v:3, id:'lightburst', fa:'انفجار نور از صفحه‌ی گوشی', en:'Screen Light Burst (God Rays)', cat:'fx',
-  when:'معرفی دستگاه یا اپ. صفحه از سیاه به سفید می‌پره، پرتوها می‌چرخن و بعد نور آروم می‌شه و محتوا دیده می‌شه.',
-  timing:'پرش نور ۰٫۲۵ ثانیه · پرتوها ۱٫۵ ثانیه محو می‌شن · فلاش سفید خیلی کوتاه (۳۰٪)',
-  where:'ثانیه ۴ تا ۷٫۵', colors:['#FFFFFF','#000000'], dur:5,
+{ v:3, id:'lightburst', fa:'Light burst from a phone screen', en:'Screen Light Burst (God Rays)', cat:'fx',
+  when:'Introducing a device or app. The screen jumps from black to white, rays rotate, then the light calms and the content shows.',
+  timing:'Light jump 0.25 s · rays fade over 1.5 s · very short white flash (30%)',
+  where:'Seconds 4 to 7.5', colors:['#FFFFFF','#000000'], dur:5,
   css:`.stage{background:#000}
 .rays{position:absolute;left:50%;top:22rem;width:60rem;height:60rem;margin:-30rem 0 0 -30rem;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.6) 0 3deg,transparent 3deg 15deg);-webkit-mask-image:radial-gradient(circle,#000 0,transparent 60%);mask-image:radial-gradient(circle,#000 0,transparent 60%);filter:blur(.4rem);opacity:0}
 .ph{position:absolute;left:50%;top:22rem;width:10rem;height:20rem;margin:-10rem 0 0 -5rem;border-radius:1.8rem;background:#000;border:.22rem solid #161616}
@@ -55,10 +55,10 @@ play(5,t=>{
 });` },
 
 /* 3 ---------------------------------------------------------------- */
-{ v:3, id:'slabmenu', fa:'شیرجه به گوشی و منوی تیغه‌ای', en:'Phone Dive-in + Slab Menu Lift', cat:'ui',
-  when:'رفتن از نمای دور دستگاه به داخل رابط. منو به‌صورت تیغه‌های ضخیم کج دیده می‌شه و یک ردیف مثل شیشه بالا میاد.',
-  timing:'شیرجه ۲٫۳ ثانیه · ease-in-out · بالا‌آمدن ردیف ۰٫۸ ثانیه و برگشت ۰٫۸ ثانیه',
-  where:'ثانیه ۷٫۵ تا ۱۳', colors:['#202D38','#1B2733','#36AE8A','#1E725A','#365A8A'], dur:6.8,
+{ v:3, id:'slabmenu', fa:'Dive into a phone and slab menu', en:'Phone Dive-in + Slab Menu Lift', cat:'ui',
+  when:'Going from a wide view of the device into the interface. The menu looks like thick tilted slabs and one row rises like glass.',
+  timing:'Dive 2.3 s · ease-in-out · row rises 0.8 s and returns 0.8 s',
+  where:'Seconds 7.5 to 13', colors:['#202D38','#1B2733','#36AE8A','#1E725A','#365A8A'], dur:6.8,
   css:`.stage{background:#000;perspective:60rem}
 .world{position:absolute;left:50%;top:24rem;width:0;height:0;transform-style:preserve-3d}
 .phone{position:absolute;left:-6rem;top:-11rem;width:12rem;height:22rem;border-radius:1.6rem;background:#0a1014;border:.15rem solid #28323a;padding:1.4rem .7rem;transform-style:preserve-3d;overflow:visible}
@@ -80,10 +80,10 @@ play(6.8,t=>{
 });` },
 
 /* 4 ---------------------------------------------------------------- */
-{ v:3, id:'bokeh', fa:'حباب‌های تار (عمق میدان)', en:'Bokeh Depth-of-Field Orbs', cat:'fx',
-  when:'اضافه‌کردن عمق به رابط. حباب‌های بزرگ و تار جلوی دوربین رد می‌شن، هرچه بزرگ‌تر، تارتر و سریع‌تر.',
-  timing:'عبور ۶ ثانیه (دو دور برای حباب‌های کوچک) · بلور متناسب با اندازه · ۶ حباب',
-  where:'ثانیه ۹ تا ۱۳', colors:['#36AE8A','#1E725A','#365A8A','#2A425A','#7ED2AE'], dur:6,
+{ v:3, id:'bokeh', fa:'Blurred bubbles (depth of field)', en:'Bokeh Depth-of-Field Orbs', cat:'fx',
+  when:'Adding depth to an interface. Big, blurred bubbles pass in front of the camera; the bigger, the blurrier and faster.',
+  timing:'Pass 6 s (two passes for small bubbles) · blur proportional to size · 6 bubbles',
+  where:'Seconds 9 to 13', colors:['#36AE8A','#1E725A','#365A8A','#2A425A','#7ED2AE'], dur:6,
   css:`.stage{background:radial-gradient(#10151a,#000)}
 .cd{position:absolute;left:3rem;right:3rem;top:14rem;height:18rem;border-radius:1rem;background:#EBEAF4;padding:1.4rem}
 .cd i{display:block;height:1.3rem;border-radius:.4rem;background:#C0C8D6;margin-bottom:.8rem}
@@ -105,10 +105,10 @@ play(6,t=>cfg.forEach((c,i)=>{
 }));` },
 
 /* 5 ---------------------------------------------------------------- */
-{ v:3, id:'ripple', fa:'موج لمس روی دکمه', en:'Touch Ripple', cat:'ui',
-  when:'نشان‌دادن لمس یا انتخاب. حلقه‌های سفید با سایه از نقطه‌ی لمس پخش می‌شن مثل موج روی آب.',
-  timing:'هر حلقه ۱٫۵ ثانیه · فاصله‌ی ۰٫۱۴ ثانیه · ۴ حلقه · ease-out · لینک کمی فشرده می‌شه',
-  where:'ثانیه ۱۳ تا ۱۵', colors:['#FDFCFF','#EBEAF4','#1B2733'], dur:4.4,
+{ v:3, id:'ripple', fa:'Touch ripple on a button', en:'Touch Ripple', cat:'ui',
+  when:'Showing a touch or a selection. White rings with a shadow spread from the touch point like ripples on water.',
+  timing:'Each ring 1.5 s · 0.14 s apart · 4 rings · ease-out · the link compresses slightly',
+  where:'Seconds 13 to 15', colors:['#FDFCFF','#EBEAF4','#1B2733'], dur:4.4,
   css:`.stage{background:#FDFCFF}
 .h{position:absolute;left:3rem;top:12rem;font:700 1.9rem 'Inter Tight',sans-serif;color:#1B2733}
 .in{position:absolute;left:3rem;right:3rem;height:3.2rem;border-radius:.8rem;background:#EBEAF4}
@@ -129,10 +129,10 @@ play(4.4,t=>{
 });` },
 
 /* 6 ---------------------------------------------------------------- */
-{ v:3, id:'formfill', fa:'پرشدن فرم با سوییپ پاستلی', en:'Form Fill + Iridescent Focus Sweep', cat:'ui',
-  when:'مراحل ثبت‌نام. فرم کج در پرسپکتیو، دوربین از بالا به پایین می‌لغزه و هر فیلد با یک سوییپ آبی-بنفش-صورتی تایپ می‌شه.',
-  timing:'هر فیلد ۱٫۰ ثانیه · فاصله‌ی ۱٫۱ ثانیه · تایپ حرف‌به‌حرف · دوربین ۷ ثانیه',
-  where:'ثانیه ۱۵ تا ۲۰', colors:['#B3BCC9','#BAC3D0','#C0C8D6','#333C49','#C1CBD9'], dur:8,
+{ v:3, id:'formfill', fa:'Form fill with a pastel sweep', en:'Form Fill + Iridescent Focus Sweep', cat:'ui',
+  when:'Sign-up steps. A tilted form in perspective, the camera slides from top to bottom, and each field is typed with a blue-purple-pink sweep.',
+  timing:'Each field 1.0 s · 1.1 s apart · typed letter by letter · camera 7 s',
+  where:'Seconds 15 to 20', colors:['#B3BCC9','#BAC3D0','#C0C8D6','#333C49','#C1CBD9'], dur:8,
   css:`.stage{background:linear-gradient(160deg,#C0C8D6,#B3BCC9);perspective:50rem}
 .board{position:absolute;left:50%;top:50%;width:19rem;margin:-12rem 0 0 -9.5rem;transform-style:preserve-3d}
 .hd{font:600 1.3rem 'Inter Tight',sans-serif;color:#333C49;margin-bottom:1rem}
@@ -161,10 +161,10 @@ play(8,t=>{
 });` },
 
 /* 7 ---------------------------------------------------------------- */
-{ v:3, id:'slabbtn', fa:'دکمه‌ی ضخیم سه‌بعدی و نئون موفقیت', en:'Extruded Button Press + Neon Success', cat:'ui',
-  when:'پایان یک فرایند. دکمه‌ی مشکی ضخیم فشرده می‌شه و بعد نور فیروزه‌ای دورش منفجر می‌شه تا موفقیت حس شه.',
-  timing:'فشردن ۰٫۲۵ ثانیه · برگشت ۰٫۵ ثانیه · درخشش ۰٫۷ ثانیه بالا و ۱ ثانیه پایین',
-  where:'ثانیه ۱۹ تا ۲۱', colors:['#000000','#55FFFF','#9BEBFF','#B3BCC9'], dur:5,
+{ v:3, id:'slabbtn', fa:'3D thick button and neon success', en:'Extruded Button Press + Neon Success', cat:'ui',
+  when:'The end of a process. A thick black button presses in, then a turquoise glow bursts around it so success is felt.',
+  timing:'Press 0.25 s · return 0.5 s · glow 0.7 s up and 1 s down',
+  where:'Seconds 19 to 21', colors:['#000000','#55FFFF','#9BEBFF','#B3BCC9'], dur:5,
   css:`.stage{background:#B3BCC9;perspective:50rem}
 .halo{position:absolute;left:50%;top:24rem;width:36rem;height:22rem;margin:-11rem 0 0 -18rem;border-radius:50%;background:radial-gradient(circle,rgba(85,255,255,.9),rgba(85,255,255,.3) 45%,transparent 70%);opacity:0;filter:blur(.8rem)}
 .btn3d{position:absolute;left:50%;top:24rem;width:17rem;height:4.4rem;margin:-2.2rem 0 0 -8.5rem;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-14deg)}
@@ -186,10 +186,10 @@ play(5,t=>{
 });` },
 
 /* 8 ---------------------------------------------------------------- */
-{ v:3, id:'trackin', fa:'متن با فاصله‌ی حروف جمع‌شونده و لوگوی پایانی', en:'Tracking Contract + Bloom Logo End', cat:'type',
-  when:'پیام موفقیت و پایان. متن خیلی نازک با فاصله‌ی زیاد ظاهر می‌شه و جمع می‌شه، بعد لوگوی خطی سفید با درخشش نرم.',
-  timing:'جمع‌شدن حروف ۱٫۴ ثانیه · ease-out · ماندن ۱٫۸ ثانیه · تبدیل به لوگو ۰٫۸ ثانیه',
-  where:'ثانیه ۲۰٫۵ تا ۲۷', colors:['#FFFFFF','#000000'], dur:6.4,
+{ v:3, id:'trackin', fa:'Tracking-in text and closing logo', en:'Tracking Contract + Bloom Logo End', cat:'type',
+  when:'A success message and the end. Very thin text appears widely spaced and tightens, then a white line logo with a soft glow.',
+  timing:'Letters tighten in 1.4 s · ease-out · hold 1.8 s · turns into the logo in 0.8 s',
+  where:'Seconds 20.5 to 27', colors:['#FFFFFF','#000000'], dur:6.4,
   css:`.stage{background:#000}
 .t{position:absolute;left:0;right:0;top:22rem;text-align:center;font:300 1.05rem/1 'Inter Tight',sans-serif;color:#fff;text-transform:uppercase;white-space:nowrap;text-shadow:0 0 .8rem rgba(255,255,255,.6)}
 .lg{position:absolute;left:50%;top:21rem;width:5rem;margin-left:-2.5rem;fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:0}`,
@@ -207,24 +207,24 @@ play(6.4,t=>{
 );
 
 VIDEOS.push({
-  id:'v3', n:3, title:'ثبت‌نام اپ: موشن سه‌بعدی', meta:'۲۷ ثانیه · ۷۲۰×۹۰۰ (نسبت ۴:۵) · موشن سه‌بعدی مراحل ثبت‌نام اپ',
-  mood:'سینمایی و سه‌بعدی. نئون فیروزه‌ای و مینت روی سیاه خالص برای لوگو و پایان، رابط روشن خاکستری-آبی با دوربین کج برای فرم. دوربین هیچ‌وقت ثابت نیست و هر عنصر حجم دارد.',
+  id:'v3', n:3, title:'App sign-up: 3D motion', meta:'27 seconds · 720×900 (4:5) · 3D motion for app sign-up steps',
+  mood:'Cinematic and 3D. Turquoise and mint neon on pure black for the logo and the ending, a light gray-blue interface with a tilted camera for the form. The camera is never still and every element has volume.',
   rules:[
-    'دوربین همیشه در حرکت است: از نزدیک روی لوگو شروع می‌شود، عقب می‌کشد، به داخل گوشی شیرجه می‌زند و روی فرم می‌لغزد.',
-    'هر رابط حجم دارد: منو و دکمه مثل تیغه‌های ضخیم، فیلدها مثل شیشه‌ی مات. زاویه‌ی کج ثابت می‌ماند.',
-    'پس‌زمینه‌ی سیاه خالص برای لوگو و پایان، رنگ روشن خاکستری-آبی برای فرم. بین دو حالت با فلاش سفید یا برش سیاه.',
-    'پرشدن فیلد: سوییپ پاستلی آبی-بنفش-صورتی با تایپ حرف‌به‌حرف و کرسر.',
-    'لمس و موفقیت محسوس است: موج روی دکمه، فشرده‌شدن دکمه‌ی ضخیم و درخشش فیروزه‌ای نئون.',
-    'عمق میدان: حباب‌های تار سبز و آبی جلوی دوربین رد می‌شوند.',
-    'پایان خیلی ساده: یک جمله‌ی نازک با فاصله‌ی حروف جمع‌شونده، بعد لوگوی خطی سفید.'
+    'The camera is always moving: it starts close on the logo, pulls back, dives into the phone and slides over the form.',
+    'Every interface has volume: the menu and button are like thick slabs, the fields like frosted glass. The tilt angle stays fixed.',
+    'Pure black background for the logo and the ending, a light gray-blue for the form. Between the two, a white flash or a black cut.',
+    'Field filling: a blue-purple-pink pastel sweep with letter-by-letter typing and a cursor.',
+    'Touch and success are felt: a ripple on the button, the thick button pressing, and a neon turquoise glow.',
+    'Depth of field: blurred green and blue bubbles pass in front of the camera.',
+    'A very simple ending: one thin sentence with tightening letter spacing, then a white line logo.'
   ],
   palette:[
-    { g:'پس‌زمینه', c:[['#000000','سیاه خالص']] },
-    { g:'لوگوی نئونی (لایه‌ها)', c:[['#2A2A8A','لبه‌ی ایندیگو'],['#1E7EA2','آبی'],['#2ABAAE','فیروزه‌ای'],['#66D2D2','روشن'],['#7ED2AE','مینت']] },
-    { g:'نئون موفقیت', c:[['#55FFFF','اوج درخشش'],['#9BEBFF','هاله']] },
-    { g:'منوی تیره', c:[['#202D38','تیغه'],['#1B2733','تیغه‌ی دوم'],['#1E725A','حباب سبز'],['#36AE8A','شیشه‌ی سبز'],['#365A8A','حباب آبی'],['#2A425A','آبی تیره']] },
-    { g:'فرم روشن', c:[['#B3BCC9','پس‌زمینه'],['#BAC3D0','فیلد'],['#C0C8D6','لبه‌ی فیلد'],['#333C49','متن'],['#C1CBD9','سوییپ پاستلی']] },
-    { g:'ورود', c:[['#FDFCFF','صفحه'],['#EBEAF4','فیلد']] }
+    { g:'Background', c:[['#000000','Pure black']] },
+    { g:'Neon logo (layers)', c:[['#2A2A8A','Indigo edge'],['#1E7EA2','Blue'],['#2ABAAE','Turquoise'],['#66D2D2','Light'],['#7ED2AE','Mint']] },
+    { g:'Success neon', c:[['#55FFFF','Peak glow'],['#9BEBFF','Halo']] },
+    { g:'Dark menu', c:[['#202D38','Slab'],['#1B2733','Second slab'],['#1E725A','Green bubble'],['#36AE8A','Green glass'],['#365A8A','Blue bubble'],['#2A425A','Dark blue']] },
+    { g:'Light form', c:[['#B3BCC9','Background'],['#BAC3D0','Field'],['#C0C8D6','Field edge'],['#333C49','Text'],['#C1CBD9','Pastel sweep']] },
+    { g:'Enter', c:[['#FDFCFF','Page'],['#EBEAF4','Field']] }
   ]
 });
 

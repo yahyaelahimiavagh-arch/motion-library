@@ -3,10 +3,10 @@ const NOIR = ".stage{background:radial-gradient(90% 55% at 50% 62%,#54160F 0%,#2
 
 TECHS.push(
 /* 1 ---------------------------------------------------------------- */
-{ v:2, id:'neonlogo', fa:'لوگوی نئونی و قفل لوگو', en:'Neon Logo Draw-on + Lockup', cat:'fx',
-  when:'شروع یا پایان ریلز. خطوط لوگو کشیده می‌شن و می‌درخشن، بعد لوگو به چپ می‌ره و تگ‌لاین کنارش باز می‌شه.',
-  timing:'کشیده‌شدن هر خط ۰٫۸ ثانیه با فاصله‌ی ۰٫۱۸ · جابه‌جایی ۱ ثانیه · باز‌شدن متن ۱٫۳ ثانیه',
-  where:'ثانیه ۰ تا ۲ و ۱۱ تا ۱۴', colors:['#FF4F30','#FB4F41','#FFFFFF'], dur:5.4,
+{ v:2, id:'neonlogo', fa:'Neon logo and logo lockup', en:'Neon Logo Draw-on + Lockup', cat:'fx',
+  when:'The start or end of a reel. The logo\'s lines draw and glow, then the logo moves left and the tagline opens beside it.',
+  timing:'Each line draws in 0.8 s, 0.18 s apart · move 1 s · text opens in 1.3 s',
+  where:'Seconds 0 to 2 and 11 to 14', colors:['#FF4F30','#FB4F41','#FFFFFF'], dur:5.4,
   css:`${NOIR}
 .mark{position:absolute;left:11.5rem;top:19.5rem;width:4rem;height:4rem}
 .tx{position:absolute;left:8.25rem;top:20.1rem;white-space:nowrap;font:600 2rem/1.2 'Inter Tight',sans-serif;letter-spacing:-.01em}
@@ -27,10 +27,10 @@ play(5.4,t=>{
 });` },
 
 /* 2 ---------------------------------------------------------------- */
-{ v:2, id:'softwipe', fa:'افشای متن با لبه‌ی نرم', en:'Soft-edge Text Wipe', cat:'type',
-  when:'جمله‌ی کوتاه و آرام. یا محو با بلور (جمله‌ی اول) یا پاک‌کننده‌ی نرم از چپ (جمله‌ی دوم). برای فارسی جهت رو برعکس کن.',
-  timing:'محو و بلور ۰٫۷ ثانیه · پاک‌کننده ۱٫۳ ثانیه · ease-in-out · لبه‌ی ۱۸٪',
-  where:'ثانیه ۹ تا ۱۱', colors:['#FFFFFF'], dur:6,
+{ v:2, id:'softwipe', fa:'Soft-edge text reveal', en:'Soft-edge Text Wipe', cat:'type',
+  when:'A short, calm sentence. Either a fade with blur (first sentence) or a soft wipe from the left (second sentence). For Persian, flip the direction.',
+  timing:'Fade and blur 0.7 s · wipe 1.3 s · ease-in-out · 18% soft edge',
+  where:'Seconds 9 to 11', colors:['#FFFFFF'], dur:6,
   css:`${NOIR}
 .ln{position:absolute;left:1rem;right:1rem;text-align:center;white-space:nowrap;font:500 1.9rem/1.25 'Inter Tight',sans-serif}
 #a{top:19rem}
@@ -48,10 +48,10 @@ play(6,t=>{
 });` },
 
 /* 3 ---------------------------------------------------------------- */
-{ v:2, id:'headswap', fa:'تیتر ترکیبی و تعویض کلمه', en:'Headline Word Swap', cat:'type',
-  when:'تیتر دو‌بخشی: کلمه‌ی ثابت سفید، کلمه‌ی کلیدی ایتالیک قرمز. کلمه‌ی کلیدی بین صحنه‌ها عوض می‌شه.',
-  timing:'ورود ۰٫۶ ثانیه · تعویض ۰٫۷ ثانیه (کلمه‌ی قدیم بالا می‌ره، جدید از پایین میاد)',
-  where:'ثانیه ۳ تا ۵', colors:['#FFFFFF','#FF4F30'], dur:5,
+{ v:2, id:'headswap', fa:'Mixed headline and word swap', en:'Headline Word Swap', cat:'type',
+  when:'A two-part headline: a fixed white word and an italic red key word. The key word changes between scenes.',
+  timing:'Enters 0.6 s · swap 0.7 s (the old word goes up, the new one comes from below)',
+  where:'Seconds 3 to 5', colors:['#FFFFFF','#FF4F30'], dur:5,
   css:`${NOIR}
 .hd{position:absolute;left:2rem;top:17rem;font:600 3.1rem/1.15 'Inter Tight',sans-serif;letter-spacing:-.02em;white-space:nowrap}
 .sw{position:relative;display:inline-block;width:12rem;height:1.25em;vertical-align:bottom;overflow:hidden}
@@ -67,10 +67,10 @@ play(5,t=>{
 });` },
 
 /* 4 ---------------------------------------------------------------- */
-{ v:2, id:'paracta', fa:'پاراگراف خط‌به‌خط و دکمه‌ی CTA', en:'Line Reveal + CTA Pill', cat:'type',
-  when:'توضیح کوتاه زیر تیتر. هر خط جدا بالا میاد و در آخر دکمه‌ی دعوت به اقدام ظاهر می‌شه.',
-  timing:'هر خط ۰٫۶ ثانیه با فاصله‌ی ۰٫۱۴ · دکمه با ease-out-back · درخشش ملایم بعد از ورود',
-  where:'ثانیه ۴ تا ۶', colors:['#F1D0CC','#341A19','#FF4F30'], dur:5,
+{ v:2, id:'paracta', fa:'Line-by-line paragraph and CTA button', en:'Line Reveal + CTA Pill', cat:'type',
+  when:'A short description under a headline. Each line rises separately and a call-to-action button appears at the end.',
+  timing:'Each line 0.6 s, 0.14 s apart · button with ease-out-back · soft glow after entering',
+  where:'Seconds 4 to 6', colors:['#F1D0CC','#341A19','#FF4F30'], dur:5,
   css:`${NOIR}
 .p{position:absolute;left:2rem;right:2rem;top:16rem;font:400 1.1rem/1.7 'Inter Tight',sans-serif;color:#F1D0CC}
 .p span{display:block}
@@ -91,10 +91,10 @@ play(5,t=>{
 });` },
 
 /* 5 ---------------------------------------------------------------- */
-{ v:2, id:'avatars', fa:'آواتارها با فیچرد مرکزی', en:'Avatar Fan-out Carousel', cat:'ui',
-  when:'معرفی آدم‌ها یا هنرمندها. اولی وسط با حلقه‌ی نئونی میاد، بعد دو نفر دیگه از پشتش بیرون می‌زنن.',
-  timing:'ورود مرکزی ۰٫۷ ثانیه · باز‌شدن ۰٫۹ ثانیه · پایین‌رفتن گروه ۰٫۹ ثانیه',
-  where:'ثانیه ۲ تا ۴', colors:['#FF4F30','#F5AF5F','#F1D0CC','#846C69'], dur:6,
+{ v:2, id:'avatars', fa:'Avatars with a centered feature', en:'Avatar Fan-out Carousel', cat:'ui',
+  when:'Introducing people or artists. The first one enters in the middle with a neon ring, then two more pop out from behind it.',
+  timing:'Center entrance 0.7 s · spread 0.9 s · group drops 0.9 s',
+  where:'Seconds 2 to 4', colors:['#FF4F30','#F5AF5F','#F1D0CC','#846C69'], dur:6,
   css:`${NOIR}
 .grp{position:absolute;inset:0}
 .it{position:absolute;top:16rem;left:50%;width:8rem;margin-left:-4rem;text-align:center}
@@ -115,10 +115,10 @@ play(6,t=>{
 });` },
 
 /* 6 ---------------------------------------------------------------- */
-{ v:2, id:'list3d', fa:'لیست سه‌بعدی کج با تیک‌های پی‌درپی', en:'3D Perspective List + Check Fill', cat:'ui',
-  when:'نشان‌دادن یک قابلیت (دانلود، انتخاب). به‌جای موکاپ گوشی، لیست کج می‌شه و ردیف‌ها یکی‌یکی تیک می‌خورن.',
-  timing:'ورود ردیف‌ها با فاصله‌ی ۰٫۱ ثانیه · تیک هر ردیف ۰٫۵ ثانیه با فاصله‌ی ۰٫۴۲ · اسکرول خروجی ۱٫۲ ثانیه',
-  where:'ثانیه ۵٫۵ تا ۷', colors:['#180603','#291513','#FF4F30','#846C69'], dur:6.4,
+{ v:2, id:'list3d', fa:'Tilted 3D list with successive ticks', en:'3D Perspective List + Check Fill', cat:'ui',
+  when:'Showing a feature (download, select). Instead of a phone mockup, the list tilts and the rows get ticked one by one.',
+  timing:'Rows enter 0.1 s apart · each tick 0.5 s, 0.42 s apart · exit scroll 1.2 s',
+  where:'Seconds 5.5 to 7', colors:['#180603','#291513','#FF4F30','#846C69'], dur:6.4,
   css:`${NOIR}
 .scene{position:absolute;inset:0;perspective:60rem}
 .list{position:absolute;left:2.4rem;right:1rem;top:7rem;transform-style:preserve-3d;transform:rotateX(14deg) rotateY(-12deg) rotateZ(-3deg)}
@@ -144,10 +144,10 @@ play(6.4,t=>{
 });` },
 
 /* 7 ---------------------------------------------------------------- */
-{ v:2, id:'chips', fa:'چیپ‌های افقی با فعال‌شدن قرمز', en:'Pill Chips Slide + Activate', cat:'ui',
-  when:'فهرست مزیت‌ها یا فیلترها. نقطه‌ی قرمز به چیپ تبدیل می‌شه، ردیف می‌لغزه و آخرین چیپ قرمز روشن می‌شه.',
-  timing:'هر چیپ ۰٫۶ ثانیه با فاصله‌ی ۰٫۸ · لغزش ردیف ۰٫۷ ثانیه · فعال‌شدن ۰٫۶ ثانیه',
-  where:'ثانیه ۷ تا ۸٫۵', colors:['#392624','#8F2215','#EB3721'], dur:6,
+{ v:2, id:'chips', fa:'Horizontal chips with red activation', en:'Pill Chips Slide + Activate', cat:'ui',
+  when:'A list of benefits or filters. A red dot turns into a chip, the row slides, and the last chip lights up red.',
+  timing:'Each chip 0.6 s, 0.8 s apart · row slide 0.7 s · activation 0.6 s',
+  where:'Seconds 7 to 8.5', colors:['#392624','#8F2215','#EB3721'], dur:6,
   css:`${NOIR}
 .dot{position:absolute;left:50%;top:22rem;width:.9rem;height:.9rem;margin:-.45rem 0 0 -.45rem;border-radius:50%;background:#FF4F30;box-shadow:0 0 1rem rgba(255,79,48,.8)}
 .rowc{position:absolute;left:0;top:20.5rem;height:3rem}
@@ -169,10 +169,10 @@ play(6,t=>{
 });` },
 
 /* 8 ---------------------------------------------------------------- */
-{ v:2, id:'glowblob', fa:'بلوب نور محیطی', en:'Ambient Glow Blob', cat:'fx',
-  when:'جای هر تصویر پس‌زمینه. یک نور قرمز نرم و تار بین صحنه‌ها جابه‌جا و بزرگ و کوچک می‌شه تا حال‌وهوا عوض شه.',
-  timing:'جابه‌جایی ۱٫۴ ثانیه هر بار · ease-in-out · تنفس خیلی کم (۴٪)',
-  where:'کل ویدیو (اوج در ثانیه ۹)', colors:['#54160F','#922316','#0D0301'], dur:7,
+{ v:2, id:'glowblob', fa:'Ambient light blob', en:'Ambient Glow Blob', cat:'fx',
+  when:'Stands in for any background image. A soft, blurred red light moves, grows and shrinks between scenes to change the mood.',
+  timing:'Move 1.4 s each time · ease-in-out · very slight breathing (4%)',
+  where:'Whole video (peak at second 9)', colors:['#54160F','#922316','#0D0301'], dur:7,
   css:`.stage{background:#0D0301}
 .bl{position:absolute;left:0;top:0;width:30rem;height:30rem;margin:-15rem 0 0 -15rem;border-radius:50%;background:radial-gradient(circle,#922316 0%,rgba(146,35,22,.55) 30%,rgba(84,22,15,.25) 55%,transparent 72%);filter:blur(1.2rem)}
 .vg{position:absolute;inset:0;background:radial-gradient(70% 55% at 50% 50%,transparent 40%,rgba(0,0,0,.6))}
@@ -189,10 +189,10 @@ play(7,t=>{
 });` },
 
 /* 9 ---------------------------------------------------------------- */
-{ v:2, id:'scenecut', fa:'انتقال صحنه با بلور و محو', en:'Blur-Fade Scene Cut', cat:'fx',
-  when:'تعویض صحنه‌ها بدون برش تند. هر صحنه با بلور و بالا‌آمدن می‌آید و با بلور و کمی بزرگ‌شدن می‌رود.',
-  timing:'ورود ۰٫۶ ثانیه · خروج ۰٫۵ ثانیه · هر صحنه حدود ۲٫۴ ثانیه',
-  where:'کل ویدیو', colors:['#FFFFFF','#FF4F30'], dur:7.6,
+{ v:2, id:'scenecut', fa:'Scene transition with blur and fade', en:'Blur-Fade Scene Cut', cat:'fx',
+  when:'Switching scenes without a hard cut. Each scene comes in with blur and a rise, and leaves with blur and a slight grow.',
+  timing:'Enter 0.6 s · exit 0.5 s · each scene about 2.4 s',
+  where:'Whole video', colors:['#FFFFFF','#FF4F30'], dur:7.6,
   css:`${NOIR}
 .sn{position:absolute;left:2rem;right:2rem;top:20rem;font:600 2.7rem/1.15 'Inter Tight',sans-serif;letter-spacing:-.02em;opacity:0}
 .sn em{font:italic 400 2.9rem 'Instrument Serif',serif;color:#FF4F30}`,
@@ -207,23 +207,23 @@ play(7.6,t=>sc.forEach((s,i)=>{
 );
 
 VIDEOS.push({
-  id:'v2', n:2, title:'اپ موسیقی پرمیوم: قرمز و مشکی', meta:'۱۴ ثانیه · ۷۲۰×۱۲۸۰ · کانسپت ریلز برای یک اپ موسیقی',
-  mood:'تیره، لوکس و آرام. سیاه گرم با یک نور قرمز نرم که جای هر تصویر پس‌زمینه رو می‌گیره. فقط یک رنگ برند (قرمز نئونی) و همه‌چیز دیگه سفید یا صورتی‌سفید. هر صحنه فقط یک پیام داره.',
+  id:'v2', n:2, title:'Premium music app: red and black', meta:'14 seconds · 720×1280 · a reels concept for a music app',
+  mood:'Dark, luxurious and calm. Warm black with one soft red light standing in for any background image. One brand color (neon red), everything else white or pinkish white. Each scene carries one message.',
   rules:[
-    'یک رنگ برند: قرمز نئونی روی سیاه گرم. متن‌ها سفید یا صورتی‌سفید، زیرعنوان قهوه‌ای کم‌رنگ.',
-    'تیتر دوبخشی: کلمه‌ی ثابت سفید سن‌سریف، کلمه‌ی کلیدی ایتالیک سریف قرمز. کلمه‌ی کلیدی بین صحنه‌ها عوض می‌شه.',
-    'هر صحنه یک پیام و یک المان دارد. انتقال‌ها همیشه با بلور و محو هستن، بدون برش تند.',
-    'بلوب نور قرمز نرم جای پس‌زمینه‌ی تصویری می‌نشیند و بین صحنه‌ها جابه‌جا و بزرگ و کوچک می‌شه.',
-    'قابلیت‌ها در رابط کج سه‌بعدی نشان داده می‌شن (نه موکاپ گوشی)؛ مثلاً دانلود آفلاین با تیک‌های پی‌درپی.',
-    'ریتم: ورود ۰٫۵ تا ۰٫۸ ثانیه، هر صحنه حدود ۲ ثانیه، کل ریلز ۱۴ ثانیه. شروع و پایان با لوگوی نئونی.'
+    'One brand color: neon red on warm black. Text is white or pinkish white, the subtitle a faded brown.',
+    'A two-part headline: a fixed white sans-serif word and an italic serif red key word. The key word changes between scenes.',
+    'Every scene has one message and one element. Transitions are always blur and fade, never hard cuts.',
+    'A soft red light blob replaces the picture background and moves, grows and shrinks between scenes.',
+    'Features are shown in a tilted 3D interface (not a phone mockup), for example offline download with successive ticks.',
+    'Rhythm: entrances 0.5 to 0.8 s, each scene about 2 s, the whole reel 14 s. It starts and ends with the neon logo.'
   ],
   palette:[
-    { g:'پس‌زمینه', c:[['#0D0301','سیاه گرم'],['#100503','سیاه گرم دوم'],['#2F0F0A','پایین صحنه']] },
-    { g:'نور محیطی', c:[['#54160F','نور ملایم'],['#922316','اوج بلوب']] },
-    { g:'قرمز برند', c:[['#FF4F30','نئون و ایتالیک و تیک'],['#FB4F41','برچسب کوچک'],['#EB3721','چیپ فعال'],['#8F2215','چیپ در حال فعال‌شدن']] },
-    { g:'سطح‌ها', c:[['#180603','کارت لیست'],['#291513','کارت لیست دوم'],['#392624','چیپ غیرفعال'],['#341A19','دکمه‌ی CTA']] },
-    { g:'متن', c:[['#FFFFFF','تیتر'],['#F1D0CC','پاراگراف'],['#846C69','زیرعنوان']] },
-    { g:'تصاویر آواتار', c:[['#F5AF5F','غروب (نمونه)']] }
+    { g:'Background', c:[['#0D0301','Warm black'],['#100503','Second warm black'],['#2F0F0A','Bottom of scene']] },
+    { g:'Ambient light', c:[['#54160F','Soft light'],['#922316','Blob peak']] },
+    { g:'Brand red', c:[['#FF4F30','Neon, italic and tick'],['#FB4F41','Small label'],['#EB3721','Active chip'],['#8F2215','Chip activating']] },
+    { g:'Surfaces', c:[['#180603','List card'],['#291513','Second list card'],['#392624','Inactive chip'],['#341A19','CTA button']] },
+    { g:'Text', c:[['#FFFFFF','Headline'],['#F1D0CC','Paragraph'],['#846C69','Subtitle']] },
+    { g:'Avatar images', c:[['#F5AF5F','Sunset (sample)']] }
   ]
 });
 
