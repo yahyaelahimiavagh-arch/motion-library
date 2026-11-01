@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>کتابخانه تکنیک‌های موشن</title>
+<meta name="description" content="تکنیک‌های موشن گرافیک استخراج‌شده از ویدیوهای مرجع: نمونه‌ی زنده، رنگ‌های دقیق، زمان‌بندی و کد آماده برای استفاده در پروژه‌های بعدی.">
+<meta name="theme-color" content="#E7EAEE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="کتابخانه تکنیک‌های موشن">
+<meta property="og:description" content="تکنیک‌های موشن گرافیک با نمونه‌ی زنده، رنگ دقیق و کد آماده.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Lalezar&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}
+</script>
+</head>
+<body>
+<a class="skip" href="#library">رفتن به محتوا</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#top" aria-label="بالای صفحه">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 20.5C3.5 6 20.5 19 20.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3.5 17.2l3.3 3.3-3.3 3.3-3.3-3.3z" transform="translate(0 -3)" fill="currentColor"/><path d="M20.5 .4l3.1 3.1-3.1 3.1-3.1-3.1z" fill="var(--play)"/></svg>
+      <span>موشن‌لیب</span>
+    </a>
+    <nav class="top-nav" aria-label="بخش‌ها">
+      <a href="#library">تکنیک‌ها</a>
+      <a href="#colors">رنگ‌ها</a>
+      <a href="#kit">کیت</a>
+    </nav>
+    <div class="top-act">
+      <button class="btn ghost" id="open-search" type="button" aria-label="جستجو"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="hide-s">جستجو</span><kbd class="hide-s">Ctrl K</kbd></button>
+      <button class="btn ghost icon" id="theme" type="button" aria-label="تغییر پوسته"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero-text">
+      <h1 id="h1"><span>کتابخانه</span> <span>تکنیک‌های موشن</span></h1>
+      <p class="lead" id="lead"></p>
+      <div class="hero-cta">
+        <a class="btn pri" href="#library">دیدن تکنیک‌ها</a>
+        <a class="btn" href="#colors">رنگ‌ها</a>
+      </div>
+    </div>
+
+    <figure class="monitor" aria-label="نمایش زنده‌ی تکنیک‌ها">
+      <div class="screen"><iframe id="mon" title="نمایش زنده‌ی تکنیک" sandbox="allow-scripts" tabindex="-1"></iframe></div>
+      <figcaption>
+        <button class="mon-now" id="mon-open" type="button"><b id="mon-name"></b><small id="mon-src"></small></button>
+        <button class="btn ghost icon" id="mon-play" type="button" aria-label="مکث"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path id="mon-ico" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg></button>
+      </figcaption>
+    </figure>
+
+    <div class="reel" id="reel" aria-label="نوار زمانی همه‌ی ویدیوها؛ بکش تا بین تکنیک‌ها بگردی">
+      <div class="reel-ruler" id="reel-ruler" aria-hidden="true"></div>
+      <div class="reel-clips" id="reel-clips" role="slider" tabindex="0" aria-label="موقعیت در کتابخانه" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1"></div>
+      <div class="playhead" id="playhead" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="body">
+    <aside class="rail" id="rail" aria-label="فهرست">
+      <div class="rail-in" id="rail-in"></div>
+    </aside>
+
+    <div class="content">
+      <section id="library" class="sec" aria-labelledby="lib-h">
+        <div class="sec-head">
+          <h2 id="lib-h">همه‌ی تکنیک‌ها</h2>
+          <p>هر ویدیو یک فصل است. روی هر نمونه بزن تا بزرگ ببینی، کد و رنگ‌هایش را کپی کنی.</p>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="فیلتر دسته"></div>
+        <div id="chapters"></div>
+        <p class="empty" id="empty" hidden>تکنیکی با این فیلتر پیدا نشد. فیلتر را روی «همه» بگذار.</p>
+      </section>
+
+      <section id="colors" class="sec" aria-labelledby="col-h">
+        <div class="sec-head">
+          <h2 id="col-h">رنگ‌ها</h2>
+          <p>مقدارها از پیکسل‌های ویدیو گرفته شده‌اند. روی هر رنگ بزن تا HEX کپی شود.</p>
+        </div>
+        <label class="field"><span>فیلتر</span><input id="col-q" type="search" placeholder="HEX یا نقش رنگ، مثلاً #E5ED35 یا طلایی" autocomplete="off"></label>
+        <div id="col-list"></div>
+        <div class="block">
+          <div class="block-h"><h3>توکن‌های CSS</h3><button class="btn" data-copy="tokens" type="button">کپی توکن‌ها</button></div>
+          <p class="muted">همه‌ی رنگ‌ها به‌صورت متغیر CSS. با هر ویدیوی جدید بزرگ‌تر می‌شود.</p>
+          <pre class="code" id="tokens-pre" tabindex="0"></pre>
+        </div>
+      </section>
+
+      <section id="kit" class="sec" aria-labelledby="kit-h">
+        <div class="sec-head">
+          <h2 id="kit-h">کیت حرکت</h2>
+          <p>پایه‌ی همه‌ی تکنیک‌ها. هر انیمیشن یک تابع از زمان <code>t</code> است؛ پس همان کد هم در مرورگر زنده اجرا می‌شود و هم با تنظیم <code>window.__T</code> فریم‌به‌فریم برای ویدیو رندر می‌گیرد.</p>
+        </div>
+        <div class="block">
+          <div class="tabs" role="tablist" id="kit-tabs">
+            <button role="tab" aria-selected="true" data-k="js" type="button">JS پایه</button>
+            <button role="tab" aria-selected="false" data-k="css" type="button">CSS پایه</button>
+            <button role="tab" aria-selected="false" data-k="render" type="button">رندر به ویدیو</button>
+          </div>
+          <div class="block-h"><p class="muted" id="kit-note"></p><button class="btn" id="kit-copy" type="button">کپی</button></div>
+          <pre class="code" id="kit-pre" tabindex="0"></pre>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <p>رنگ‌ها از پیکسل‌های ویدیو نمونه‌گیری شده‌اند و به‌خاطر فشرده‌سازی ممکن است چند واحد جابه‌جایی داشته باشند. زمان‌بندی‌ها از روی فریم‌ها تخمین زده شده‌اند، نه از فایل پروژه‌ی اصلی. هر جا آدم یا لوگو لازم بوده، شکل انتزاعی جایگزین شده است؛ تکنیک‌ها یاد گرفته می‌شوند و با برند خودمان ساخته می‌شوند.</p>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<dialog id="dlg" aria-labelledby="d-title">
+  <div class="d-grid">
+    <div class="d-stage">
+      <div class="d-screen"><iframe id="d-frame" title="نمونه‌ی زنده" sandbox="allow-scripts"></iframe></div>
+      <div class="d-ctrl">
+        <button class="btn" id="d-prev" type="button">قبلی</button>
+        <button class="btn" id="d-replay" type="button">پخش مجدد</button>
+        <button class="btn" id="d-next" type="button">بعدی</button>
+      </div>
+    </div>
+    <div class="d-info">
+      <div class="d-top"><span class="cat" id="d-cat"></span><span class="muted" id="d-vid"></span></div>
+      <h2 id="d-title"></h2>
+      <p class="en" id="d-en"></p>
+      <dl class="facts">
+        <div><dt>کجا بزنیم</dt><dd id="d-when"></dd></div>
+        <div><dt>زمان‌بندی (تخمینی)</dt><dd id="d-timing"></dd></div>
+        <div><dt>در ویدیو</dt><dd id="d-where"></dd></div>
+      </dl>
+      <div class="dots" id="d-colors"></div>
+      <div class="tabs" role="tablist" id="d-tabs">
+        <button role="tab" aria-selected="true" data-k="snip" type="button">کد تکنیک</button>
+        <button role="tab" aria-selected="false" data-k="full" type="button">فایل کامل</button>
+      </div>
+      <div class="block-h"><p class="muted" id="d-note"></p><button class="btn pri" id="d-copy" type="button">کپی</button></div>
+      <pre class="code" id="d-pre" tabindex="0"></pre>
+    </div>
+    <button class="d-close btn ghost icon" id="d-close" type="button" aria-label="بستن"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+</dialog>
+
+<dialog id="cmd" aria-label="جستجو">
+  <div class="cmd-box">
+    <input id="cmd-q" type="search" placeholder="جستجوی تکنیک، دسته یا رنگ" autocomplete="off" aria-controls="cmd-list">
+    <ul id="cmd-list" role="listbox" aria-label="نتیجه‌ها"></ul>
+    <p class="cmd-help muted">جهت‌ها برای انتخاب، Enter برای باز کردن، Esc برای بستن</p>
+  </div>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px;text-align:center">برای دیدن نمونه‌های زنده، جاوااسکریپت را روشن کن.</p></noscript>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
