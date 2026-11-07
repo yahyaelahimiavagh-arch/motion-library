@@ -517,3 +517,87 @@ document.addEventListener('pointerdown', e => {
   b.appendChild(d); setTimeout(() => d.remove(), 750);
 });
 })();
+
+
+(function () {
+  'use strict';
+  var doc = document;
+  /* ---- header logo: EM mark builds piece by piece, holds with a glint, leaves, repeats ---- */
+  [].slice.call(document.querySelectorAll('.logo-em')).forEach(function (logo) {
+    if (!logo.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var LOOP = 9500;                                  /* ms for one full cycle */
+    var OUT = 'cubic-bezier(.16,1,.3,1)', IN = 'cubic-bezier(.7,0,.84,0)';
+    var D = 70;                                       /* diagonal travel: x shift per 260 y */
+    /* piece: [in-offset x, y,  arrive at (s),  leave at (s)] — offsets start outside the viewBox */
+    var PIECES = {
+      top:   [-300, 0,    0.10, 8.85],
+      spine: [0, -300,    0.25, 8.80],
+      mid:   [460, 0,     0.40, 8.70],
+      bot:   [-300, 0,    0.55, 8.60],
+      A:     [-D, 280,    0.80, 8.55],
+      B:     [-D, -280,   0.95, 8.50],
+      C:     [D, -280,    1.10, 8.45],
+      D:     [D, 280,     1.25, 8.40],
+      fin:   [160, -60,   1.65, 8.35]
+    };
+    for (var wi = 0; wi < 12; wi++) PIECES['w' + wi] = [0, 24, 2.3 + 0.05 * wi, 8.1 + 0.02 * wi];   /* wordmark letters (large lockup only) */
+    var anims = [];
+    var o = function (s) { return Math.min(1, Math.max(0, s * 1000 / LOOP)); };
+    var tr = function (x, y) { return 'translate(' + x + 'px,' + y + 'px)'; };
+    Object.keys(PIECES).forEach(function (k) {
+      var el = logo.querySelector('[data-p="' + k + '"]'), c = PIECES[k];
+      if (!el) return;
+      var ax = c[0], ay = c[1], t0 = c[2], t1 = c[3];
+      anims.push(el.animate([
+        { offset: 0, transform: tr(ax, ay) },
+        { offset: o(t0), transform: tr(ax, ay), easing: OUT },
+        { offset: o(t0 + 0.9), transform: tr(0, 0) },
+        { offset: o(t1), transform: tr(0, 0), easing: IN },
+        { offset: o(t1 + 0.45), transform: tr(ax, ay) },
+        { offset: 1, transform: tr(ax, ay) }
+      ], { duration: LOOP, iterations: Infinity }));
+      anims.push(el.animate([
+        { offset: 0, opacity: 0 }, { offset: o(t0), opacity: 0 }, { offset: o(t0 + 0.12), opacity: 1 },
+        { offset: o(t1 + 0.3), opacity: 1 }, { offset: o(t1 + 0.45), opacity: 0 }, { offset: 1, opacity: 0 }
+      ], { duration: LOOP, iterations: Infinity }));
+    });
+    /* orange flash when the fin lands, a small fin pulse mid-hold, and a warm glint sweeping across the mark */
+    var glow = logo.querySelector('.lg-glow'), glint = logo.querySelector('.lg-glint'), finPath = logo.querySelector('[data-p="fin"] path');
+    if (glow) anims.push(glow.animate([
+      { offset: 0, opacity: 0 }, { offset: o(1.95), opacity: 0 }, { offset: o(2.15), opacity: .9 }, { offset: o(3.1), opacity: 0 }, { offset: 1, opacity: 0 }
+    ], { duration: LOOP, iterations: Infinity }));
+    if (finPath) anims.push(finPath.animate([
+      { offset: 0, transform: 'scale(1)' }, { offset: o(5.9), transform: 'scale(1)', easing: OUT },
+      { offset: o(6.1), transform: 'scale(1.16)' }, { offset: o(6.7), transform: 'scale(1)' }, { offset: 1, transform: 'scale(1)' }
+    ], { duration: LOOP, iterations: Infinity }));
+    var sweep = function (el, from) {
+      return el.animate([{ transform: tr(0, 0), opacity: 0 }, { opacity: 1, offset: .15 }, { opacity: 1, offset: .85 }, { transform: tr(560, 0), opacity: 0 }],
+        { duration: 1000, easing: 'cubic-bezier(.4,0,.2,1)', delay: from || 0 });
+    };
+    if (glint) {
+      anims.push(glint.animate([
+        { offset: 0, transform: tr(0, 0), opacity: 0 }, { offset: o(3.6), transform: tr(0, 0), opacity: 0 },
+        { offset: o(3.75), transform: tr(60, 0), opacity: 1 }, { offset: o(4.6), transform: tr(540, 0), opacity: 1 },
+        { offset: o(4.7), transform: tr(560, 0), opacity: 0 }, { offset: 1, transform: tr(560, 0), opacity: 0 }
+      ], { duration: LOOP, iterations: Infinity }));
+      /* hover / keyboard focus: extra glint while the logo is fully built */
+      var brand = logo.closest('a') || logo, busy = false;
+      var again = function () {
+        var t = (anims[0].currentTime || 0) % LOOP / 1000;
+        if (busy || t < 2.6 || t > 8.0) return;
+        busy = true; var a = sweep(glint); a.onfinish = a.oncancel = function () { busy = false; };
+      };
+      if (brand) { brand.addEventListener('pointerenter', again); brand.addEventListener('focus', again); }
+    }
+    /* save battery: pause when the header is off screen or the tab is hidden */
+    var inView = true, paused = false;
+    var sync = function () {
+      var stop = !inView || document.hidden;
+      if (stop === paused) return; paused = stop;
+      anims.forEach(function (a) { stop ? a.pause() : a.play(); });
+    };
+    document.addEventListener('visibilitychange', sync);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; sync(); }).observe(logo);
+    
+  });
+})();
