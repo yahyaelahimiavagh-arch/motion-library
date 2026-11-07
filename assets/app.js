@@ -11,7 +11,7 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store = { get(k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch (e) {} } };
 
 /* ---------- data prep ---------- */
-const ACC = { 1: '#3E7BE0', 2: '#EB3721', 3: '#1E9E94', 4: '#6B7CE8', 5: '#16A312', 6: '#E0642F', 7: '#D6DF1A', 8: '#D21212', 9: '#F65A0E', 10: '#C99A72', 11: '#5FA7F2', 12: '#9B8CFF' };
+const ACC = { 1: '#3E7BE0', 2: '#EB3721', 3: '#1E9E94', 4: '#6B7CE8', 5: '#16A312', 6: '#E0642F', 7: '#D6DF1A', 8: '#D21212', 9: '#F65A0E', 10: '#C99A72', 11: '#5FA7F2', 12: '#9B8CFF', 13: '#E8861C', 14: '#6CF0B8', 15: '#3FD0D8' };
 const CATC = { type: 'var(--c-type)', ui: 'var(--c-ui)', data: 'var(--c-data)', fx: 'var(--c-fx)', layout: 'var(--c-layout)' };
 const inkOn = hex => { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#10141A' : '#FFFFFF' };
 const shortTitle = v => v.title.split(':')[0].trim();
@@ -82,7 +82,7 @@ const TOTAL = VIDEOS.reduce((s, v) => s + v.dur, 0);
 const SLOT = 3.4;           /* seconds each technique is shown */
 let pos = 0, playing = !reduced, scrubbing = false, shown = -1, heroVisible = true, monT;
 
-clipsEl.style.gridTemplateColumns = VIDEOS.map(v => 'minmax(30px,' + v.dur + 'fr)').join(' ');
+clipsEl.style.gridTemplateColumns = VIDEOS.map(v => 'minmax(0,' + v.dur + 'fr)').join(' ');
 clipsEl.innerHTML = VIDEOS.map((v, i) => '<div class="clip" style="--ac:' + v.ac + ';--ac-ink:' + inkOn(v.ac) + ';--i:' + i + '"><span class="rn">' + fa(v.n) + '</span><span class="rt">' + esc(shortTitle(v)) + '</span></div>').join('');
 const clipEls = $$('.clip', clipsEl);
 (() => {
@@ -290,11 +290,11 @@ $$('.chap, #reels, #colors, #kit').forEach(s => spy.observe(s));
 
 /* ---------- category reels ---------- */
 const REELS = {
-  type: ['kinetic', 'softwipe', 'wordcuts', 'chroma', 'neonslam', 'ovalmark', 'sigdraw'],
-  ui: ['glass', 'stack', 'list3d', 'chips', 'slabbtn', 'liquidmorph', 'promptpill'],
+  type: ['kinetic', 'softwipe', 'wordcuts', 'chroma', 'kineticwords', 'ovalmark', 'sigdraw'],
+  ui: ['glass', 'stack', 'list3d', 'chips', 'modelpicker', 'liquidmorph', 'promptpill'],
   data: ['counter', 'slider', 'chart', 'clockdial', 'ringcount', 'timerrows', 'statboard'],
-  fx: ['focus', 'particles', 'scenecut', 'lightbloom', 'dustdissolve', 'gridwave', 'markburst'],
-  layout: ['frame', 'reticle', 'hexnodes', 'nodeflow', 'posterred', 'cornerhud', 'hubnodes']
+  fx: ['focus', 'particles', 'scenecut', 'dotreveal', 'dustdissolve', 'markburst', 'lightbloom'],
+  layout: ['frame', 'reticle', 'hexnodes', 'nodeflow', 'emblemassemble', 'cornerhud', 'hubnodes']
 };
 const RSLOT = 4.2;
 let rcat = 'type', ri = 0, rt = 0, rplaying = !reduced, rvisible = false, rready = false, rfront = null, rtok = 0, rlast = performance.now();

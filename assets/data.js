@@ -2319,3 +2319,411 @@ TOKENS_CSS = TOKENS_CSS.replace(/\n\}$/, `
   /* video 12: AI explainer */
   --ai-black:#02030B; --ai-white:#F4F6FF; --ai-muted:#9AA3C0; --ai-glow:#8FB3FF; --ai-violet:#5B2E9E; --ai-coral:#E0785C; --ai-green:#62D394; --ai-pink:#F26CA7;
 }`);
+
+/* ===== Video 13: portfolio intro. Halftone sunset reveal, selection-handle prompt box, kinetic words with glyph confetti, grid-framed card collage, arc glow outro ===== */
+const P13_CSS = `.stage{background:#FDF1D9;font-family:'Inter Tight',sans-serif;color:#1A1410}
+.lb{position:absolute;left:1rem;bottom:1rem;font:600 .8rem/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#B8661A;opacity:.9;z-index:9}
+.sky{position:absolute;inset:0;background:radial-gradient(40% 12% at 20% 12%,#fff 0%,transparent 70%),radial-gradient(34% 10% at 78% 22%,#fff 0%,transparent 70%),linear-gradient(180deg,#409AEF 0%,#9CCBF5 36%,#C6DDA0 50%,#86AE4C 66%,#5C6D5C 100%)}`;
+const P13_JS = `const $=id=>document.getElementById(id);`;
+const P13_SKY = `<div class="sky" id="sky"></div>`;
+
+TECHS.push(
+{ v:13, id:'dotreveal', fa:'Halftone sunset reveal', en:'Halftone Dot Reveal', cat:'fx',
+  when:'The very first beat of an intro. A small orange blob made of dots grows until the dots cover the frame, then the dots shrink from the center outward and reveal the first scene underneath.',
+  timing:'Blob 0 to 0.9 s (radius 2.2 → 3.2 rem) · grows to full frame 0.9 to 1.9 s · dots shrink outward 1.7 to 3.2 s · dot pitch 1 rem · orange #F28F4B at the center → pink #E27BA0 at the edges',
+  where:'0 to 3 s', colors:['#000000','#F28F4B','#E27BA0','#409AEF'], dur:5.4,
+  css:P13_CSS+`.stage{background:#000}.sky{opacity:0}.cv{position:absolute;inset:0;width:100%;height:100%}`,
+  html:`<div class="stage">${P13_SKY}<canvas class="cv" id="cv"></canvas><div class="lb" id="lb"></div></div>`,
+  js:`${P13_JS}
+const cv=$('cv'),g=cv.getContext('2d'),W=270,H=480,C=10;cv.width=W;cv.height=H;
+play(5.4,t=>{
+  g.clearRect(0,0,W,H);
+  const blob=lerp(22,32,seg(t,0,.9)),cover=lerp(blob,430,ease.inOut(seg(t,.9,1.9))),rev=seg(t,1.7,3.2);
+  $('sky').style.opacity=seg(t,1.6,1.9)*(1-seg(t,4.6,5.2));
+  for(let y=0;y<H/C;y++)for(let x=0;x<W/C;x++){
+    const px=x*C+C/2,py=y*C+C/2,d=Math.hypot(px-135,py-230);
+    if(d>cover)continue;
+    let r=C*.56*clamp((cover-d)/16+.15,0,1)*(1-clamp((rev*560-d)/170,0,1));
+    if(t<.9)r*=.9+.1*Math.sin(t*7+d*.06);
+    if(r<.3)continue;
+    const m=clamp(d/300);g.fillStyle='rgb('+Math.round(lerp(242,226,m))+','+Math.round(lerp(143,123,m))+','+Math.round(lerp(75,160,m))+')';
+    g.beginPath();g.arc(px,py,r,0,7);g.fill();
+  }
+  $('lb').textContent=t<.9?'BLOB':t<1.9?'COVER':'REVEAL';
+});` },
+
+{ v:13, id:'handlebox', fa:'Prompt box with selection handles', en:'Selection-handle Prompt Box', cat:'ui',
+  when:'Introducing a person by letting the intro "type itself". A white rounded box sits on the photo with four black square handles, like a selected layer in a design tool; the text types in, the last phrase is orange, and a cursor presses the send button.',
+  timing:'Box pop 0.4 s · typing 0.5 to 3 s (30 chars per second) · camera push 1× → 1.15× during typing, back to 1× 3.1 to 3.8 s · cursor in 3.0 to 3.6 s · press at 3.7 s (button goes lilac #8A74B0) · exit 4.6 s',
+  where:'2.8 to 7 s', colors:['#FDFDFD','#E8861C','#8A74B0','#111111','#409AEF'], dur:5.4,
+  css:P13_CSS+`.grp{position:absolute;left:2.2rem;top:19rem;width:22.6rem;transform-origin:50% 50%}
+.hb{position:relative;min-height:3.2rem;background:#fff;border-radius:.8rem;padding:1rem 3.4rem 1rem 1rem;box-shadow:0 .6rem 2rem rgba(0,0,0,.18);font:500 .85rem/1.25 'Inter Tight',sans-serif}
+.hb u{text-decoration:none;color:#E8861C}
+.hd{position:absolute;width:.55rem;height:.55rem;background:#111}
+.sn{position:absolute;right:.7rem;bottom:.7rem;width:1.7rem;height:1.7rem;border-radius:.5rem;background:#111;color:#fff;display:grid;place-items:center;font:700 .9rem/1 'Inter Tight',sans-serif}
+.cu{position:absolute;width:1.5rem;height:1.5rem;filter:drop-shadow(0 .2rem .3rem rgba(0,0,0,.4))}`,
+  html:`<div class="stage">${P13_SKY}<div class="grp" id="g"><div class="hb" id="hb"><i class="hd" style="left:-.28rem;top:-.28rem"></i><i class="hd" style="right:-.28rem;top:-.28rem"></i><i class="hd" style="left:-.28rem;bottom:-.28rem"></i><i class="hd" style="right:-.28rem;bottom:-.28rem"></i><span id="tx"></span><b class="sn" id="sn">↑</b></div><svg class="cu" id="cu" viewBox="0 0 20 20"><path d="M2 2L17 8L10 10L8 17Z" fill="#111" stroke="#fff" stroke-width="1.2"/></svg></div><div class="lb" id="lb"></div></div>`,
+  js:`${P13_JS}
+const A="Hi, I'm Alex Rowan, a Motion Designer with ",B='6 years of experience bringing ideas to life.',ALL=A+B;
+play(5.4,t=>{
+  const pop=ease.back(seg(t,0,.5)),z=lerp(1,1.15,ease.out(seg(t,.4,2.8)))*lerp(1,1/1.15,ease.inOut(seg(t,3.1,3.8)));
+  const g=$('g');g.style.transform='scale('+(z*lerp(.7,1,pop))+')';g.style.opacity=pop*(1-seg(t,4.6,5.1));
+  const n=Math.floor(seg(t,.5,3)*ALL.length),s=ALL.slice(0,n),i=Math.min(n,A.length+8);
+  const a=s.slice(0,Math.min(s.length,A.length+8)),b=s.slice(A.length+8);
+  $('tx').innerHTML=a+(b?'<u>'+b+'</u>':'')+(n<ALL.length?'<u>|</u>':'');
+  const m=ease.inOut(seg(t,3,3.6));$('cu').style.left=lerp(24,19.6,m)+'rem';$('cu').style.top=lerp(8,4.6,m)+'rem';$('cu').style.opacity=seg(t,3,3.2);
+  const pr=seg(t,3.7,3.85);$('sn').style.transform='scale('+(1-.15*pr)+')';$('sn').style.background=t>3.7?'#8A74B0':'#111';
+  $('lb').textContent=t<3?'TYPING':t<3.7?'CURSOR':'SEND';
+});` },
+
+{ v:13, id:'kineticwords', fa:'Words with orange emphasis and glyph confetti', en:'Kinetic Words with Glyph Burst', cat:'type',
+  when:'A one-line pitch that changes meaning word by word. Each phrase is one line of calm dark type on cream with a single orange word; while it holds, small slashes, arrows and asterisks fly outward around it.',
+  timing:'4 phrases of 1.2 s · word blur-in 0.35 s · orange word color-wipes 0.3 s later · 16 glyphs per phrase flying 0.9 s, opacity 0 → 1 → 0 · exit blur 0.25 s',
+  where:'7 to 10.7 s', colors:['#FDF1D9','#1A1410','#E8861C','#B8661A'], dur:5.4,
+  css:P13_CSS+`.ph{position:absolute;left:0;right:0;top:22.4rem;text-align:center;font:500 1.8rem/1 'Inter Tight',sans-serif;white-space:nowrap}
+.ph u{text-decoration:none;color:#E8861C}
+.gl{position:absolute;font:600 1.1rem/1 'Inter Tight',sans-serif;color:#1A1410}.gl.o{color:#E8861C}`,
+  html:`<div class="stage"><div id="gs"></div><div class="ph" id="ph"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P13_JS}
+const PH=[['I turn ','ideas'],['into ','visuals'],['And visuals ','into'],['','Motion']],GL=['/','<','>','*','/','*'],gs=$('gs'),ph=$('ph');
+const hs=n=>{const x=Math.sin(n*127.1)*43758.5453;return x-Math.floor(x)};
+const gl=[];for(let p=0;p<PH.length;p++)for(let i=0;i<16;i++){const e=document.createElement('i');e.className='gl'+(i%3==0?' o':'');e.textContent=GL[Math.floor(hs(p*40+i)*GL.length)];e.style.opacity=0;gs.appendChild(e);gl.push([e,p,hs(p*9+i+1)*6.28,2+hs(p*5+i+3)*10,hs(i+p)*90])}
+play(5.4,t=>{
+  const p=Math.min(3,Math.floor(t/1.2)),u=t-p*1.2;
+  ph.innerHTML=PH[p][0]+'<u style="opacity:'+ease.out(seg(u,.3,.6))+'">'+PH[p][1]+'</u>';
+  const k=ease.out(seg(u,0,.35))*(1-seg(u,1.0,1.2));ph.style.opacity=k;ph.style.filter='blur('+(1-k)*.5+'rem)';
+  gl.forEach(([e,q,a,r,rot])=>{const v=q===p?seg(u,.1,1):0,o=Math.sin(v*Math.PI);
+    e.style.opacity=o;e.style.left=(13.5+Math.cos(a)*(3+r*v*1.3))+'rem';e.style.top=(23.6+Math.sin(a)*(3+r*v*.9))+'rem';e.style.transform='rotate('+(rot*v)+'deg)'});
+  $('lb').textContent='PHRASE '+(p+1)+'/4';
+});` },
+
+{ v:13, id:'gridcards', fa:'Grid-framed image and fanning card collage', en:'Grid Frame to Card Collage', cat:'layout',
+  when:'Showing a body of work. Thin grid lines draw across the page, one image sits inside a grid cell, then a pile of cards fans out from it so the page looks like a pin-board of projects.',
+  timing:'Grid lines draw 0.8 s · hero card scales 0.6 → 1 in 0.7 s · collage cards pop 0.07 s apart from 1.8 s with back-ease · each card drifts ±0.3 rem · exit 4.6 s',
+  where:'8 to 11 s and 10.5 to 11.8 s', colors:['#FFFFFF','#FFD21F','#2A1F6B','#7B5CFF','#111111','#F6C9A8'], dur:5.4,
+  css:P13_CSS+`.stage{background:linear-gradient(180deg,#fff 0%,#FFF6EC 70%,#FBD9BE 100%)}
+.gr{position:absolute;inset:0;width:27rem;height:48rem}
+.gr line{stroke:#9A8F86;stroke-width:.06}
+.cd{position:absolute;border-radius:.4rem;box-shadow:0 .5rem 1.2rem rgba(0,0,0,.2);overflow:hidden;font:700 1rem/1 'Inter Tight',sans-serif;display:grid;place-items:center}`,
+  html:`<div class="stage"><svg class="gr" viewBox="0 0 27 48"><g id="gl"><line x1="9" y1="0" x2="9" y2="48"/><line x1="18" y1="0" x2="18" y2="48"/><line x1="0" y1="16" x2="27" y2="16"/><line x1="0" y1="32" x2="27" y2="32"/></g></svg><div id="cs"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P13_JS}
+const L=[...$('gl').children];L.forEach(l=>{const n=l.getAttribute('x1')===l.getAttribute('x2')?48:27;l.style.strokeDasharray=n;l.style.strokeDashoffset=n});
+const D=[['linear-gradient(160deg,#6CA8E8,#E8C8A0)','',9,18.4,9,12,0],['#FFD21F','',3,20,6,6,-6],['linear-gradient(135deg,#2A1F6B,#7B5CFF)','Fund your',4,30,8,5.4,4],['#fff','Hello',12,24.5,7,5,-3],['#111','',15,31,8,6.4,3],['#F6C9A8','',2,12,6,7,5],['linear-gradient(135deg,#1E8F7A,#9BE3C8)','',17,13.4,7,7,-4]];
+const cs=$('cs');const E=D.map(d=>{const e=document.createElement('div');e.className='cd';e.style.background=d[0];e.style.color=d[0]==='#fff'||d[0]==='#FFD21F'?'#111':'#fff';e.textContent=d[1];e.style.left=d[2]+'rem';e.style.top=d[3]+'rem';e.style.width=d[4]+'rem';e.style.height=d[5]+'rem';cs.appendChild(e);return e});
+play(5.4,t=>{
+  L.forEach((l,i)=>{const n=i<2?48:27;l.style.strokeDashoffset=n*(1-ease.out(seg(t,i*.1,.8+i*.1)))});
+  E.forEach((e,i)=>{const s=i===0?.2:1.8+(i-1)*.07,k=i===0?ease.out(seg(t,s,s+.7)):ease.back(seg(t,s,s+.6)),o=1-seg(t,4.6,5.1);
+    e.style.opacity=Math.min(1,k*3)*o;e.style.transform='translate('+Math.sin(t*1.3+i)*.3+'rem,'+Math.cos(t*1.1+i)*.3+'rem) rotate('+(D[i][6]*k)+'deg) scale('+(i===0?lerp(.6,1,k):lerp(.3,1,k))+')'});
+  $('lb').textContent=t<1.8?'GRID + HERO':'COLLAGE';
+});` },
+
+{ v:13, id:'arcglow', fa:'Warm arc glow rising under a word swap', en:'Rising Arc Glow Outro', cat:'fx',
+  when:'The closing line. A black frame with a curved peach-to-plum glow rising from the bottom edge like a horizon, and one centered word at a time swapping with a short blur.',
+  timing:'Glow rises 19 rem over 3 s (ease-out) · words 1 s each · word blur 0.25 s in and out · four words: Let\'s / Let\'s Make / Things / Move · plum ring #2A1650 above the glow',
+  where:'11 to 12.6 s', colors:['#000000','#DEA885','#9B655A','#683E45','#2A1650'], dur:5.4,
+  css:P13_CSS+`.stage{background:#000;color:#F6EDE3}
+.arc{position:absolute;left:-22rem;width:71rem;height:34rem;border-radius:50%;background:radial-gradient(closest-side,#DEA885 0%,#9B655A 34%,#683E45 58%,#1A0F1A 80%,transparent 100%)}
+.ring{position:absolute;left:-18rem;width:63rem;height:34rem;border-radius:50%;border:1.5rem solid #2A1650;filter:blur(1.4rem);opacity:.5}
+.w{position:absolute;left:0;right:0;top:22rem;text-align:center;font:500 1.6rem/1 'Inter Tight',sans-serif}`,
+  html:`<div class="stage"><i class="ring" id="rg"></i><i class="arc" id="ac"></i><div class="w" id="w"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P13_JS}
+const W=["Let's","Let's Make",'Things','Move'];
+play(5.4,t=>{
+  const r=ease.out(seg(t,0,3));$('ac').style.top=lerp(54,35,r)+'rem';$('rg').style.top=lerp(47,27,r)+'rem';
+  const i=Math.min(3,Math.floor(t/1)),u=t-i;
+  $('w').textContent=W[i];const k=ease.out(seg(u,0,.25))*(1-seg(u,.78,1.0)*(i<3?1:0));$('w').style.opacity=k;$('w').style.filter='blur('+(1-k)*.5+'rem)';
+  $('lb').textContent='GLOW '+Math.round(r*100)+'%';
+});` }
+);
+
+VIDEOS.push({ id:'v13', n:13, title:'Designer portfolio intro: halftone to cream', meta:'12.6 seconds · 1080×608 · a landscape self-introduction: dot reveal, prompt box, kinetic words, card collage, glow outro',
+  mood:'Warm and friendly. A sunny photo and a cream paper page with calm dark type and one orange word at a time, closed by a black frame with a peach horizon glow. It feels like a personal note, not an ad.',
+  rules:[
+    'The first frame is only an orange blob made of dots; the dots become the transition. The next scene is revealed by shrinking them, not by a fade.',
+    'The intro is "written" in a prompt box: selection handles on the corners make it look like a layer you are editing.',
+    'Only one word per phrase gets the accent color, and it is the word the sentence is about.',
+    'Little glyphs (slash, angle bracket, asterisk) fly around a phrase while it holds. They add energy without adding content.',
+    'Work is shown as a pile of cards on a hairline grid, not as a slideshow.',
+    'The outro is a single word at a time over a rising glow.'
+  ],
+  palette:[
+    { g:'Scenes', c:[['#FDF1D9','Cream page'],['#FCE9BE','Warm cream'],['#409AEF','Sky blue'],['#5C6D5C','Grass'],['#000000','Black']] },
+    { g:'Accent and glow', c:[['#E8861C','Orange word'],['#F28F4B','Dot orange'],['#E27BA0','Dot pink'],['#DEA885','Glow peach'],['#9B655A','Glow clay'],['#683E45','Glow plum'],['#8A74B0','Button pressed']] }
+  ] });
+
+TOKENS_CSS = TOKENS_CSS.replace(/\n\}$/, `
+  /* video 13: portfolio intro */
+  --pf-cream:#FDF1D9; --pf-ink:#1A1410; --pf-orange:#E8861C; --pf-dot:#F28F4B; --pf-glow:#DEA885; --pf-plum:#683E45; --pf-sky:#409AEF;
+}`);
+
+/* ===== Video 14: AI chat interface intro, shown above a sound-design timeline. Light-line logo, dark prompt box with model picker, hand click into spinner, code window ===== */
+const P14_CSS = `.stage{background:#050505;font-family:'Inter Tight',sans-serif;color:#F2F2F2}
+.lb{position:absolute;left:1rem;bottom:1rem;font:600 .8rem/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#7FD3B4;opacity:.9;z-index:9}
+.hl{position:absolute;left:0;right:0;top:0;text-align:center;font:600 .78rem/1 'Inter Tight',sans-serif;padding-top:1rem;color:#fff}
+.vig{position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 46%,transparent 0%,rgba(0,0,0,.55) 100%);pointer-events:none}`;
+const P14_JS = `const $=id=>document.getElementById(id);const blurIn=(el,k,r=.5)=>{el.style.opacity=k;el.style.filter='blur('+(1-k)*r+'rem)'};`;
+const P14_PET = `<g fill="none" stroke="#fff" stroke-width=".11" stroke-linecap="round">${Array.from({length:6},(_,i)=>`<path transform="rotate(${i*60})" d="M0 -.12C.55 -.1 .62 -.7 0 -.98C-.62 -.7 -.55 -.1 0 -.12Z"/>`).join('')}</g>`;
+
+TECHS.push(
+{ v:14, id:'linelogo', fa:'Light line growing into a logo and wordmark', en:'Light-line Logo Reveal', cat:'type',
+  when:'Opening a product intro on black. A thin vertical streak of light appears, a soft dark halo opens around it, a small ring logo takes its place, slides left, and the product name types out beside it with a version number that rolls to the new one.',
+  timing:'Streak 0.5 s (height 0 → 6 rem) · halo 0.5 s · logo pop 0.45 s · logo slides 4.3 rem left at 1.4 s · name letters 0.07 s apart from 1.4 s · version digit rolls 0.35 s at 3.2 s · exit 4.6 s',
+  where:'0.4 to 4.2 s', colors:['#050505','#FFFFFF','#8A8A8A','#111111'], dur:5.4,
+  css:P14_CSS+`.st{position:absolute;left:13.35rem;top:19rem;width:.3rem;height:6rem;background:linear-gradient(180deg,transparent,#fff,transparent);filter:blur(.08rem);transform-origin:50% 50%}
+.hal{position:absolute;left:3.5rem;top:12.5rem;width:20rem;height:20rem;border-radius:50%;background:radial-gradient(closest-side,rgba(60,60,60,.55),transparent)}
+.lg{position:absolute;left:11.3rem;top:20.2rem;width:4.4rem;height:4.4rem}
+.nm{position:absolute;left:12.2rem;top:21.4rem;font:600 1.5rem/1 'Inter Tight',sans-serif;white-space:nowrap}
+.nm i{display:inline-block;font-style:normal}
+.vr{position:relative;display:inline-block;height:1.5rem;width:2.1rem;overflow:hidden;vertical-align:top;margin-left:.5rem;color:#9A9A9A}
+.vr b{position:absolute;left:0;font-weight:600}`,
+  html:`<div class="stage"><div class="hl">Motion Design</div><i class="hal" id="hal"></i><i class="st" id="st"></i><svg class="lg" id="lg" viewBox="-1.1 -1.1 2.2 2.2">${P14_PET}</svg><div class="nm" id="nm"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P14_JS}
+const NM='Nexa',nm=$('nm');nm.innerHTML=[...NM].map(c=>'<i>'+c+'</i>').join('')+'<span class="vr"><b id="v1" style="top:0">5.1</b><b id="v2" style="top:1.5rem">5.4</b></span>';
+const G=[...nm.querySelectorAll('i')];
+play(5.4,t=>{
+  const s=ease.out(seg(t,.2,.7))*(1-seg(t,.7,.95)),h=ease.out(seg(t,.3,.8));
+  $('st').style.transform='scaleY('+ease.out(seg(t,.2,.7))+')';$('st').style.opacity=s;$('hal').style.opacity=h*(1-seg(t,4.4,5));
+  const p=ease.back(seg(t,.7,1.15)),sl=ease.inOut(seg(t,1.4,2));
+  $('lg').style.opacity=seg(t,.7,.9)*(1-seg(t,4.4,5));$('lg').style.transform='translateX('+(-4.3*sl)+'rem) scale('+lerp(.5,1,p)+') rotate('+lerp(-60,0,p)+'deg)';
+  G.forEach((g,i)=>blurIn(g,ease.out(seg(t,1.5+i*.07,1.9+i*.07)),.4));
+  nm.querySelector('.vr').style.opacity=seg(t,1.9,2.3);const rl=ease.inOut(seg(t,3.2,3.55));$('v1').style.transform='translateY('+(-1.5*rl)+'rem)';$('v2').style.transform='translateY('+(-1.5*rl)+'rem)';
+  nm.style.opacity=1-seg(t,4.4,5);
+  $('lb').textContent=t<.7?'STREAK':t<1.4?'LOGO':t<3.2?'NAME':'VERSION';
+});` },
+
+{ v:14, id:'modelpicker', fa:'Dark prompt box with a model dropdown', en:'Dark Prompt Box with Model Picker', cat:'ui',
+  when:'Showing how someone talks to an AI and switches model on the way. A dark glass field types a request, a small chip on the right opens a three-item list, the highlight steps down to the newest model and the chip label changes.',
+  timing:'Box 0.4 s · typing 0.6 to 2 s · list opens 2.3 s (0.25 s) · highlight steps 0.3 s each, selects at 3.3 s (blue #2F6BFF) · chip label swaps at 3.4 s · camera 1.2× → 1× over 4 s · exit 4.6 s',
+  where:'4.2 to 8 s', colors:['#101012','#1E1E22','#2F6BFF','#8A8A8A','#F2F2F2'], dur:5.4,
+  css:P14_CSS+`.grp{position:absolute;left:2rem;top:19rem;width:23rem;transform-origin:50% 40%}
+.bx{position:relative;height:6rem;border-radius:1rem;background:#161618;border:1px solid #2A2A2E;box-shadow:0 0 3rem rgba(80,110,200,.12)}
+.ty{position:absolute;left:1rem;top:1rem;font:500 .85rem/1 'Inter Tight',sans-serif;color:#E8E8EA;white-space:nowrap}
+.tl{position:absolute;left:1rem;bottom:.8rem;font:500 .6rem/1 'Inter Tight',sans-serif;color:#8A8A8A}
+.ch{position:absolute;right:4rem;bottom:.6rem;font:600 .65rem/1 'Inter Tight',sans-serif;padding:.35rem .5rem;border-radius:.4rem;background:#232327;color:#D8D8DC}
+.ar{position:absolute;right:.7rem;bottom:.55rem;width:1.5rem;height:1.5rem;border-radius:50%;background:#2A2A2E;display:grid;place-items:center;font-size:.8rem}
+.dd{position:absolute;right:3.2rem;top:6.3rem;width:7rem;border-radius:.6rem;background:#1B1B1F;border:1px solid #2F2F34;padding:.3rem;opacity:0;transform-origin:100% 0}
+.dd div{font:500 .62rem/1 'Inter Tight',sans-serif;padding:.45rem .5rem;border-radius:.35rem;color:#CFCFD4}`,
+  html:`<div class="stage"><div class="grp" id="g"><div class="bx" id="bx"><div class="ty" id="ty"></div><div class="tl">⌘ Tools</div><div class="ch" id="ch">5.1 ⌄</div><div class="ar">→</div></div><div class="dd" id="dd"><div>Model 4</div><div>Model 5</div><div>Model 5.4</div></div></div><div class="lb" id="lb"></div></div>`,
+  js:`${P14_JS}
+const T='Help me write a code....',R=[...$('dd').children];
+play(5.4,t=>{
+  const k=ease.out(seg(t,0,.4)),z=lerp(1.2,1,ease.out(seg(t,0,4))),o=seg(t,4.6,5.1);
+  const g=$('g');g.style.opacity=k*(1-o);g.style.transform='scale('+z+')';g.style.filter='blur('+o*.5+'rem)';
+  const n=Math.floor(seg(t,.6,2)*T.length);$('ty').innerHTML=n?T.slice(0,n)+(t<2.1?'<span style="color:#7FA8FF">|</span>':''):'<span style="color:#6A6A70">Ask anything</span><span style="color:#7FA8FF">|</span>';
+  const d=ease.out(seg(t,2.3,2.55));$('dd').style.opacity=d;$('dd').style.transform='scale('+lerp(.9,1,d)+')';
+  const hi=t<2.7?0:t<3.0?1:2;R.forEach((r,i)=>{r.style.background=(t>=2.4&&i===hi)?(t>3.3?'#2F6BFF':'#2B2B30'):'transparent';r.style.color=(t>3.3&&i===2)?'#fff':'#CFCFD4'});
+  $('ch').textContent=t>3.4?'5.4 ⌄':'5.1 ⌄';
+  if(t>3.7)$('dd').style.opacity=1-seg(t,3.7,3.95);
+  $('lb').textContent=t<2.3?'TYPING':t<3.3?'PICKING':'MODEL 5.4';
+});` },
+
+{ v:14, id:'handspinner', fa:'Hand press that turns into a loading spinner', en:'Hand Press to Spinner', cat:'fx',
+  when:'The moment of "send". A small round arrow button sits alone, a pointing hand presses it (the button swells and glows), then the button dissolves into eight tick marks that spin as a loader.',
+  timing:'Hand rises 0.6 s · press 1.2 to 1.5 s (button 1× → 1.35×, ring 0.5 s) · button → ticks 2.1 to 2.5 s · 8 ticks, opacity chase at 1.1 revolutions per second · bottom-right light #2A2A30',
+  where:'8 to 10.5 s', colors:['#050505','#FFFFFF','#2A2A30','#9A9A9A'], dur:5.4,
+  css:P14_CSS+`.bt{position:absolute;left:12.3rem;top:22.3rem;width:2.4rem;height:2.4rem;border-radius:50%;background:#18181A;border:1px solid #3A3A40;display:grid;place-items:center;font:600 1.1rem/1 'Inter Tight',sans-serif}
+.rg{position:absolute;left:12.3rem;top:22.3rem;width:2.4rem;height:2.4rem;border-radius:50%;border:2px solid rgba(255,255,255,.7);opacity:0}
+.hd{position:absolute;width:2.2rem;height:2.6rem;filter:drop-shadow(0 .3rem .5rem rgba(0,0,0,.6))}
+.sp{position:absolute;left:12.3rem;top:22.3rem;width:2.4rem;height:2.4rem}
+.glow{position:absolute;right:-5rem;bottom:-5rem;width:16rem;height:16rem;border-radius:50%;background:#2A2A30;filter:blur(3rem)}`,
+  html:`<div class="stage"><i class="glow"></i><div class="bt" id="bt">↑</div><i class="rg" id="rg"></i><svg class="sp" id="sp" viewBox="-12 -12 24 24"></svg><svg class="hd" id="hd" viewBox="0 0 22 26"><path d="M7 3.2C7 2 9.2 2 9.2 3.2V11C9.8 10 12 10 12 11.4 12.6 10.6 14.6 10.8 14.8 12 15.6 11.4 17.6 11.8 17.6 13.2V18C17.6 21.5 15.4 24 12 24 8.8 24 7.2 22.4 5.8 20L2.6 14.6C2 13.4 3.6 12.4 4.6 13.4L7 15.6Z" fill="#fff" stroke="#111" stroke-width=".7"/></svg><div class="lb" id="lb"></div></div>`,
+  js:`${P14_JS}
+const sp=$('sp'),NS='http://www.w3.org/2000/svg',TK=[];for(let i=0;i<8;i++){const l=document.createElementNS(NS,'line');l.setAttribute('x1',0);l.setAttribute('x2',0);l.setAttribute('y1',-8);l.setAttribute('y2',-4.5);l.setAttribute('stroke','#fff');l.setAttribute('stroke-width',1.4);l.setAttribute('stroke-linecap','round');l.setAttribute('transform','rotate('+i*45+')');sp.appendChild(l);TK.push(l)}
+play(5.4,t=>{
+  const h=ease.out(seg(t,0,.6)),pr=Math.sin(Math.PI*seg(t,1.2,1.6))*.5+.5*seg(t,1.4,2.1)*(1-seg(t,2.1,2.5));
+  $('hd').style.left=lerp(17,13.4,h)+'rem';$('hd').style.top=lerp(36,24.1,h)+'rem';$('hd').style.opacity=h*(1-seg(t,2,2.4));$('hd').style.transform='scale('+(1-.12*Math.sin(Math.PI*seg(t,1.2,1.6)))+')';
+  const m=1-ease.out(seg(t,2.1,2.5));const sc=(1+.35*Math.sin(Math.PI*seg(t,1.2,1.7)));
+  $('bt').style.transform='scale('+sc*m+')';$('bt').style.opacity=m;$('bt').style.boxShadow='0 0 '+(Math.sin(Math.PI*seg(t,1.2,1.7))*2)+'rem rgba(255,255,255,.5)';
+  const r=seg(t,1.2,1.8);$('rg').style.opacity=r>0&&r<1?1-r:0;$('rg').style.transform='scale('+(1+r*1.2)+')';
+  const s=ease.out(seg(t,2.2,2.6));sp.style.opacity=s*(1-seg(t,5,5.4));
+  TK.forEach((l,i)=>l.setAttribute('opacity',.15+.85*(((i/8-t*1.1)%1+1)%1)));
+  $('lb').textContent=t<1.2?'APPROACH':t<2.2?'PRESS':'LOADING';
+});` },
+
+{ v:14, id:'codewindow', fa:'Glowing code window rising and collapsing', en:'Glowing Code Window', cat:'ui',
+  when:'Showing the result of a "write code" prompt. A narrow window appears in the dark with a colored glow behind it; colored lines of code write themselves, the window grows and then folds back into the logo.',
+  timing:'Window rises 0.7 s (scale 0.6 → 1, back-ease) · 12 code lines 0.12 s apart from 0.6 s · glow pulses at 1.4 Hz · scale 1 → 1.35 over 3 s · collapse 0.5 s at 4.3 s into a dot',
+  where:'10.5 to 12 s', colors:['#0B0B0D','#E6D84F','#B58CFF','#F4F4F4','#FF7AA8','#333338'], dur:5.4,
+  css:P14_CSS+`.wn{position:absolute;left:9.6rem;top:14rem;width:7.8rem;height:14rem;border-radius:.5rem;background:#0B0B0D;border:1px solid #333338;padding:1.1rem .6rem .5rem;overflow:hidden}
+.wn::before{content:'Result';position:absolute;left:0;right:0;top:.25rem;text-align:center;font:600 .45rem/1 'Inter Tight',sans-serif;color:#9A9A9A}
+.cl{height:.28rem;border-radius:.15rem;margin-bottom:.42rem;transform-origin:0 50%}
+.gw{position:absolute;left:8.4rem;top:14.4rem;width:10.2rem;height:13rem;border-radius:50%;background:linear-gradient(135deg,#B58CFF,#E6D84F);filter:blur(2.2rem);opacity:.35}`,
+  html:`<div class="stage"><i class="gw" id="gw"></i><div class="wn" id="wn"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P14_JS}
+const COL=['#E6D84F','#B58CFF','#F4F4F4','#FF7AA8'],W=[.9,.55,.7,.4,.8,.62,.5,.88,.36,.74,.58,.46],wn=$('wn');
+W.forEach((w,i)=>{const d=document.createElement('div');d.className='cl';d.style.width=(w*100)+'%';d.style.background=COL[i%4];d.style.marginLeft=((i%3)*6)+'%';wn.appendChild(d)});
+const L=[...wn.children];
+play(5.4,t=>{
+  const p=ease.back(seg(t,0,.7)),sc=lerp(1,1.35,ease.inOut(seg(t,.7,3.7)))*lerp(.6,1,p),c=1-ease.inOut(seg(t,4.3,4.8));
+  const w=$('wn'),gw=$('gw');w.style.opacity=Math.min(1,p*2)*c;w.style.transform='scale('+sc*c+')';
+  gw.style.opacity=(.3+.12*Math.sin(t*8.8))*Math.min(1,p*2)*c;gw.style.transform='scale('+sc*c+')';
+  L.forEach((l,i)=>{l.style.transform='scaleX('+ease.out(seg(t,.6+i*.12,.95+i*.12))+')'});
+  $('lb').textContent=t<2?'WRITING':t<4.3?'GROWING':'FOLD';
+});` },
+
+{ v:14, id:'dualpane', fa:'Preview above, audio timeline below', en:'Motion over Sound Timeline Split', cat:'layout',
+  when:'Showing that a piece is designed and scored. The frame is split: the visual sits on top under a "Motion Design" label and a green audio timeline sits below a "Sound Design" label, with a playhead sweeping across both so the viewer sees how picture and sound are cut together.',
+  timing:'Labels fade 0.4 s · preview box 0.5 s · timeline blocks pop 0.03 s apart from 0.8 s · playhead sweeps the full width in 5 s (linear) · block under the playhead lights up (#6CF0B8)',
+  where:'The whole video (the lower half stays on screen throughout)', colors:['#050505','#1FA97A','#6CF0B8','#8C7CF0','#2E2E33'], dur:5.4,
+  css:P14_CSS+`.pv{position:absolute;left:1.5rem;top:4rem;width:24rem;height:13.5rem;border-radius:.3rem;background:#000;border:1px solid #26262A;display:grid;place-items:center}
+.ls{position:absolute;left:0;right:0;font:600 .78rem/1 'Inter Tight',sans-serif;text-align:center}
+.tm{position:absolute;left:1.5rem;top:26.6rem;width:24rem;height:13rem;background:#101012;border:1px solid #26262A;overflow:hidden}
+.tm::before{content:'';position:absolute;left:0;right:0;top:0;height:1rem;background:#8C7CF0;opacity:.75}
+.bk{position:absolute;height:.62rem;border-radius:.12rem;background:#1FA97A}
+.ph{position:absolute;top:0;bottom:0;width:.1rem;background:#fff;box-shadow:0 0 .5rem #fff}
+.pt{width:3rem;height:3rem;border-radius:50%;border:2px solid #fff}`,
+  html:`<div class="stage"><div class="ls" style="top:2rem" id="l1">Motion Design</div><div class="pv" id="pv"><div class="pt" id="pt"></div></div><div class="ls" style="top:24.6rem" id="l2">Sound Design</div><div class="tm" id="tm"></div><div class="lb" id="lb"></div></div>`,
+  js:`${P14_JS}
+const tm=$('tm'),hs=n=>{const x=Math.sin(n*91.7)*43758.5;return x-Math.floor(x)},B=[];
+for(let r=0;r<12;r++){let x=hs(r)*3;while(x<24){const w=.6+hs(r*17+x)*3.2;const b=document.createElement('i');b.className='bk';b.style.left=x+'rem';b.style.top=(1.5+r*.92)+'rem';b.style.width=w+'rem';tm.appendChild(b);B.push([b,x,w]);x+=w+.15+hs(x+r)*1.2}}
+const ph=document.createElement('i');ph.className='ph';tm.appendChild(ph);
+play(5.4,t=>{
+  blurIn($('l1'),ease.out(seg(t,0,.4)),.3);blurIn($('l2'),ease.out(seg(t,.3,.7)),.3);
+  $('pv').style.opacity=ease.out(seg(t,.2,.6));$('tm').style.opacity=ease.out(seg(t,.5,.9));
+  const x=t/5.4*24;ph.style.left=x+'rem';
+  B.forEach(([b,bx,w],i)=>{const on=x>=bx&&x<=bx+w;b.style.background=on?'#6CF0B8':'#1FA97A';b.style.transform='scaleX('+ease.out(seg(t,.8+i*.003,1.1+i*.003))+')';b.style.transformOrigin='0 50%'});
+  const pt=$('pt');pt.style.transform='scale('+(1+.25*Math.sin(t*3))+')';pt.style.opacity=.5+.5*Math.sin(t*3)**2;
+  $('lb').textContent=(t).toFixed(1)+' s';
+});` }
+);
+
+VIDEOS.push({ id:'v14', n:14, title:'AI chat intro on a picture-and-sound split', meta:'12.5 seconds · 720×1280 · a landscape product intro shown over a sound-design timeline',
+  mood:'Quiet and technical. A black screen, thin white strokes, small dark glass panels with soft blue-violet glow, and a green audio timeline under the picture. The UI animation is small and exact, like a product teaser.',
+  rules:[
+    'A single thin streak of light starts the video; the logo and name come out of it.',
+    'The name is typed with blur-in letters and the version number rolls like a slot to show an upgrade.',
+    'The prompt box is dark glass with a faint outline; the only color in the whole interface is the selected list row (blue).',
+    'A choice is shown in three beats: open list, step the highlight, change the label of the chip.',
+    'Clicks are drawn: hand moves in, the button swells with a ring, then the button turns into the loader so the same spot keeps the viewer\'s eye.',
+    'The picture and the sound are shown together: the preview above, the audio timeline below with a playhead through both.'
+  ],
+  palette:[
+    { g:'Interface', c:[['#050505','Black'],['#101012','Panel'],['#161618','Prompt box'],['#2A2A2E','Outline'],['#2F6BFF','Selected row']] },
+    { g:'Timeline', c:[['#1FA97A','Block green'],['#6CF0B8','Active block'],['#8C7CF0','Ruler violet'],['#2E2E33','Track line']] },
+    { g:'Code glow', c:[['#E6D84F','Yellow line'],['#B58CFF','Violet line'],['#FF7AA8','Pink line'],['#F4F4F4','White line']] }
+  ] });
+
+TOKENS_CSS = TOKENS_CSS.replace(/\n\}$/, `
+  /* video 14: AI chat intro */
+  --ct-black:#050505; --ct-panel:#161618; --ct-line:#2A2A2E; --ct-select:#2F6BFF; --ct-green:#1FA97A; --ct-mint:#6CF0B8; --ct-violet:#8C7CF0;
+}`);
+
+/* ===== Video 15: logo reveal filmed off a laptop screen: shape carving, gloss sweep, emblem assembly, palette bars, chevron stack ===== */
+const P15_CSS = `.stage{background:#0F5A4C;font-family:'Inter Tight',sans-serif;color:#fff;overflow:hidden}
+.lb{position:absolute;left:1rem;bottom:2.4rem;font:600 .8rem/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9FE3D0;opacity:.9;z-index:9}
+.sb{position:absolute;left:3rem;right:3rem;bottom:1rem;height:.12rem;background:rgba(255,255,255,.28);z-index:8}.sb i{position:absolute;left:0;top:0;bottom:0;background:#fff}.sb b{position:absolute;top:-.22rem;width:.55rem;height:.55rem;border-radius:50%;background:#fff;margin-left:-.27rem}
+.sv{position:absolute;left:0;top:0;width:27rem;height:48rem;overflow:visible}`;
+const P15_SB = `<div class="sb"><i id="sbi"></i><b id="sbk"></b></div>`;
+const P15_JS = `const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';
+function scrub(t,d){const p=Math.min(1,t/d)*100;$('sbi').style.width=p+'%';$('sbk').style.left=p+'%'}`;
+
+TECHS.push(
+{ v:15, id:'shapecarve', fa:'Square carved into a corner shape with guide lines', en:'Square-to-corner Carve with Guides', cat:'fx',
+  when:'Starting a logo from its geometry. A plain light-blue square sits on dashed guide lines; a rectangle slices out of it until only a bold corner remains, a cyan handle marks the anchor, and the corner grows and swings toward the lower left.',
+  timing:'Guides draw 0.6 s · corner cut 0.8 to 1.4 s (ease inOut) · handle pulses at 2 Hz · corner scales 1 → 2.1 and moves 5 rem toward the lower left 2.4 to 4 s · exit blur 4.6 s',
+  where:'0 to 4 s', colors:['#0F5A4C','#9CC9E8','#3FD0D8','#FFFFFF'], dur:5.4,
+  css:P15_CSS,
+  html:`<div class="stage"><svg class="sv" viewBox="0 0 27 48"><g id="gd" stroke="#8FD6C6" stroke-width=".06" stroke-dasharray=".35 .3" fill="none"><line x1="0" y1="17" x2="27" y2="17"/><line x1="0" y1="26" x2="27" y2="26"/><line x1="9" y1="0" x2="9" y2="48"/><line x1="18" y1="0" x2="18" y2="48"/></g><defs><mask id="mk"><rect width="27" height="48" fill="#fff"/><rect id="c1" x="13" y="21" width="0" height="5" fill="#000"/><rect id="c2" x="9" y="17" width="5" height="0" fill="#000"/></mask></defs><g id="sh"><rect x="9" y="17" width="9" height="9" fill="#9CC9E8" mask="url(#mk)"/><path id="hn" d="M18 17 l-.7 .1 .2 .9z" fill="#3FD0D8" transform="translate(-.2 .1) scale(1.6)"/></g>${P15_SB}<div class="lb" id="lb"></div></div>`,
+  js:`${P15_JS}
+const gd=[...$('gd').children];gd.forEach(l=>{l.dataset.n=48});
+play(5.4,t=>{
+  gd.forEach((l,i)=>l.setAttribute('opacity',ease.out(seg(t,i*.08,.6+i*.08))*(1-seg(t,4.4,4.9))));
+  const a=ease.inOut(seg(t,.8,1.4));
+  $('c1').setAttribute('width',5*a);$('c1').setAttribute('x',18-5*a);$('c2').setAttribute('height',0);
+  $('c1').setAttribute('y',21);$('c1').setAttribute('height',5);
+  const m=ease.inOut(seg(t,2.4,4)),s=lerp(1,2.1,m),tx=lerp(0,-5,m),ty=lerp(0,4,m),o=1-seg(t,4.6,5.2);
+  $('sh').setAttribute('transform','translate('+(13.5+tx)+' '+(21.5+ty)+') scale('+s+') translate(-13.5 -21.5)');$('sh').setAttribute('opacity',o);
+  $('hn').setAttribute('opacity',.6+.4*Math.sin(t*12.5));
+  scrub(t,5.4);$('lb').textContent=t<.8?'GUIDES':t<1.8?'CARVE':'GROW';
+});` },
+
+{ v:15, id:'glosssweep', fa:'Diagonal gloss sweep over a solid shape', en:'Diagonal Gloss Sweep', cat:'fx',
+  when:'Giving a flat shape a physical, glassy feel just before it resolves. A soft white band travels diagonally across the shape and a hairline of light follows it across the frame.',
+  timing:'Shape fades up 0.4 s · band moves 1.0 s (ease inOut) from the top-left to the bottom-right at −35° · band width 6 rem, peak opacity 0.9 · hairline 0.5 s behind · hold 1 s · exit 0.4 s',
+  where:'4 to 5.5 s', colors:['#0B3F36','#F4F4F4','#FFFFFF','#9CC9E8'], dur:5.4,
+  css:P15_CSS+`.stage{background:#0B3F36}`,
+  html:`<div class="stage"><svg class="sv" viewBox="0 0 27 48"><defs><linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="cp"><path d="M7 17H20V22H12V31H7Z"/></clipPath></defs><path id="sp" d="M7 17H20V22H12V31H7Z" fill="#E9EEF0"/><g clip-path="url(#cp)"><rect id="bd" x="-8" y="-6" width="6" height="60" fill="url(#gb)" transform="rotate(35 13.5 24)"/></g><line id="hl" x1="0" y1="0" x2="40" y2="0" stroke="#fff" stroke-width=".08" opacity="0" transform="rotate(35 13.5 24)"/>${P15_SB}</svg><div class="lb" id="lb"></div></div>`,
+  js:`${P15_JS}
+play(5.4,t=>{
+  const a=ease.out(seg(t,0,.4)),o=1-seg(t,4.9,5.3);$('sp').setAttribute('opacity',a*o);
+  const k=ease.inOut(seg(t,1,2));$('bd').setAttribute('x',lerp(-8,34,k));
+  $('hl').setAttribute('opacity',.8*Math.sin(Math.PI*seg(t,1.2,2.4)));$('hl').setAttribute('y1',lerp(-14,30,seg(t,1.2,2.4)));$('hl').setAttribute('y2',lerp(-14,30,seg(t,1.2,2.4)));
+  $('bd').parentNode.setAttribute('opacity',o);
+  $('lb').textContent=t<1?'SHAPE':t<2?'SWEEP':'HOLD';
+});` },
+
+{ v:15, id:'emblemassemble', fa:'Four brackets assembling into a ring emblem', en:'Bracket-to-ring Emblem Assembly', cat:'layout',
+  when:'Revealing a symbol made of four identical pieces. Four angle brackets slide in from the corners, click together inside a ring that draws itself, one of them in the accent color, and the whole emblem spins once and settles.',
+  timing:'Ring draws 0.9 s · brackets fly in 0.7 s each, 0.1 s apart, ease-back · accent bracket (#E8431F) last · emblem spin 360° in 1.1 s (ease inOut) · settle scale 1.08 → 1 · exit 4.7 s',
+  where:'5.5 to 8 s', colors:['#0E7F72','#E8431F','#F4F4F4','#0B3F36'], dur:5.4,
+  css:P15_CSS+`.stage{background:#0B3F36}`,
+  html:`<div class="stage"><svg class="sv" viewBox="0 0 27 48"><g id="em" transform="translate(13.5 23)"><circle id="rg" r="6.2" fill="none" stroke="#0E7F72" stroke-width=".9"/>${[[-1,-1,'#0E7F72'],[1,-1,'#0E7F72'],[-1,1,'#0E7F72'],[1,1,'#E8431F']].map((q,i)=>`<path class="br" data-i="${i}" data-x="${q[0]}" data-y="${q[1]}" d="M0 0H3.2V1.5H1.5V3.2H0Z" fill="${q[2]}" transform="scale(${q[0]} ${q[1]})"/>`).join('')}</g>${P15_SB}</svg><div class="lb" id="lb"></div></div>`,
+  js:`${P15_JS}
+const rg=$('rg'),RL=2*Math.PI*6.2;rg.style.strokeDasharray=RL;
+const B=[...document.querySelectorAll('.br')];
+play(5.4,t=>{
+  rg.style.strokeDashoffset=RL*(1-ease.out(seg(t,0,.9)));
+  B.forEach((b,i)=>{const x=+b.dataset.x,y=+b.dataset.y,k=ease.back(seg(t,.7+i*.1,1.4+i*.1)),d=(1-k)*12;
+    b.setAttribute('transform','translate('+(x*(.9+d))+' '+(y*(.9+d))+') scale('+x+' '+y+')');b.setAttribute('opacity',Math.min(1,k*4))});
+  const sp=ease.inOut(seg(t,2.2,3.3)),sc=lerp(1.08,1,ease.out(seg(t,3.3,3.9)))*(1-.2*seg(t,4.7,5.3));
+  $('em').setAttribute('transform','translate(13.5 23) rotate('+(360*sp)+') scale('+sc+')');$('em').setAttribute('opacity',1-seg(t,4.7,5.3));
+  scrub(t,5.4);$('lb').textContent=t<2.2?'ASSEMBLE':t<3.3?'SPIN':'SETTLE';
+});` },
+
+{ v:15, id:'palettebars', fa:'Four color bars that name the brand palette', en:'Palette Bars with Hex Labels', cat:'layout',
+  when:'Presenting a brand palette inside the reveal. Four tall vertical bars rise one after another, each labelled with its hex code, hold together as a flag, and then slide away to make room for the mark.',
+  timing:'Bars rise 0.7 s each, 0.12 s apart (ease-out) · hex labels fade 0.3 s after each bar · hold 1.4 s · bars collapse top to bottom 0.5 s, 0.08 s apart · bar width 3.4 rem, height 19 rem',
+  where:'9 to 11 s', colors:['#004C3D','#FFA069','#FFFFFF','#000000','#EAF0FF'], dur:5.4,
+  css:P15_CSS+`.stage{background:#EAF0FF}.lb{color:#2A4A6A}.sb{background:rgba(0,0,0,.2)}.sb i,.sb b{background:#2A4A6A}
+.bar{position:absolute;top:14.5rem;width:3.4rem;height:19rem;transform-origin:50% 100%;display:grid;place-items:center;font:600 .55rem/1 'Inter Tight',sans-serif;letter-spacing:.04em;border:1px solid rgba(0,0,0,.1)}`,
+  html:`<div class="stage">${[['#004C3D','004C3D','#fff'],['#FFA069','FFA069','#4A2A14'],['#FFFFFF','FFFFFF','#555'],['#000000','000000','#fff']].map((c,i)=>`<div class="bar" id="b${i}" style="left:${6.1+i*3.5}rem;background:${c[0]};color:${c[2]}"><span id="t${i}">${c[1]}</span></div>`).join('')}${P15_SB}<div class="lb" id="lb"></div></div>`,
+  js:`${P15_JS}
+play(5.4,t=>{
+  for(let i=0;i<4;i++){
+    const k=ease.out(seg(t,.2+i*.12,.9+i*.12)),c=ease.inOut(seg(t,3.6+i*.08,4.1+i*.08)),b=$('b'+i);
+    b.style.transform='scaleY('+k*(1-c)+')';b.style.transformOrigin=c>0?'50% 0%':'50% 100%';$('t'+i).style.opacity=seg(t,.5+i*.12,.8+i*.12)*(1-c);
+  }
+  scrub(t,5.4);$('lb').textContent=t<1.2?'RISE':t<3.6?'HOLD':'COLLAPSE';
+});` },
+
+{ v:15, id:'chevronstack', fa:'Three stacked chevrons popping in with a mini menu', en:'Chevron Stack with Action Menu', cat:'ui',
+  when:'Ending a logo story with an interface hint. Three chevrons in three colors pop up one on top of another with a back-ease, a small cyan dot like a cursor lands beside them, and a tiny menu card of actions slides up with the last item highlighted.',
+  timing:'Chevrons pop 0.5 s each, 0.2 s apart from the bottom up · cursor dot flies in 0.6 s at 1.4 s · menu card rises 0.5 s at 2.4 s · rows fade 0.08 s apart · last row highlight #3FD0D8 at 3.3 s · exit 4.6 s',
+  where:'12 to 14 s', colors:['#F2F2F2','#E8431F','#8ED0E6','#3FD0D8','#101820'], dur:5.4,
+  css:P15_CSS+`.stage{background:#10181E}
+.mn{position:absolute;left:8.5rem;top:30rem;width:10rem;border-radius:.5rem;background:rgba(40,56,66,.9);border:1px solid rgba(255,255,255,.14);padding:.5rem}
+.mn div{font:600 .55rem/1 'Inter Tight',sans-serif;letter-spacing:.06em;padding:.38rem .4rem;border-radius:.25rem;color:#D8E4EA}
+.mn div:last-child{color:#10181E}`,
+  html:`<div class="stage"><svg class="sv" viewBox="0 0 27 48"><g id="cv"><path id="c2" d="M7 6L13.5 0L20 6V9L13.5 3L7 9Z" fill="#8ED0E6" transform="translate(0 20)"/><path id="c1" d="M7 6L13.5 0L20 6V9L13.5 3L7 9Z" fill="#E8431F" transform="translate(0 15.5)"/><path id="c0" d="M7 6L13.5 0L20 6V9L13.5 3L7 9Z" fill="#F2F2F2" transform="translate(0 11)"/></g><circle id="dt" r=".45" fill="#3FD0D8"/></svg><div class="mn" id="mn"><div>OPEN</div><div>SAVE</div><div>SHARE</div><div id="ap">APPLY</div></div>${P15_SB}<div class="lb" id="lb"></div></div>`,
+  js:`${P15_JS}
+const R=[...$('mn').children];
+play(5.4,t=>{
+  [2,1,0].forEach((c,i)=>{const k=ease.back(seg(t,.2+i*.2,.7+i*.2)),e=$('c'+c),y=[11,15.5,20][c];e.setAttribute('transform','translate(13.5 '+(y+3)+') scale('+k+') translate(-13.5 -3)');e.setAttribute('opacity',Math.min(1,k*3)*(1-seg(t,4.6,5.1)))});
+  const d=ease.out(seg(t,1.4,2));$('dt').setAttribute('cx',lerp(26,19.4,d));$('dt').setAttribute('cy',lerp(40,24,d));$('dt').setAttribute('opacity',seg(t,1.4,1.6)*(1-seg(t,4.6,5.1)));
+  const m=ease.out(seg(t,2.4,2.9)),mn=$('mn');mn.style.opacity=m*(1-seg(t,4.6,5.1));mn.style.transform='translateY('+(1-m)*1.5+'rem)';
+  R.forEach((r,i)=>r.style.opacity=ease.out(seg(t,2.5+i*.08,2.8+i*.08)));
+  $('ap').style.background=t>3.3?'#3FD0D8':'transparent';
+  scrub(t,5.4);$('lb').textContent=t<1.4?'POP':t<2.4?'CURSOR':'MENU';
+});` }
+);
+
+VIDEOS.push({ id:'v15', n:15, title:'Logo reveal filmed off a laptop screen', meta:'19.6 seconds · 720×1280 · a brand-identity reveal shot as a phone video of a monitor',
+  mood:'Craft-forward and tactile. Deep teal, one warm peach and one hot orange-red, pure white and black; thin dashed guide lines and hex labels show how the mark was built, and the footage keeps the real monitor edge, player bar and dock.',
+  rules:[
+    'The logo is explained as geometry first: a plain square on dashed guides is carved into the mark by two moving rectangles.',
+    'A diagonal gloss band crosses the finished shape once, so it reads as a solid object.',
+    'A symbol made of four parts is assembled from the corners and spins once; only one part carries the accent color.',
+    'The palette is shown as four tall bars with their hex codes written on them, then the bars collapse.',
+    'The footage is deliberately left as a recording of a screen: the player scrub bar and the dock stay visible.',
+    'Backgrounds switch hard between teal, black, red and white; the mark carries continuity, not the background.'
+  ],
+  palette:[
+    { g:'Brand', c:[['#004C3D','Deep teal'],['#FFA069','Peach'],['#FFFFFF','White'],['#000000','Black']] },
+    { g:'Construction', c:[['#9CC9E8','Light-blue square'],['#3FD0D8','Cyan handle'],['#8FD6C6','Guide line'],['#0E7F72','Ring teal']] },
+    { g:'Accent', c:[['#E8431F','Orange-red bracket'],['#8ED0E6','Chevron blue'],['#EAF0FF','Palette page']] }
+  ] });
+
+TOKENS_CSS = TOKENS_CSS.replace(/\n\}$/, `
+  /* video 15: logo reveal */
+  --lr-teal:#004C3D; --lr-peach:#FFA069; --lr-red:#E8431F; --lr-cyan:#3FD0D8; --lr-sq:#9CC9E8; --lr-page:#EAF0FF;
+}`);
