@@ -11,7 +11,7 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store = { get(k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch (e) {} } };
 
 /* ---------- data prep ---------- */
-const ACC = { 1: '#3E7BE0', 2: '#EB3721', 3: '#1E9E94', 4: '#6B7CE8', 5: '#16A312', 6: '#E0642F', 7: '#D6DF1A', 8: '#D21212', 9: '#F65A0E', 10: '#C99A72', 11: '#5FA7F2', 12: '#9B8CFF', 13: '#E8861C', 14: '#6CF0B8', 15: '#3FD0D8' };
+const ACC = { 1: '#3E7BE0', 2: '#EB3721', 3: '#1E9E94', 4: '#6B7CE8', 5: '#16A312', 6: '#E0642F', 7: '#D6DF1A', 8: '#D21212', 9: '#F65A0E', 10: '#C99A72', 11: '#5FA7F2', 12: '#9B8CFF', 13: '#E8861C', 14: '#6CF0B8', 15: '#3FD0D8', 16: '#D8D8D8' };
 const CATC = { type: 'var(--c-type)', ui: 'var(--c-ui)', data: 'var(--c-data)', fx: 'var(--c-fx)', layout: 'var(--c-layout)' };
 const inkOn = hex => { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#10141A' : '#FFFFFF' };
 const shortTitle = v => v.title.split(':')[0].trim();
